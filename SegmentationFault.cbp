@@ -30,7 +30,20 @@
 		</Build>
 		<Compiler>
 			<Add option="-Wall" />
+			<Add directory="C:/SFML-2.5.1/include" />
 		</Compiler>
+		<Linker>
+			<Add library="sfml-graphics" />
+			<Add library="sfml-system" />
+			<Add library="sfml-window" />
+			<Add library="sfml-audio" />
+			<Add directory="C:/SFML-2.5.1/lib" />
+		</Linker>
+		<Unit filename="Textbox.cpp" />
+		<Unit filename="Textbox.hpp" />
+		<Unit filename="Utilities.cpp" />
+		<Unit filename="Utilities.hpp" />
+		<Unit filename="main.cpp" />
 		<Extensions>
 			<lib_finder disable_auto="1" />
 		</Extensions>

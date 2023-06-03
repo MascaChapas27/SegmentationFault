@@ -85,14 +85,21 @@ bool Textbox::update(){
             // If the character is calm, there is a chance it glitches
             faceRect.left = FACE_WIDTH*(rand() % 8 + 1);
             // The glitch sfx should be in the last position of the array
-            sound.setBuffer(speakingSounds[2]);
+            sound.setBuffer(speakingSounds[SPEAKING_SOUNDS-1]);
             sound.play();
-            // We create a special string with glitch characters
-            std::string glitchString = "";
-            for(int i=0;i<rand()%50+10;i++){
-                glitchString+= rand()%255;
+            // The textbox moves a bit when it glitches
+            sf::Vector2i position = window.getPosition();
+            position.x+=rand()%2 + rand()%2 * -1;
+            position.y+=rand()%2 + rand()%2 * -1;
+            window.setPosition(position);
+            // We create a special string based on the current text
+            std::string glitchText = currentText;
+            for(unsigned int i=0;i<(rand()%currentText.length());i++){
+                // We are going to turn some characters into glitch characters
+                int pos = rand() % glitchText.length();
+                glitchText[pos] = rand()%255;
             }
-            text.setString(glitchString);
+            text.setString(glitchText);
             window.requestFocus();
         } else {
             // The character is calm again if there is no glitching

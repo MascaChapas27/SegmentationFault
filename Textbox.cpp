@@ -1,7 +1,7 @@
 #include "Textbox.hpp"
 
 // The constructor. It creates a new textbox
-Textbox::Textbox(CharName speaker, CharName lookingAt, std::string spritesheetPath, std::string soundFilesPath[3], std::string fontPath){
+Textbox::Textbox(CharName speaker, CharName lookingAt, std::string spritesheetPath, std::string soundFilesPath[3], std::string fontPath, bool glitchy){
     // The textbox is initialized without text
     currentText = "";
     finalText = "";
@@ -35,11 +35,13 @@ Textbox::Textbox(CharName speaker, CharName lookingAt, std::string spritesheetPa
 
     // The window is created
     window.create(sf::VideoMode(TEXTBOX_WIDTH, TEXTBOX_HEIGHT), "Textbox");
-    window.setFramerateLimit(60);
+    window.setFramerateLimit(30);
 
     // The rectangles are given values
     backgroundRect = sf::IntRect(0,0,TEXTBOX_WIDTH, TEXTBOX_HEIGHT);
     faceRect = sf::IntRect(0,TEXTBOX_HEIGHT,FACE_WIDTH,FACE_HEIGHT);
+
+    this->glitchy = glitchy;
 }
 
 // Sets the text the character should say
@@ -63,18 +65,49 @@ bool Textbox::update(){
     // it has been completed
     if(currentText!=finalText){
         currentText+=finalText[(int)currentText.length()];
-        sound.setBuffer(speakingSounds[rand()%3]);
+        sound.setBuffer(speakingSounds[rand()%2]);
         sound.play();
         text.setString(currentText);
     }
 
-    // We draw the text on the screen
-    window.draw(text);
-
     // We check the direction the character is facing
     // TODO check direction
+
+    // If the character is glitchy, then it depends on the
+    if(glitchy){
+        // If the character is calm there is a chance it starts
+        // glitching. If it's glitching, there is a higher chance
+        // that another glitch effect comes immediately after.
+        // It's important to notice that glitch characters always look
+        // at the player (leftmost sprite, faceRect.left==0).
+        // Any other sprite is a glitch sprite
+        if(faceRect.left==0 ? rand()%30 == 11 : rand()%2 == 1){
+            // If the character is calm, there is a chance it glitches
+            faceRect.left = FACE_WIDTH*(rand() % 8 + 1);
+            // The glitch sfx should be in the last position of the array
+            sound.setBuffer(speakingSounds[2]);
+            sound.play();
+            // We create a special string with glitch characters
+            std::string glitchString = "";
+            for(int i=0;i<rand()%50+10;i++){
+                glitchString+= rand()%255;
+            }
+            text.setString(glitchString);
+            window.requestFocus();
+        } else {
+            // The character is calm again if there is no glitching
+            if(faceRect.left != 0){
+                faceRect.left = 0;
+                text.setString(currentText);
+                sound.stop();
+            }
+        }
+    }
     sprite.setTextureRect(faceRect);
     sprite.setPosition(TEXTBOX_BORDER,TEXTBOX_BORDER);
+
+    // We draw the text on the screen
+    window.draw(text);
 
     // Finally we draw the character's face
     window.draw(sprite);
@@ -88,7 +121,8 @@ bool Textbox::update(){
     {
         // Close window: exit
         if (event.type == sf::Event::Closed){
-            setText("que haces cerrandome\ncabron te parto las\nputas piernas");
+            window.close();
+            return false;
         }
     }
     return true;

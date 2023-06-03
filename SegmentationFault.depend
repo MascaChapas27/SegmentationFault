@@ -532,3 +532,23 @@
 1685631559 source:c:\users\angel\desktop\segmentationfault\utilities.cpp
 	"Textbox.hpp"
 
+1685802787 source:c:\users\angel\desktop\mis programas\segmentationfault\main.cpp
+	"Textbox.hpp"
+	<thread>
+	<chrono>
+
+1685802779 c:\users\angel\desktop\mis programas\segmentationfault\textbox.hpp
+	<string>
+	"Utilities.hpp"
+	<SFML/Graphics.hpp>
+	<SFML/Audio.hpp>
+
+1685709220 c:\users\angel\desktop\mis programas\segmentationfault\utilities.hpp
+	<iostream>
+
+1685804009 source:c:\users\angel\desktop\mis programas\segmentationfault\textbox.cpp
+	"Textbox.hpp"
+
+1685631559 source:c:\users\angel\desktop\mis programas\segmentationfault\utilities.cpp
+	"Textbox.hpp"
+

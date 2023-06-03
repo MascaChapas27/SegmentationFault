@@ -58,8 +58,11 @@ private:
     // This is needed to play the speaking sounds
     sf::Sound sound;
 
+    // This is needed if we want the textbox to have glitch effects
+    bool glitchy;
+
 public:
-    Textbox(CharName speaker, CharName lookingAt, std::string spritesheetPath, std::string soundFilesPath[3], std::string fontPath);
+    Textbox(CharName speaker, CharName lookingAt, std::string spritesheetPath, std::string soundFilesPath[3], std::string fontPath, bool glitchy);
     ~Textbox();
     void setText(std::string text);
     bool update();

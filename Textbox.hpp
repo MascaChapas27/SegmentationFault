@@ -61,6 +61,10 @@ private:
     // This is needed if we want the textbox to have glitch effects
     bool glitchy;
 
+    // When trying to close a glitched character's window, this counter
+    // makes a last glitch effect happen
+    int finalGlitch;
+
 public:
     Textbox(CharName speaker, CharName lookingAt, std::string spritesheetPath, std::string soundFilesPath[3], std::string fontPath, bool glitchy);
     ~Textbox();

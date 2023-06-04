@@ -16,7 +16,7 @@ Textbox::Textbox(CharName speaker, CharName lookingAt, std::string spritesheetPa
 
     text.setFont(font);
     text.setFillColor(sf::Color::White);
-    text.setCharacterSize(20);
+    text.setCharacterSize(TEXT_SIZE);
     text.setPosition(TEXT_X,TEXT_Y);
 
     // The spritesheet is initialized
@@ -35,13 +35,14 @@ Textbox::Textbox(CharName speaker, CharName lookingAt, std::string spritesheetPa
 
     // The window is created
     window.create(sf::VideoMode(TEXTBOX_WIDTH, TEXTBOX_HEIGHT), "Textbox");
-    window.setFramerateLimit(30);
+    window.setFramerateLimit(TEXTBOX_FPS);
 
     // The rectangles are given values
     backgroundRect = sf::IntRect(0,0,TEXTBOX_WIDTH, TEXTBOX_HEIGHT);
     faceRect = sf::IntRect(0,TEXTBOX_HEIGHT,FACE_WIDTH,FACE_HEIGHT);
 
     this->glitchy = glitchy;
+    finalGlitch = 0;
 }
 
 // Sets the text the character should say
@@ -53,7 +54,23 @@ void Textbox::setText(std::string text){
 // Updates the textbox, making the character look the right way,
 // making it speak and drawing the sprites
 bool Textbox::update(){
-    // First we clear everything
+
+    // First we check if the textbox should be destroyed
+    sf::Event event;
+    while (window.pollEvent(event))
+    {
+        // Close window: exit
+        if (event.type == sf::Event::Closed){
+            if(glitchy){
+                finalGlitch = 1;
+            } else {
+                window.close();
+                return false;
+            }
+        }
+    }
+
+    // If the window is still open, clear everything
     window.clear();
 
     // Then we draw the background
@@ -68,6 +85,7 @@ bool Textbox::update(){
         sound.setBuffer(speakingSounds[rand()%2]);
         sound.play();
         text.setString(currentText);
+        window.requestFocus();
     }
 
     // We check the direction the character is facing
@@ -81,17 +99,23 @@ bool Textbox::update(){
         // It's important to notice that glitch characters always look
         // at the player (leftmost sprite, faceRect.left==0).
         // Any other sprite is a glitch sprite
-        if(faceRect.left==0 ? rand()%30 == 11 : rand()%2 == 1){
-            // If the character is calm, there is a chance it glitches
-            faceRect.left = FACE_WIDTH*(rand() % 8 + 1);
+        if(finalGlitch > 0 || (faceRect.left==0 ? rand()%30 == 11 : rand()%2 == 1)){
+            // The character glitches, as well as the textbox
+            faceRect.left = FACE_WIDTH*(rand() % (EXPRESSION_NUMBER-1) + 1);
+            backgroundRect.left = TEXTBOX_WIDTH*(rand() % (TEXTBOX_NUMBER-1) + 1);
             // The glitch sfx should be in the last position of the array
             sound.setBuffer(speakingSounds[SPEAKING_SOUNDS-1]);
             sound.play();
-            // The textbox moves a bit when it glitches
-            sf::Vector2i position = window.getPosition();
-            position.x+=rand()%2 + rand()%2 * -1;
-            position.y+=rand()%2 + rand()%2 * -1;
-            window.setPosition(position);
+
+            // If the final glitch is happening, the counter advances until the limit is reached
+            // and the window changes position
+            if(finalGlitch > 0) {
+                finalGlitch++;
+                sf::Vector2i pos = window.getPosition();
+                pos.x += rand() % finalGlitch - (finalGlitch/2.f);
+                pos.y += rand() % finalGlitch - (finalGlitch/2.f);
+                window.setPosition(pos);
+            }
             // We create a special string based on the current text
             std::string glitchText = currentText;
             for(unsigned int i=0;i<(rand()%currentText.length());i++){
@@ -100,11 +124,11 @@ bool Textbox::update(){
                 glitchText[pos] = rand()%255;
             }
             text.setString(glitchText);
-            window.requestFocus();
         } else {
             // The character is calm again if there is no glitching
             if(faceRect.left != 0){
                 faceRect.left = 0;
+                backgroundRect.left = 0;
                 text.setString(currentText);
                 sound.stop();
             }
@@ -122,17 +146,10 @@ bool Textbox::update(){
     // Once everything is drawn we display the result
     window.display();
 
-    // Additionally we check if the textbox should be destroyed
-    sf::Event event;
-    while (window.pollEvent(event))
-    {
-        // Close window: exit
-        if (event.type == sf::Event::Closed){
-            window.close();
-            return false;
-        }
-    }
-    return true;
+    // Finally, true is returned (unless the character is glitchy
+    // and it's about to be closed)
+    if(finalGlitch == FINAL_GLITCH_LIMIT) window.close();
+    return finalGlitch != FINAL_GLITCH_LIMIT;
 }
 
 Textbox::~Textbox(){

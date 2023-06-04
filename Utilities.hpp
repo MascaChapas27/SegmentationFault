@@ -36,6 +36,25 @@ const int TEXTBOX_BORDER = 10;
 const int TEXT_X = FACE_WIDTH + 2*TEXTBOX_BORDER + 20;
 const int TEXT_Y = TEXTBOX_BORDER + 20;
 
+// Size of the font in textboxes
+const int TEXT_SIZE = 20;
+
+// Framerate limit for textboxes
+const int TEXTBOX_FPS = 20;
+
+// Total number of textboxes a character has
+// (The first one is the basic one, the others are glitchy)
+const int TEXTBOX_NUMBER = 3;
+
+// Total number of expression a character has for a certain feeling
+// One facing to the front, eight for each direction
+// and an extra one for glitch effects
+const int EXPRESSION_NUMBER = 10;
+
+// The value at which the final glitch end. A counter starts increasing
+// its value until it equals this constant's value
+const int FINAL_GLITCH_LIMIT = TEXTBOX_FPS * 1.5;
+
 // Function that inputs an error message whenever a file cannot
 // be accessed (it also exits with error code 1)
 void printFileError(std::string fileName);

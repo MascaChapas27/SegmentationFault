@@ -16,10 +16,6 @@ enum CharName{
     GABRIELA, DANIELA, FATHER, MOTHER, PLAYER
 };
 
-// Each character has 3 different sound effects
-// that play every time a new letter is displayed
-const int SPEAKING_SOUNDS = 3;
-
 // Height and width of a textbox
 const int TEXTBOX_HEIGHT = 200;
 const int TEXTBOX_WIDTH = 400;
@@ -59,5 +55,9 @@ const int FINAL_GLITCH_LIMIT = TEXTBOX_FPS;
 // be accessed (it also exits with error code 1)
 void printFileError(std::string fileName);
 
+// Function that generates a kind-of random double
+// The doubles generated are in the range (0.6, 0.7, ..., 1.4, 1.5)
+// because it's used for the pitch of voices and sfx
+double randDouble();
 
 #endif // __UTILITIES_HPP__

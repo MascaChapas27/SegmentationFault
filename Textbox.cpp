@@ -1,7 +1,7 @@
 #include "Textbox.hpp"
 
 // The constructor. It creates a new textbox
-Textbox::Textbox(CharName speaker, CharName lookingAt, std::string spritesheetPath, std::string soundFilesPath[3], std::string fontPath, bool glitchy){
+Textbox::Textbox(CharName speaker, CharName lookingAt, std::string spritesheetPath, std::string soundPath, std::string fontPath){
     // The textbox is initialized without text
     currentText = "";
     finalText = "";
@@ -27,11 +27,9 @@ Textbox::Textbox(CharName speaker, CharName lookingAt, std::string spritesheetPa
     sprite.setTexture(spritesheet);
     sprite.setPosition(TEXTBOX_BORDER,TEXTBOX_BORDER);
 
-    // The speaking sounds are initialized
-    for(int i=0;i<SPEAKING_SOUNDS;i++){
-        if(!speakingSounds[i].loadFromFile(soundFilesPath[i]))
-            printFileError(soundFilesPath[i]);
-    }
+    // The speaking sound is initialized
+    if(!speakingSound.loadFromFile(soundPath))
+            printFileError(soundPath);
 
     // The window is created
     window.create(sf::VideoMode(TEXTBOX_WIDTH, TEXTBOX_HEIGHT), "Textbox");
@@ -41,9 +39,18 @@ Textbox::Textbox(CharName speaker, CharName lookingAt, std::string spritesheetPa
     backgroundRect = sf::IntRect(0,0,TEXTBOX_WIDTH, TEXTBOX_HEIGHT);
     faceRect = sf::IntRect(0,TEXTBOX_HEIGHT,FACE_WIDTH,FACE_HEIGHT);
 
-    this->glitchy = glitchy;
+    glitchy = false;
     finalGlitch = 0;
     shouldEnd = false;
+}
+
+// Another constructor if we want the textbox to be glitchy
+Textbox::Textbox(CharName speaker, CharName lookingAt, std::string spritesheetPath, std::string soundPath, std::string fontPath, std::string glitchSoundPath) :
+Textbox(speaker, lookingAt,spritesheetPath,soundPath, fontPath){
+    glitchy = true;
+    if(!glitchSound.loadFromFile(glitchSoundPath))
+            printFileError(glitchSoundPath);
+
 }
 
 // Sets the text the character should say
@@ -55,7 +62,7 @@ void Textbox::setText(std::string text){
 // Updates the textbox, making the character look the right way,
 // making it speak and drawing the sprites
 bool Textbox::update(){
-
+    if(!window.isOpen()) return false;
     // First we check if the textbox should be destroyed
     sf::Event event;
     while (window.pollEvent(event))
@@ -94,7 +101,8 @@ bool Textbox::update(){
     // it has been completed
     if(currentText!=finalText){
         currentText+=finalText[(int)currentText.length()];
-        sound.setBuffer(speakingSounds[rand()%2]);
+        sound.setBuffer(speakingSound);
+        sound.setPitch(randDouble());
         sound.play();
         text.setString(currentText);
         window.requestFocus();
@@ -116,7 +124,8 @@ bool Textbox::update(){
             faceRect.left = FACE_WIDTH*(rand() % (EXPRESSION_NUMBER-1) + 1);
             backgroundRect.left = TEXTBOX_WIDTH*(rand() % (TEXTBOX_NUMBER-1) + 1);
             // The glitch sfx should be in the last position of the array
-            sound.setBuffer(speakingSounds[SPEAKING_SOUNDS-1]);
+            sound.setBuffer(glitchSound);
+            sound.setPitch(randDouble());
             sound.play();
 
             // If the final glitch is happening, the counter advances until the limit is reached

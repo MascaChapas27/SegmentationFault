@@ -8,7 +8,16 @@ int main(){
     gabrielaSpeakingSounds[2] = "sounds\\speaking\\gabriela\\gabrielaSpeaking2.wav";
     Textbox t1(GABRIELA,PLAYER,"sprites\\textbox\\gabrielaTextbox.png",gabrielaSpeakingSounds,"fonts\\gabriela.ttf", true);
     t1.setText("amai la kuki xdxdxd\nsi o que eh kuki");
-    while(t1.update()){
+    Textbox t2(GABRIELA,PLAYER,"sprites\\textbox\\gabrielaTextbox.png",gabrielaSpeakingSounds,"fonts\\gabriela.ttf", false);
+    t2.setText("que dices");
+    while(t1.update() && t2.update()){
+
+    }
+
+    t1.end();
+    t2.end();
+
+    while(t1.update() || t2.update()){
 
     }
 }

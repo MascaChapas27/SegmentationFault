@@ -65,11 +65,15 @@ private:
     // makes a last glitch effect happen
     int finalGlitch;
 
+    // Boolean value that is set to true if the textbox needs to be closed
+    bool shouldEnd;
+
 public:
     Textbox(CharName speaker, CharName lookingAt, std::string spritesheetPath, std::string soundFilesPath[3], std::string fontPath, bool glitchy);
     ~Textbox();
     void setText(std::string text);
     bool update();
+    void end();
 };
 
 #endif // __TEXTBOX_HPP__

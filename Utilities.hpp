@@ -53,7 +53,7 @@ const int EXPRESSION_NUMBER = 10;
 
 // The value at which the final glitch end. A counter starts increasing
 // its value until it equals this constant's value
-const int FINAL_GLITCH_LIMIT = TEXTBOX_FPS * 1.5;
+const int FINAL_GLITCH_LIMIT = TEXTBOX_FPS;
 
 // Function that inputs an error message whenever a file cannot
 // be accessed (it also exits with error code 1)

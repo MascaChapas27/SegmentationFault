@@ -35,10 +35,6 @@ private:
     // This is the text that will be displayed
     sf::Text text;
 
-    // This is the spritesheet with all the sprites for the
-    // character's face, including the background
-    sf::Texture spritesheet;
-
     // This is the sprite that will be used to draw the
     // character's face and the background
     sf::Sprite sprite;
@@ -52,14 +48,11 @@ private:
     sf::IntRect backgroundRect;
     sf::IntRect faceRect;
 
-    // This is the sound the character makes when speaking
-    sf::SoundBuffer speakingSound;
-
-    // This is an optional sound the character makes when glitching
-    sf::SoundBuffer glitchSound;
-
     // This is needed to play the speaking sounds
-    sf::Sound sound;
+    sf::Sound speakingSound;
+
+    // This is needed to play the glitch sound
+    sf::Sound glitchSound;
 
     // This is needed if we want the textbox to have glitch effects
     bool glitchy;
@@ -72,8 +65,8 @@ private:
     bool shouldEnd;
 
 public:
-    Textbox(CharName speaker, CharName lookingAt, std::string spritesheetPath, std::string soundPath, std::string fontPath);
-    Textbox(CharName speaker, CharName lookingAt, std::string spritesheetPath, std::string soundPath, std::string fontPath, std::string glitchSoundPath);
+    Textbox(CharName speaker, CharName lookingAt, sf::Texture& texture, sf::SoundBuffer& soundBuffer, std::string fontPath);
+    Textbox(CharName speaker, CharName lookingAt, sf::Texture& texture, sf::SoundBuffer& soundBuffer, std::string fontPath, sf::SoundBuffer& glitchSoundBuffer);
     ~Textbox();
     void setText(std::string text);
     bool update();

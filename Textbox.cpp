@@ -1,7 +1,7 @@
 #include "Textbox.hpp"
 
 // The constructor. It creates a new textbox
-Textbox::Textbox(CharName speaker, CharName lookingAt, std::string spritesheetPath, std::string soundPath, std::string fontPath){
+Textbox::Textbox(CharName speaker, CharName lookingAt, sf::Texture& texture, sf::SoundBuffer& soundBuffer, std::string fontPath){
     // The textbox is initialized without text
     currentText = "";
     finalText = "";
@@ -19,17 +19,12 @@ Textbox::Textbox(CharName speaker, CharName lookingAt, std::string spritesheetPa
     text.setCharacterSize(TEXT_SIZE);
     text.setPosition(TEXT_X,TEXT_Y);
 
-    // The spritesheet is initialized
-    if(!spritesheet.loadFromFile(spritesheetPath))
-        printFileError(spritesheetPath);
-
-    // The sprite uses that spritesheet
-    sprite.setTexture(spritesheet);
+    // The sprite uses the texture
+    sprite.setTexture(texture);
     sprite.setPosition(TEXTBOX_BORDER,TEXTBOX_BORDER);
 
-    // The speaking sound is initialized
-    if(!speakingSound.loadFromFile(soundPath))
-            printFileError(soundPath);
+    // The sound uses the soundBuffer
+    speakingSound.setBuffer(soundBuffer);
 
     // The window is created
     window.create(sf::VideoMode(TEXTBOX_WIDTH, TEXTBOX_HEIGHT), "Textbox");
@@ -45,12 +40,12 @@ Textbox::Textbox(CharName speaker, CharName lookingAt, std::string spritesheetPa
 }
 
 // Another constructor if we want the textbox to be glitchy
-Textbox::Textbox(CharName speaker, CharName lookingAt, std::string spritesheetPath, std::string soundPath, std::string fontPath, std::string glitchSoundPath) :
-Textbox(speaker, lookingAt,spritesheetPath,soundPath, fontPath){
+Textbox::Textbox(CharName speaker, CharName lookingAt, sf::Texture& texture, sf::SoundBuffer& soundBuffer, std::string fontPath, sf::SoundBuffer& glitchSoundBuffer) :
+Textbox(speaker, lookingAt,texture,soundBuffer, fontPath){
     glitchy = true;
-    if(!glitchSound.loadFromFile(glitchSoundPath))
-            printFileError(glitchSoundPath);
 
+    // The glitch sound uses the soundBuffer
+    glitchSound.setBuffer(glitchSoundBuffer);
 }
 
 // Sets the text the character should say
@@ -101,9 +96,8 @@ bool Textbox::update(){
     // it has been completed
     if(currentText!=finalText){
         currentText+=finalText[(int)currentText.length()];
-        sound.setBuffer(speakingSound);
-        sound.setPitch(randDouble());
-        sound.play();
+        speakingSound.setPitch(randDouble());
+        speakingSound.play();
         text.setString(currentText);
         window.requestFocus();
     }
@@ -124,9 +118,8 @@ bool Textbox::update(){
             faceRect.left = FACE_WIDTH*(rand() % (EXPRESSION_NUMBER-1) + 1);
             backgroundRect.left = TEXTBOX_WIDTH*(rand() % (TEXTBOX_NUMBER-1) + 1);
             // The glitch sfx should be in the last position of the array
-            sound.setBuffer(glitchSound);
-            sound.setPitch(randDouble());
-            sound.play();
+            glitchSound.setPitch(randDouble());
+            glitchSound.play();
 
             // If the final glitch is happening, the counter advances until the limit is reached
             // and the window changes position
@@ -151,7 +144,7 @@ bool Textbox::update(){
                 faceRect.left = 0;
                 backgroundRect.left = 0;
                 text.setString(currentText);
-                sound.stop();
+                glitchSound.stop();
             }
         }
     }

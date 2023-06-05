@@ -16,6 +16,16 @@ enum CharName{
     GABRIELA, DANIELA, FATHER, MOTHER, PLAYER
 };
 
+// Identifiers for every texture used
+enum TextureID {
+    GabrielaTextbox
+};
+
+// Identifiers for every sound effect used
+enum SoundID {
+    GabrielaSpeaking, Glitch0
+};
+
 // Height and width of a textbox
 const int TEXTBOX_HEIGHT = 200;
 const int TEXTBOX_WIDTH = 400;

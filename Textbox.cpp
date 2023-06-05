@@ -43,6 +43,7 @@ Textbox::Textbox(CharName speaker, CharName lookingAt, std::string spritesheetPa
 
     this->glitchy = glitchy;
     finalGlitch = 0;
+    shouldEnd = false;
 }
 
 // Sets the text the character should say
@@ -67,6 +68,17 @@ bool Textbox::update(){
                 window.close();
                 return false;
             }
+        }
+    }
+
+    // If the window should end, do it
+    if(shouldEnd){
+        if(glitchy){
+            finalGlitch = 1;
+            shouldEnd = 0;
+        } else {
+            window.close();
+            return false;
         }
     }
 
@@ -150,6 +162,10 @@ bool Textbox::update(){
     // and it's about to be closed)
     if(finalGlitch == FINAL_GLITCH_LIMIT) window.close();
     return finalGlitch != FINAL_GLITCH_LIMIT;
+}
+
+void Textbox::end(){
+    shouldEnd = true;
 }
 
 Textbox::~Textbox(){

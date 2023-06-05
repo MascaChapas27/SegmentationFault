@@ -52,8 +52,11 @@ private:
     sf::IntRect backgroundRect;
     sf::IntRect faceRect;
 
-    // These are the sounds the character makes when speaking
-    sf::SoundBuffer speakingSounds[SPEAKING_SOUNDS];
+    // This is the sound the character makes when speaking
+    sf::SoundBuffer speakingSound;
+
+    // This is an optional sound the character makes when glitching
+    sf::SoundBuffer glitchSound;
 
     // This is needed to play the speaking sounds
     sf::Sound sound;
@@ -69,7 +72,8 @@ private:
     bool shouldEnd;
 
 public:
-    Textbox(CharName speaker, CharName lookingAt, std::string spritesheetPath, std::string soundFilesPath[3], std::string fontPath, bool glitchy);
+    Textbox(CharName speaker, CharName lookingAt, std::string spritesheetPath, std::string soundPath, std::string fontPath);
+    Textbox(CharName speaker, CharName lookingAt, std::string spritesheetPath, std::string soundPath, std::string fontPath, std::string glitchSoundPath);
     ~Textbox();
     void setText(std::string text);
     bool update();

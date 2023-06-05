@@ -532,23 +532,46 @@
 1685631559 source:c:\users\angel\desktop\segmentationfault\utilities.cpp
 	"Textbox.hpp"
 
-1685974345 source:c:\users\angel\desktop\mis programas\segmentationfault\main.cpp
+1685979352 source:c:\users\angel\desktop\mis programas\segmentationfault\main.cpp
 	"Textbox.hpp"
+	"ResourceHolder.hpp"
 	<thread>
 	<chrono>
 
-1685974064 c:\users\angel\desktop\mis programas\segmentationfault\textbox.hpp
+1685979253 c:\users\angel\desktop\mis programas\segmentationfault\textbox.hpp
 	<string>
 	"Utilities.hpp"
 	<SFML/Graphics.hpp>
 	<SFML/Audio.hpp>
 
-1685973714 c:\users\angel\desktop\mis programas\segmentationfault\utilities.hpp
+1685979052 c:\users\angel\desktop\mis programas\segmentationfault\utilities.hpp
 	<iostream>
 
-1685974431 source:c:\users\angel\desktop\mis programas\segmentationfault\textbox.cpp
+1685976476 source:c:\users\angel\desktop\mis programas\segmentationfault\textbox.cpp
 	"Textbox.hpp"
 
 1685974396 source:c:\users\angel\desktop\mis programas\segmentationfault\utilities.cpp
 	"Textbox.hpp"
+
+1685977437 source:c:\users\angel\desktop\mis programas\segmentationfault\textureholder.cpp
+	"TextureHolder.hpp"
+	<assert.h>
+
+1685977609 c:\users\angel\desktop\mis programas\segmentationfault\textureholder.hpp
+	"Utilities.hpp"
+	<SFML/Graphics.hpp>
+	<map>
+
+1685978881 c:\users\angel\desktop\mis programas\segmentationfault\resourceholder.hpp
+	"Utilities.hpp"
+	<memory>
+	<map>
+	"ResourceHolder.tpp"
+
+1685978002 source:c:\users\angel\desktop\mis programas\segmentationfault\resourceholder.cpp
+	"ResourceHolder.hpp"
+	<assert.h>
+
+1685978731 c:\users\angel\desktop\mis programas\segmentationfault\resourceholder.tpp
+	<assert.h>
 

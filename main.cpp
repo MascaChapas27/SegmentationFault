@@ -12,6 +12,7 @@ int main(){
     ResourceHolder<sf::SoundBuffer,SoundID> soundHolder;
     soundHolder.load(GabrielaSpeaking,"sounds\\speaking\\gabrielaSpeaking.wav");
     soundHolder.load(Glitch0,"sounds\\speaking\\glitch0.wav");
+    soundHolder.load(AdvanceConversation,"sounds\\speaking\\advanceConversation.wav");
 
     // All fonts are initialized
     ResourceHolder<sf::Font,FontID> fontHolder;

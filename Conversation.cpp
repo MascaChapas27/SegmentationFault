@@ -8,6 +8,9 @@ Conversation::Conversation(std::list<Interaction>& interactions, std::list<CharN
     // The list of interactions is copied
     this->interactions = interactions;
 
+    // The advancing sound is initialized
+    advanceSound.setBuffer(soundHolder.get(AdvanceConversation));
+
     // For every character, a textbox is created
     Position positions[4] = {TOP_LEFT, TOP_RIGHT, BOTTOM_LEFT, BOTTOM_RIGHT};
     int numTextboxes = 0;
@@ -25,7 +28,7 @@ Conversation::Conversation(std::list<Interaction>& interactions, std::list<CharN
         }
         numTextboxes++;
     }
-
+    // For the glitched characters it's the same thing but with a glitched textbox
     for(CharName c : glitchedCharacters){
         switch(c){
         case GABRIELA:
@@ -49,11 +52,14 @@ Conversation::Conversation(std::list<Interaction>& interactions, std::list<CharN
 bool Conversation::advance(){
     // if there are no more interactions, then end everything
     if(interactions.empty()){
+        bool keepGoing = false;
         for(auto t = textboxes.begin(); t != textboxes.end(); t++){
             // All textbox windows are told to end
             t->second->end();
+            // If at least one texbox is not closed, the conversation can't end
+            if(!t->second->isClosed()) keepGoing = true;
         }
-        return false;
+        return keepGoing;
     }
 
     // Get the first interaction and delete it
@@ -62,6 +68,9 @@ bool Conversation::advance(){
 
     // The speaker speaks the phrase of the interaction
     textboxes[i.getSpeaker()]->setText(i.getPhrase());
+
+    // The advance sound plays
+    advanceSound.play();
 
     // For every participant in the conversation...
     for(auto t = textboxes.begin(); t != textboxes.end(); t++){

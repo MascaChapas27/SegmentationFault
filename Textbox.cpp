@@ -1,19 +1,16 @@
 #include "Textbox.hpp"
 
 // The constructor. It creates a new textbox
-Textbox::Textbox(CharName speaker, CharName lookingAt, sf::Texture& texture, sf::SoundBuffer& soundBuffer, std::string fontPath){
+Textbox::Textbox(CharName speaker, std::unique_ptr<Textbox> lookingAt, sf::Texture& texture, sf::SoundBuffer& soundBuffer, sf::Font& font, Position pos){
     // The textbox is initialized without text
     currentText = "";
     finalText = "";
 
     // Very obvious
     this->speaker = speaker;
-    this->lookingAt = lookingAt;
+    this->lookingAt = std::move(lookingAt);
 
-    // The font is initialized
-    if(!font.loadFromFile(fontPath))
-        printFileError(fontPath);
-
+    // The text is initialized
     text.setFont(font);
     text.setFillColor(sf::Color::White);
     text.setCharacterSize(TEXT_SIZE);
@@ -27,21 +24,37 @@ Textbox::Textbox(CharName speaker, CharName lookingAt, sf::Texture& texture, sf:
     speakingSound.setBuffer(soundBuffer);
 
     // The window is created
-    window.create(sf::VideoMode(TEXTBOX_WIDTH, TEXTBOX_HEIGHT), "Textbox");
+    window.create(sf::VideoMode(TEXTBOX_WIDTH, TEXTBOX_HEIGHT), "Textbox", sf::Style::Close | sf::Style::Titlebar);
     window.setFramerateLimit(TEXTBOX_FPS);
+    sf::Vector2i position(sf::VideoMode::getDesktopMode().width / 10, sf::VideoMode::getDesktopMode().height / 10);
+    switch(pos){
+    case TOP_RIGHT:
+        position.x += sf::VideoMode::getDesktopMode().width / 2;
+        break;
+    case BOTTOM_LEFT:
+        position.y += sf::VideoMode::getDesktopMode().height / 2;
+        break;
+    case BOTTOM_RIGHT:
+        position.x += sf::VideoMode::getDesktopMode().width / 2;
+        position.y += sf::VideoMode::getDesktopMode().height / 2;
+        break;
+    default:
+        break;
+    }
 
     // The rectangles are given values
     backgroundRect = sf::IntRect(0,0,TEXTBOX_WIDTH, TEXTBOX_HEIGHT);
     faceRect = sf::IntRect(0,TEXTBOX_HEIGHT,FACE_WIDTH,FACE_HEIGHT);
 
+    // The auxiliar variables are initialized
     glitchy = false;
     finalGlitch = 0;
     shouldEnd = false;
 }
 
 // Another constructor if we want the textbox to be glitchy
-Textbox::Textbox(CharName speaker, CharName lookingAt, sf::Texture& texture, sf::SoundBuffer& soundBuffer, std::string fontPath, sf::SoundBuffer& glitchSoundBuffer) :
-Textbox(speaker, lookingAt,texture,soundBuffer, fontPath){
+Textbox::Textbox(CharName speaker, std::unique_ptr<Textbox> lookingAt, sf::Texture& texture, sf::SoundBuffer& soundBuffer, sf::Font& font, Position pos, sf::SoundBuffer& glitchSoundBuffer) :
+Textbox(speaker,std::move(lookingAt),texture,soundBuffer, font, pos){
     glitchy = true;
 
     // The glitch sound uses the soundBuffer
@@ -56,20 +69,19 @@ void Textbox::setText(std::string text){
 
 // Updates the textbox, making the character look the right way,
 // making it speak and drawing the sprites
-bool Textbox::update(){
-    if(!window.isOpen()) return false;
-    // First we check if the textbox should be destroyed
+bool Textbox::update(bool& keyPressed){
+    // First we check if the conversation should advance
     sf::Event event;
     while (window.pollEvent(event))
     {
         // Close window: exit
-        if (event.type == sf::Event::Closed){
-            if(glitchy){
-                finalGlitch = 1;
-            } else {
-                window.close();
-                return false;
-            }
+        if (event.type == sf::Event::KeyPressed && !keyPressed && event.key.code == KEY_OK){
+            // Now we are pressing the key, the conversation advances
+            keyPressed = true;
+            return true;
+        } else if (event.type == sf::Event::KeyReleased && keyPressed && event.key.code == KEY_OK){
+            // Now the key is being released
+            keyPressed = false;
         }
     }
 
@@ -105,7 +117,7 @@ bool Textbox::update(){
     // We check the direction the character is facing
     // TODO check direction
 
-    // If the character is glitchy, then it depends on the
+    // If the character is glitchy, things can happen
     if(glitchy){
         // If the character is calm there is a chance it starts
         // glitching. If it's glitching, there is a higher chance
@@ -117,12 +129,11 @@ bool Textbox::update(){
             // The character glitches, as well as the textbox
             faceRect.left = FACE_WIDTH*(rand() % (EXPRESSION_NUMBER-1) + 1);
             backgroundRect.left = TEXTBOX_WIDTH*(rand() % (TEXTBOX_NUMBER-1) + 1);
-            // The glitch sfx should be in the last position of the array
-            glitchSound.setPitch(randDouble());
+            // A glitch sound is played
             glitchSound.play();
 
             // If the final glitch is happening, the counter advances until the limit is reached
-            // and the window changes position
+            // and the window changes position randomly
             if(finalGlitch > 0) {
                 finalGlitch++;
                 sf::Vector2i pos = window.getPosition();
@@ -148,6 +159,7 @@ bool Textbox::update(){
             }
         }
     }
+    // The rectangle for the texture is set
     sprite.setTextureRect(faceRect);
     sprite.setPosition(TEXTBOX_BORDER,TEXTBOX_BORDER);
 
@@ -160,14 +172,21 @@ bool Textbox::update(){
     // Once everything is drawn we display the result
     window.display();
 
-    // Finally, true is returned (unless the character is glitchy
-    // and it's about to be closed)
+    // Finally, false is returned, and the window is closed if it needs
     if(finalGlitch == FINAL_GLITCH_LIMIT) window.close();
-    return finalGlitch != FINAL_GLITCH_LIMIT;
+    return false;
 }
 
 void Textbox::end(){
     shouldEnd = true;
+}
+
+void Textbox::setLookingAt(std::unique_ptr<Textbox> lookingAt){
+    this->lookingAt = std::move(lookingAt);
+}
+
+CharName Textbox::getSpeaker(){
+    return speaker;
 }
 
 Textbox::~Textbox(){

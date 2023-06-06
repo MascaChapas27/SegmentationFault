@@ -23,8 +23,9 @@ private:
     // (See Utilities.hpp for more info on the CharName enum)
     CharName speaker;
 
-    // This indicates who the character is looking at
-    CharName lookingAt;
+    // This indicates who the character is looking at (pointer because
+    // it needs to check the position constantly)
+    std::unique_ptr<Textbox> lookingAt;
 
     // This is the window in which the textbox will be displayed
     sf::RenderWindow window;
@@ -65,11 +66,13 @@ private:
     bool shouldEnd;
 
 public:
-    Textbox(CharName speaker, CharName lookingAt, sf::Texture& texture, sf::SoundBuffer& soundBuffer, std::string fontPath);
-    Textbox(CharName speaker, CharName lookingAt, sf::Texture& texture, sf::SoundBuffer& soundBuffer, std::string fontPath, sf::SoundBuffer& glitchSoundBuffer);
+    Textbox(CharName speaker, std::unique_ptr<Textbox> lookingAt, sf::Texture& texture, sf::SoundBuffer& soundBuffer, sf::Font& font, Position pos);
+    Textbox(CharName speaker, std::unique_ptr<Textbox> lookingAt, sf::Texture& texture, sf::SoundBuffer& soundBuffer, sf::Font& font, Position pos, sf::SoundBuffer& glitchSoundBuffer);
     ~Textbox();
     void setText(std::string text);
-    bool update();
+    void setLookingAt(std::unique_ptr<Textbox> lookingAt);
+    CharName getSpeaker();
+    bool update(bool& keyPressed);
     void end();
 };
 

@@ -41,6 +41,10 @@
 		<Linker>
 			<Add directory="C:/SFML-2.5.1/lib" />
 		</Linker>
+		<Unit filename="Conversation.cpp" />
+		<Unit filename="Conversation.hpp" />
+		<Unit filename="Interaction.cpp" />
+		<Unit filename="Interaction.hpp" />
 		<Unit filename="ResourceHolder.hpp" />
 		<Unit filename="ResourceHolder.tpp" />
 		<Unit filename="Textbox.cpp" />

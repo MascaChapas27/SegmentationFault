@@ -25,6 +25,9 @@ class Conversation{
         // key once and holding it, forcing the user to release the key and then pressing again
         bool keyPressed;
 
+        // A sound that plays when advancing the conversation
+        sf::Sound advanceSound;
+
     public:
         Conversation(std::list<Interaction>& interactions, std::list<CharName>& characters, std::list<CharName>& glitchedCharacters,
                      ResourceHolder<sf::Texture,TextureID>& textureHolder,

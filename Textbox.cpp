@@ -42,6 +42,11 @@ Textbox::Textbox(CharName speaker, std::unique_ptr<Textbox> lookingAt, sf::Textu
         break;
     }
 
+    // The window is set to its corresponding position and the posY
+    // is set to its initial value
+    posY = position.y;
+    window.setPosition(position);
+
     // The rectangles are given values
     backgroundRect = sf::IntRect(0,0,TEXTBOX_WIDTH, TEXTBOX_HEIGHT);
     faceRect = sf::IntRect(0,TEXTBOX_HEIGHT,FACE_WIDTH,FACE_HEIGHT);
@@ -65,11 +70,18 @@ Textbox(speaker,std::move(lookingAt),texture,soundBuffer, font, pos){
 void Textbox::setText(std::string text){
     currentText = "";
     finalText = text;
+    // When the text is set, the window moves down a bit
+    sf::Vector2i pos = window.getPosition();
+    pos.y += TEXTBOX_BOUNCE;
+    window.setPosition(pos);
 }
 
 // Updates the textbox, making the character look the right way,
 // making it speak and drawing the sprites
 bool Textbox::update(bool& keyPressed){
+    // If the window is closed, then always return true (that means
+    // that at least one character is glitchy and it's doint the final glitch
+    if(!window.isOpen()) return true;
     // First we check if the conversation should advance
     sf::Event event;
     while (window.pollEvent(event))
@@ -87,13 +99,20 @@ bool Textbox::update(bool& keyPressed){
 
     // If the window should end, do it
     if(shouldEnd){
-        if(glitchy){
+        if(glitchy && finalGlitch == 0){
             finalGlitch = 1;
-            shouldEnd = 0;
+            shouldEnd = false;
         } else {
             window.close();
-            return false;
+            return true;
         }
+    }
+
+    // If the window is lower than it should, put it back in its place slowly
+    if(window.getPosition().y > posY) {
+        sf::Vector2i pos = window.getPosition();
+        pos.y -= 1;
+        window.setPosition(pos);
     }
 
     // If the window is still open, clear everything
@@ -179,6 +198,10 @@ bool Textbox::update(bool& keyPressed){
 
 void Textbox::end(){
     shouldEnd = true;
+}
+
+bool Textbox::isClosed(){
+    return !window.isOpen();
 }
 
 void Textbox::setLookingAt(std::unique_ptr<Textbox> lookingAt){

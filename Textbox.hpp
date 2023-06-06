@@ -65,6 +65,11 @@ private:
     // Boolean value that is set to true if the textbox needs to be closed
     bool shouldEnd;
 
+    // Position in the y axis that the window should have (this is useful to
+    // do that cool effect that makes the window associated to the speaker
+    // bounce when it starts speaking)
+    int posY;
+
 public:
     Textbox(CharName speaker, std::unique_ptr<Textbox> lookingAt, sf::Texture& texture, sf::SoundBuffer& soundBuffer, sf::Font& font, Position pos);
     Textbox(CharName speaker, std::unique_ptr<Textbox> lookingAt, sf::Texture& texture, sf::SoundBuffer& soundBuffer, sf::Font& font, Position pos, sf::SoundBuffer& glitchSoundBuffer);
@@ -73,6 +78,7 @@ public:
     void setLookingAt(std::unique_ptr<Textbox> lookingAt);
     CharName getSpeaker();
     bool update(bool& keyPressed);
+    bool isClosed();
     void end();
 };
 

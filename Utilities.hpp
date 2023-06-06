@@ -27,7 +27,7 @@ enum FontID {
 
 // Identifiers for every sound effect used
 enum SoundID {
-    GabrielaSpeaking, Glitch0
+    GabrielaSpeaking, AdvanceConversation, Glitch0
 };
 
 // Positions of a textbox
@@ -69,6 +69,10 @@ const int EXPRESSION_NUMBER = 10;
 // The value at which the final glitch end. A counter starts increasing
 // its value until it equals this constant's value
 const int FINAL_GLITCH_LIMIT = TEXTBOX_FPS;
+
+// The amount of pixels the screen moves down when advancing
+// in a conversation
+const int TEXTBOX_BOUNCE = 10;
 
 // The key that should be pressed to accept or interact
 const sf::Keyboard::Key KEY_OK = sf::Keyboard::LShift;

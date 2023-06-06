@@ -2,13 +2,12 @@
 #define __UTILITIES_HPP__
 
 #include <iostream>
+#include <SFML/Window.hpp>
 
 /*
     This file contains lots of useful stuff: enums,
     constants, etc etc etc
 */
-
-/* RELATING TO THE TEXTBOX */
 
 // Names for every character in the game and maybe
 // something else I forgot
@@ -21,9 +20,19 @@ enum TextureID {
     GabrielaTextbox
 };
 
+// Identifiers for every font used
+enum FontID {
+    Gabriela
+};
+
 // Identifiers for every sound effect used
 enum SoundID {
     GabrielaSpeaking, Glitch0
+};
+
+// Positions of a textbox
+enum Position {
+    TOP_LEFT, TOP_RIGHT, BOTTOM_LEFT, BOTTOM_RIGHT
 };
 
 // Height and width of a textbox
@@ -60,6 +69,11 @@ const int EXPRESSION_NUMBER = 10;
 // The value at which the final glitch end. A counter starts increasing
 // its value until it equals this constant's value
 const int FINAL_GLITCH_LIMIT = TEXTBOX_FPS;
+
+// The key that should be pressed to accept or interact
+const sf::Keyboard::Key KEY_OK = sf::Keyboard::LShift;
+
+/* FUNCTIONS */
 
 // Function that inputs an error message whenever a file cannot
 // be accessed (it also exits with error code 1)

@@ -12,22 +12,22 @@
 // Names for every character in the game and maybe
 // something else I forgot
 enum CharName{
-    GABRIELA, DANIELA, FATHER, MOTHER, PLAYER
+    GABRIELA, DANIELA, PLAYER, BYSTANDER
 };
 
 // Identifiers for every texture used
 enum TextureID {
-    GabrielaTextbox
+    GabrielaTextbox, DanielaTextbox, BystanderTextbox
 };
 
 // Identifiers for every font used
 enum FontID {
-    Gabriela
+    Gabriela, Daniela
 };
 
 // Identifiers for every sound effect used
 enum SoundID {
-    GabrielaSpeaking, AdvanceConversation, Glitch0
+    GabrielaSpeaking, DanielaSpeaking, AdvanceConversation, Glitch0, Glitch1
 };
 
 // Positions of a textbox
@@ -77,6 +77,11 @@ const int TEXTBOX_BOUNCE = 10;
 // The key that should be pressed to accept or interact
 const sf::Keyboard::Key KEY_OK = sf::Keyboard::LShift;
 
+// The range of pixels in which a character looks in cardinal directions.
+// If the difference in x and y axes is bigger than this tresshold, the
+// character will look at a diagonal direction
+const int TEXTBOX_TRESSHOLD = 80;
+
 /* FUNCTIONS */
 
 // Function that inputs an error message whenever a file cannot
@@ -87,5 +92,8 @@ void printFileError(std::string fileName);
 // The doubles generated are in the range (0.6, 0.7, ..., 1.4, 1.5)
 // because it's used for the pitch of voices and sfx
 double randDouble();
+
+// Causes a Segmentation Fault
+void segfault();
 
 #endif // __UTILITIES_HPP__

@@ -532,27 +532,27 @@
 1685631559 source:c:\users\angel\desktop\segmentationfault\utilities.cpp
 	"Textbox.hpp"
 
-1686063061 source:c:\users\angel\desktop\mis programas\segmentationfault\main.cpp
+1686126013 source:c:\users\angel\desktop\mis programas\segmentationfault\main.cpp
 	"Textbox.hpp"
 	"ResourceHolder.hpp"
-	"Conversation.hpp"
+	"ConversationHolder.hpp"
 	<thread>
 	<chrono>
 
-1686063858 c:\users\angel\desktop\mis programas\segmentationfault\textbox.hpp
+1686087374 c:\users\angel\desktop\mis programas\segmentationfault\textbox.hpp
 	<string>
 	"Utilities.hpp"
 	<SFML/Graphics.hpp>
 	<SFML/Audio.hpp>
 
-1686064024 c:\users\angel\desktop\mis programas\segmentationfault\utilities.hpp
+1686126013 c:\users\angel\desktop\mis programas\segmentationfault\utilities.hpp
 	<iostream>
 	<SFML/Window.hpp>
 
-1686063918 source:c:\users\angel\desktop\mis programas\segmentationfault\textbox.cpp
+1686126695 source:c:\users\angel\desktop\mis programas\segmentationfault\textbox.cpp
 	"Textbox.hpp"
 
-1685974396 source:c:\users\angel\desktop\mis programas\segmentationfault\utilities.cpp
+1686125295 source:c:\users\angel\desktop\mis programas\segmentationfault\utilities.cpp
 	"Textbox.hpp"
 
 1685977437 source:c:\users\angel\desktop\mis programas\segmentationfault\textureholder.cpp
@@ -577,19 +577,32 @@
 1685978731 c:\users\angel\desktop\mis programas\segmentationfault\resourceholder.tpp
 	<assert.h>
 
-1686060897 source:c:\users\angel\desktop\mis programas\segmentationfault\interaction.cpp
+1686087091 source:c:\users\angel\desktop\mis programas\segmentationfault\interaction.cpp
 	"Interaction.hpp"
 
-1686060939 c:\users\angel\desktop\mis programas\segmentationfault\interaction.hpp
+1686087096 c:\users\angel\desktop\mis programas\segmentationfault\interaction.hpp
 	"Utilities.hpp"
 
-1686063726 source:c:\users\angel\desktop\mis programas\segmentationfault\conversation.cpp
+1686126127 source:c:\users\angel\desktop\mis programas\segmentationfault\conversation.cpp
 	"Conversation.hpp"
 	<assert.h>
 
-1686062980 c:\users\angel\desktop\mis programas\segmentationfault\conversation.hpp
+1686081122 c:\users\angel\desktop\mis programas\segmentationfault\conversation.hpp
 	<list>
 	"Interaction.hpp"
 	"Textbox.hpp"
 	"ResourceHolder.hpp"
+
+1686087683 source:c:\users\angel\desktop\mis programas\segmentationfault\conversationholder.cpp
+	"ConversationHolder.hpp"
+	<fstream>
+
+1686080687 c:\users\angel\desktop\mis programas\segmentationfault\conversationholder.hpp
+	<map>
+	<memory>
+	"Conversation.hpp"
+
+1686090021 source:c:\users\angel\desktop\mis programas\segmentationfault\pruebadialogo.cpp
+	"ResourceHolder.hpp"
+	"ConversationHolder.hpp"
 

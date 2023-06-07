@@ -17,24 +17,30 @@ class Conversation{
         // A list of all the interactions that form the conversation
         std::list<Interaction> interactions;
 
+        // A list of all normal characters that participate
+        std::list<CharName> characters;
+
+        // A list of all glitched characters that participate
+        std::list<CharName> glitchedCharacters;
+
         // A map of the textboxes (map because there is one for each character)
         std::map<CharName,std::unique_ptr<Textbox>> textboxes;
+
+        // An iterator that points at the current Interaction
+        std::list<Interaction>::iterator it;
 
         // This indicates if the advance key is pressed. If it is, prevent the conversation
         // from advancing. This prevents the user from advancing 999 times by pressing the
         // key once and holding it, forcing the user to release the key and then pressing again
         bool keyPressed;
 
-        // A sound that plays when advancing the conversation
-        sf::Sound advanceSound;
-
     public:
-        Conversation(std::list<Interaction>& interactions, std::list<CharName>& characters, std::list<CharName>& glitchedCharacters,
-                     ResourceHolder<sf::Texture,TextureID>& textureHolder,
-                     ResourceHolder<sf::SoundBuffer,SoundID>& soundHolder,
-                     ResourceHolder<sf::Font,FontID>& fontHolder);
+        Conversation(std::list<Interaction>& interactions, std::list<CharName>& characters, std::list<CharName>& glitchedCharacters);
 
         bool advance();
+        void initialize(ResourceHolder<sf::Texture,TextureID>& textureHolder,
+                                      ResourceHolder<sf::SoundBuffer,SoundID>& soundHolder,
+                                      ResourceHolder<sf::Font,FontID>& fontHolder);
         bool update();
 
         ~Conversation();

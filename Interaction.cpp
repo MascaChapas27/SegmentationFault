@@ -1,9 +1,7 @@
 #include "Interaction.hpp"
 
-Interaction::Interaction(std::string phrase, CharName speaker, CharName listener){
-    this->phrase = phrase;
-    this->speaker = speaker;
-    this->listener = listener;
+Interaction::Interaction(){
+
 }
 
 std::string Interaction::getPhrase(){
@@ -18,6 +16,11 @@ CharName Interaction::getListener(){
     return listener;
 }
 
+int Interaction::getEmotion(){
+    return emotion;
+}
+
+
 void Interaction::setPhrase(std::string phrase){
     this->phrase = phrase;
 }
@@ -28,6 +31,10 @@ void Interaction::setSpeaker(CharName speaker){
 
 void Interaction::setListener(CharName listener){
     this->listener = listener;
+}
+
+void Interaction::setEmotion(int emotion){
+    this->emotion = emotion;
 }
 
 Interaction::~Interaction(){

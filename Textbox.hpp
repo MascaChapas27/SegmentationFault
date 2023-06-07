@@ -19,13 +19,16 @@ private:
     // This is the final text that the character should say
     std::string finalText;
 
+    // This is the emotion the character is feeling, which determines
+    // the row of sprites it uses from its spritesheet
+    int emotion;
+
     // This stores the character that is currently speaking
     // (See Utilities.hpp for more info on the CharName enum)
     CharName speaker;
 
-    // This indicates who the character is looking at (pointer because
-    // it needs to check the position constantly)
-    std::unique_ptr<Textbox> lookingAt;
+    // This indicates who the character is looking at
+    CharName lookingAt;
 
     // This is the window in which the textbox will be displayed
     sf::RenderWindow window;
@@ -70,14 +73,24 @@ private:
     // bounce when it starts speaking)
     int posY;
 
+    // Position in the x axis that the window shound have (this is useful
+    // because if you change the position of the window manually it's necessary to
+    // know that it wasn't because of the special effect that happens when
+    // advancing in the conversation)
+    int posX;
+
 public:
-    Textbox(CharName speaker, std::unique_ptr<Textbox> lookingAt, sf::Texture& texture, sf::SoundBuffer& soundBuffer, sf::Font& font, Position pos);
-    Textbox(CharName speaker, std::unique_ptr<Textbox> lookingAt, sf::Texture& texture, sf::SoundBuffer& soundBuffer, sf::Font& font, Position pos, sf::SoundBuffer& glitchSoundBuffer);
+    Textbox(CharName speaker, CharName lookingAt, sf::Texture& texture, sf::SoundBuffer& soundBuffer, sf::Font& font, Position pos);
+    Textbox(CharName speaker, CharName lookingAt, sf::Texture& texture, sf::SoundBuffer& soundBuffer, sf::Font& font, Position pos, sf::SoundBuffer& glitchSoundBuffer);
     ~Textbox();
     void setText(std::string text);
-    void setLookingAt(std::unique_ptr<Textbox> lookingAt);
+    void setEmotion(int emotion);
+    void setLookingAt(CharName lookingAt);
     CharName getSpeaker();
-    bool update(bool& keyPressed);
+    CharName getLookingAt();
+    int getX();
+    int getY();
+    bool update(bool& keyPressed, int target_x, int target_y);
     bool isClosed();
     void end();
 };

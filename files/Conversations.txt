@@ -1,0 +1,93 @@
+# This file contains all conversations
+# All lines that begin with a "#" character are considered comments
+# The format for the conversation is the following:
+# 
+# Number of normal characters
+# Codes of the normal characters (one in each line)
+# Number of glitch characters
+# Codes of the glitch characters (one in each line)
+# Code of the speaker
+# Code of the listener
+# String that represents the text that is spoken
+# Blank line
+# ... (the four last lines repeat until the blank line is a dollar symbol)
+# Dollar symbol
+# 
+# A blank line means "this is the end of an Interaction"
+# and a dollar symbol means "this is the end of a Conversation"
+# Finally, a @ symbol means "end of the file"
+# Every conversation has a code, which appears in the comment that comes before it
+#
+# 0: Test conversation
+0
+2
+0
+1
+0
+1
+1
+hola buen
+
+1
+0
+1
+Bueno!!
+
+0
+1
+1
+buen bien bienio
+
+1
+0
+1
+Hola soy buen
+Bieno
+
+0
+1
+1
+que estamos haciendo
+por dios santo
+
+1
+0
+1
+No se pero es Bien
+$
+# 1: Second test in which Gabriela speaks with Bystander
+1
+0
+1
+3
+0
+3
+1
+tu quien eres
+
+3
+0
+2
+ 
+
+0
+3
+1
+a muy bien
+
+3
+0
+2
+.
+
+0
+3
+1
+pero sin faltar eh
+
+3
+0
+2
+_
+$
+@

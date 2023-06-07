@@ -36,6 +36,7 @@
 		</Build>
 		<Compiler>
 			<Add option="-Wall" />
+			<Add option="-g" />
 			<Add directory="C:/SFML-2.5.1/include" />
 		</Compiler>
 		<Linker>
@@ -43,6 +44,8 @@
 		</Linker>
 		<Unit filename="Conversation.cpp" />
 		<Unit filename="Conversation.hpp" />
+		<Unit filename="ConversationHolder.cpp" />
+		<Unit filename="ConversationHolder.hpp" />
 		<Unit filename="Interaction.cpp" />
 		<Unit filename="Interaction.hpp" />
 		<Unit filename="ResourceHolder.hpp" />

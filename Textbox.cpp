@@ -63,7 +63,7 @@ Textbox::Textbox(CharName speaker, CharName lookingAt, sf::Texture& texture, sf:
 
     // The rectangles are given values
     backgroundRect = sf::IntRect(0,0,TEXTBOX_WIDTH, TEXTBOX_HEIGHT);
-    faceRect = sf::IntRect(0,TEXTBOX_HEIGHT,FACE_WIDTH,FACE_HEIGHT);
+    faceRect = sf::IntRect(0,TEXTBOX_HEIGHT+emotion*FACE_HEIGHT,FACE_WIDTH,FACE_HEIGHT);
 
     // The auxiliar variables are initialized
     glitchy = false;
@@ -209,7 +209,10 @@ bool Textbox::update(bool& keyPressed, int target_x, int target_y){
                 }
             }
         }
-    }
+    } else
+        // Then the target is the player, so the character
+        // must look forward
+        faceRect.left = 0;
 
     // If the character is glitchy, things can happen
     if(glitchy){

@@ -1,5 +1,7 @@
 # This file contains all conversations
-# All lines that begin with a "#" character are considered comments
+# pLEASEE be careful with comments, don't write them
+# in the middle of a conversation (rude ! !)
+# instead write them before and after
 # The format for the conversation is the following:
 # 
 # Number of normal characters
@@ -19,9 +21,9 @@
 # Every conversation has a code, which appears in the comment that comes before it
 #
 # 0: Test conversation
+1
 0
-2
-0
+1
 1
 0
 1
@@ -83,11 +85,41 @@ a muy bien
 0
 3
 1
-pero sin faltar eh
+ 
+
+0
+2
+1
+ 
+
+0
+2
+1
+oye esto me esta
+empezando a dar
+mal rollo
+
+0
+2
+1
+malas vibras como suele
+decir hoy en dia la
+joviela
 
 3
 0
 2
-_
+que dices tu a que
+te parto las piernas
+
+0
+3
+1
+cuidao que vuelcas
+
+3
+0
+2
+!
 $
 @

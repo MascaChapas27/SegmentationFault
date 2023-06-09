@@ -85,9 +85,12 @@ void Textbox::setText(std::string text){
     currentText = "";
     finalText = text;
     // When the text is set, the window moves down a bit
-    sf::Vector2i pos = window.getPosition();
-    pos.y += TEXTBOX_BOUNCE;
-    window.setPosition(pos);
+    // except for BYSTANDER
+    if(speaker!=BYSTANDER){
+        sf::Vector2i pos = window.getPosition();
+        pos.y += TEXTBOX_BOUNCE;
+        window.setPosition(pos);
+    }
 }
 
 // Updates the textbox, making the character look the right way,
@@ -159,10 +162,27 @@ bool Textbox::update(bool& keyPressed, int target_x, int target_y){
     // We try to advance one character in the text unless
     // it has been completed
     if(currentText!=finalText){
-        currentText+=finalText[(int)currentText.length()];
-        speakingSound.setPitch(randDouble());
+
+        // BYSTANDER talks by using the window's
+        // title, so it works differently
+        if(speaker == BYSTANDER){
+            window.setTitle(finalText);
+            finalText = " ";
+            currentText = " ";
+            // Also, we get a bit closer
+            sf::Vector2i vec = window.getPosition();
+            vec.x+= (target_x-vec.x)*0.1;
+            vec.y+= (target_y-vec.y)*0.1;
+            window.setPosition(vec);
+        } else {
+            currentText+=finalText[(int)currentText.length()];
+            speakingSound.setPitch(randDouble());
+            window.requestFocus();
+        }
+
+        // The speaking sound always plays
         speakingSound.play();
-        window.requestFocus();
+
     }
 
     // The text is always set to the current text
@@ -223,7 +243,7 @@ bool Textbox::update(bool& keyPressed, int target_x, int target_y){
             // The character glitches, as well as the textbox
             // The first row, just under the textbox sprite, is the glitch row
             faceRect.top = TEXTBOX_HEIGHT;
-            faceRect.left = FACE_WIDTH*(rand() % (EXPRESSION_NUMBER-1) + 1);
+            faceRect.left = FACE_WIDTH*(rand() % EXPRESSION_NUMBER);
             backgroundRect.left = TEXTBOX_WIDTH*(rand() % (TEXTBOX_NUMBER-1) + 1);
             // A glitch sound is played
             glitchSound.play();

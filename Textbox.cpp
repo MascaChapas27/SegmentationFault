@@ -231,7 +231,7 @@ bool Textbox::update(bool& keyPressed, int target_x, int target_y){
         }
     } else
         // Then the target is the player, so the character
-        // must look forward
+        // must look forward (or the target is nowhere to be seen)
         faceRect.left = 0;
 
     // If the character is glitchy, things can happen

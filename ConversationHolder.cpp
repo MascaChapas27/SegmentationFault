@@ -3,6 +3,10 @@
 
 ConversationHolder::ConversationHolder(ResourceHolder<sf::SoundBuffer,SoundID>& soundHolder){
     advanceSound.setBuffer(soundHolder.get(AdvanceConversation));
+    names["GABRIELA"] = GABRIELA;
+    names["DANIELA"] = DANIELA;
+    names["BYSTANDER"] = BYSTANDER;
+    names["PLAYER"] = PLAYER;
 }
 
 void ConversationHolder::load(std::string path){
@@ -35,7 +39,8 @@ void ConversationHolder::load(std::string path){
 
         for(int i=0;i<normalChars;i++){
             getline(f,line);
-            characters.push_back((CharName)(line[0]-'0'));
+            // line.erase(line.size() - 1);
+            characters.push_back(names[line]);
         }
 
         // Now we get the glitched characters
@@ -45,29 +50,34 @@ void ConversationHolder::load(std::string path){
 
         for(int i=0;i<glitchChars;i++){
             getline(f,line);
-            glitchCharacters.push_back((CharName)(line[0]-'0'));
+            // The last character is erased (the \n)
+            // line.erase(line.size() - 1);
+            glitchCharacters.push_back(names[line]);
         }
+
+        // One blank line that separate info about chars from the conversation
+        getline(f,line);
 
         // Now we read info in groups of four
         do {
             Interaction i;
-            int speaker;
-            int listener;
+            std::string speaker;
+            std::string listener;
             int emotion;
 
             getline(f,line);
-            speaker = line[0]-'0';
+            speaker = line;
 
             getline(f,line);
-            listener = line[0]-'0';
+            listener = line;
 
             getline(f,line);
             emotion = line[0]-'0';
 
             std::string phrase;
 
-            i.setSpeaker((CharName)speaker);
-            i.setListener((CharName)listener);
+            i.setSpeaker(names[speaker]);
+            i.setListener(names[listener]);
             i.setEmotion(emotion);
             getline(f,line);
             while(line != "" && line != "$"){

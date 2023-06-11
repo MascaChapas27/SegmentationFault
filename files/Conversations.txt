@@ -5,9 +5,9 @@
 # The format for the conversation is the following:
 # 
 # Number of normal characters
-# Codes of the normal characters (one in each line)
+# Names of the normal characters (one in each line)
 # Number of glitch characters
-# Codes of the glitch characters (one in each line)
+# Names of the glitch characters (one in each line)
 # Code of the speaker
 # Code of the listener
 # String that represents the text that is spoken
@@ -22,104 +22,106 @@
 #
 # 0: Test conversation
 1
-0
+GABRIELA
 1
-1
-0
-1
+DANIELA
+
+GABRIELA
+DANIELA
 1
 hola buen
 
-1
-0
+DANIELA
+GABRIELA
 1
 Bueno!!
 
-0
-1
+GABRIELA
+DANIELA
 1
 buen bien bienio
 
-1
-0
+DANIELA
+GABRIELA
 1
 Hola soy buen
 Bieno
 
-0
-1
+GABRIELA
+DANIELA
 1
 que estamos haciendo
 por dios santo
 
-1
-0
+DANIELA
+GABRIELA
 1
 No se pero es Bien
 $
 # 1: Second test in which Gabriela speaks with Bystander
 1
-0
+GABRIELA
 1
-3
-0
-3
+BYSTANDER
+
+GABRIELA
+BYSTANDER
 1
 tu quien eres
 
-3
-0
+BYSTANDER
+GABRIELA
 2
- 
+yo soy bien
 
-0
-3
+GABRIELA
+BYSTANDER
 1
 a muy bien
 
-3
-0
+BYSTANDER
+GABRIELA
 2
-.
+ven que te de un beso
 
-0
-3
+GABRIELA
+BYSTANDER
 1
  
 
-0
-2
+GABRIELA
+PLAYER
 1
  
 
-0
-2
+GABRIELA
+PLAYER
 1
 oye esto me esta
 empezando a dar
 mal rollo
 
-0
-2
+GABRIELA
+PLAYER
 1
 malas vibras como suele
 decir hoy en dia la
 joviela
 
-3
-0
+BYSTANDER
+GABRIELA
 2
 que dices tu a que
 te parto las piernas
 
-0
-3
+GABRIELA
+BYSTANDER
 1
 cuidao que vuelcas
 
-3
-0
+BYSTANDER
+GABRIELA
 2
-!
+amai la kuki
 $
 @

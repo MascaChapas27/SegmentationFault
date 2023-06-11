@@ -15,6 +15,9 @@ class ConversationHolder{
         // All conversations are in this map
         std::map<int,std::unique_ptr<Conversation>> conversations;
 
+        // This map helps translate names into CharNames
+        std::map<std::string,CharName> names;
+
         // This stores the code of the current conversation
         int currentConversation;
 

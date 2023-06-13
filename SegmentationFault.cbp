@@ -39,11 +39,9 @@
 			<Add option="-Wall" />
 			<Add option="-g" />
 			<Add directory="C:/SFML-2.5.1/include" />
-			<Add directory="/usr/SFML-2.5.1/include" />
 		</Compiler>
 		<Linker>
 			<Add directory="C:/SFML-2.5.1/lib" />
-			<Add directory="/usr/SFML-2.5.1/lib" />
 		</Linker>
 		<Unit filename="Conversation.cpp" />
 		<Unit filename="Conversation.hpp" />

@@ -21,9 +21,9 @@
 # Every conversation has a code, which appears in the comment that comes before it
 #
 # 0: Test conversation
-1
+0
+2
 GABRIELA
-1
 DANIELA
 
 GABRIELA
@@ -71,7 +71,7 @@ tu quien eres
 
 BYSTANDER
 GABRIELA
-2
+1
 yo soy bien
 
 GABRIELA
@@ -81,7 +81,7 @@ a muy bien
 
 BYSTANDER
 GABRIELA
-2
+1
 ven que te de un beso
 
 GABRIELA
@@ -110,7 +110,7 @@ joviela
 
 BYSTANDER
 GABRIELA
-2
+1
 que dices tu a que
 te parto las piernas
 
@@ -121,7 +121,71 @@ cuidao que vuelcas
 
 BYSTANDER
 GABRIELA
-2
+1
 amai la kuki
+$
+# 2: Third test in which three characters speak
+2
+GABRIELA
+DANIELA
+1
+BYSTANDER
+
+GABRIELA
+DANIELA
+1
+bueno como iba diciendo
+es legal evadir
+impuestos mientras no
+te pille hacienda
+
+DANIELA
+GABRIELA
+1
+Me encanta
+cometer fraude
+fiscal!! :DDD
+
+BYSTANDER
+GABRIELA
+1
+pero eso es malo para perro sanche
+
+DANIELA
+GABRIELA
+1
+Oye eso que es??
+
+GABRIELA
+DANIELA
+1
+no se
+
+GABRIELA
+DANIELA
+1
+vamos a decirle
+perrerias varias a ver
+que dice
+
+DANIELA
+GABRIELA
+1
+Venga!!
+
+GABRIELA
+BYSTANDER
+1
+oye
+
+BYSTANDER
+GABRIELA
+1
+que
+
+GABRIELA
+BYSTANDER
+1
+so
 $
 @

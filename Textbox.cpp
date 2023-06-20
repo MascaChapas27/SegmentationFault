@@ -22,7 +22,9 @@ Textbox::Textbox(CharName speaker, CharName lookingAt, sf::Texture& texture, sf:
     case DANIELA:
         text.setFillColor(sf::Color::Yellow);
         break;
-    default:
+    case BYSTANDER:
+        break;
+    case PLAYER:
         break;
     }
 
@@ -51,8 +53,24 @@ Textbox::Textbox(CharName speaker, CharName lookingAt, sf::Texture& texture, sf:
         position.x += sf::VideoMode::getDesktopMode().width / 2;
         position.y += sf::VideoMode::getDesktopMode().height / 2;
         break;
-    default:
+    case TOP_LEFT:
         break;
+    }
+
+    // Depending on the name of the character, the window will have a different title
+    switch(speaker)
+    {
+        case GABRIELA:
+            window.setTitle("Gabriela");
+            break;
+        case DANIELA:
+            window.setTitle("Daniela");
+            break;
+        case BYSTANDER:
+            window.setTitle("Bystander");
+            break;
+        case PLAYER:
+            break;
     }
 
     // The window is set to its corresponding position and the posY

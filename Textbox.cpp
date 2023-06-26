@@ -134,6 +134,21 @@ bool Textbox::update(bool& keyPressed, int target_x, int target_y){
     }
 
     // First we check if the conversation should advance
+    if (sf::Keyboard::isKeyPressed(KEY_OK) && !keyPressed){
+        // Now we are pressing the key, the conversation advances only if
+        // the current text is equal to the final text
+        keyPressed = true;
+        if(currentText == finalText) return true;
+        // If not, the text is set to be equal to the final text
+        else currentText = finalText;
+    } else if (!sf::Keyboard::isKeyPressed(KEY_OK) && keyPressed){
+        // Now the key is being released
+        keyPressed = false;
+    }
+
+    sf::Event event;
+    while (window.pollEvent(event));
+    /*
     sf::Event event;
     while (window.pollEvent(event))
     {
@@ -150,6 +165,7 @@ bool Textbox::update(bool& keyPressed, int target_x, int target_y){
             keyPressed = false;
         }
     }
+    */
 
     // If the window should end, do it
     if(shouldEnd){
@@ -314,8 +330,11 @@ bool Textbox::update(bool& keyPressed, int target_x, int target_y){
     // Once everything is drawn we display the result
     window.display();
 
-    // Finally, false is returned, and the window is closed if it needs
+    // If the character is glitchy and the final glitch ended,
+    // then close the window
     if(finalGlitch == FINAL_GLITCH_LIMIT) window.close();
+
+    // Finally, false is returned
     return false;
 }
 

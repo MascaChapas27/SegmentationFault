@@ -41,8 +41,7 @@ int main(){
 
         conversationHolder.start(codigo,textureHolder,soundHolder,fontHolder);
 
-        while(conversationHolder.updateConversation()){
-        }
+        while(conversationHolder.updateConversation());
 
     }
 }

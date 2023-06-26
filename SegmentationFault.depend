@@ -532,7 +532,7 @@
 1685631559 source:c:\users\angel\desktop\segmentationfault\utilities.cpp
 	"Textbox.hpp"
 
-1686686780 source:c:\users\angel\desktop\mis programas\segmentationfault\main.cpp
+1687790094 source:c:\users\angel\desktop\mis programas\segmentationfault\main.cpp
 	"Textbox.hpp"
 	"ResourceHolder.hpp"
 	"ConversationHolder.hpp"
@@ -549,7 +549,7 @@
 	<iostream>
 	<SFML/Window.hpp>
 
-1687258853 source:c:\users\angel\desktop\mis programas\segmentationfault\textbox.cpp
+1687790024 source:c:\users\angel\desktop\mis programas\segmentationfault\textbox.cpp
 	"Textbox.hpp"
 
 1686125295 source:c:\users\angel\desktop\mis programas\segmentationfault\utilities.cpp

@@ -545,11 +545,11 @@
 	<SFML/Graphics.hpp>
 	<SFML/Audio.hpp>
 
-1686126013 c:\users\angel\desktop\mis programas\segmentationfault\utilities.hpp
+1687798808 c:\users\angel\desktop\mis programas\segmentationfault\utilities.hpp
 	<iostream>
 	<SFML/Window.hpp>
 
-1687790024 source:c:\users\angel\desktop\mis programas\segmentationfault\textbox.cpp
+1687798356 source:c:\users\angel\desktop\mis programas\segmentationfault\textbox.cpp
 	"Textbox.hpp"
 
 1686125295 source:c:\users\angel\desktop\mis programas\segmentationfault\utilities.cpp
@@ -583,7 +583,7 @@
 1686087096 c:\users\angel\desktop\mis programas\segmentationfault\interaction.hpp
 	"Utilities.hpp"
 
-1686126127 source:c:\users\angel\desktop\mis programas\segmentationfault\conversation.cpp
+1687798680 source:c:\users\angel\desktop\mis programas\segmentationfault\conversation.cpp
 	"Conversation.hpp"
 	<assert.h>
 

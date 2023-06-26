@@ -113,6 +113,8 @@ void Textbox::setText(std::string text){
 
 // Updates the textbox, making the character look the right way,
 // making it speak and drawing the sprites
+// True means the conversation related to this textbox must advance
+// because the textbox
 bool Textbox::update(bool& keyPressed, int target_x, int target_y){
 
     // If the window is closed, then always return true (that means
@@ -146,6 +148,7 @@ bool Textbox::update(bool& keyPressed, int target_x, int target_y){
         keyPressed = false;
     }
 
+    // Poll events so that the window do
     sf::Event event;
     while (window.pollEvent(event));
     /*
@@ -227,7 +230,7 @@ bool Textbox::update(bool& keyPressed, int target_x, int target_y){
     // with down-left being the last one. Check the spritesheets at
     // sprites\textbox to see it
     if(target_x > 0){
-        if(abs(window.getPosition().y-target_y) < TEXTBOX_TRESSHOLD){
+        if(abs(window.getPosition().y-target_y) < TEXTBOX_THRESHOLD){
             if(window.getPosition().x > target_x){
                 // Look to the left
                 faceRect.left = 1 * FACE_WIDTH;
@@ -235,7 +238,7 @@ bool Textbox::update(bool& keyPressed, int target_x, int target_y){
                 // Look to the right
                 faceRect.left = 5 * FACE_WIDTH;
             }
-        } else if (abs(window.getPosition().x-target_x) < TEXTBOX_TRESSHOLD){
+        } else if (abs(window.getPosition().x-target_x) < TEXTBOX_THRESHOLD){
             if(window.getPosition().y > target_y){
                 // Look up
                 faceRect.left = 3 * FACE_WIDTH;

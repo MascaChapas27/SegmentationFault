@@ -132,12 +132,23 @@ bool Conversation::advance(){
     return true;
 }
 
+// Update the conversation, which returns true if the conversation
+// should advance, or false if the conversation is OK right now and
+// doesn't need to advance
 bool Conversation::update(){
+    // Helper boolean, stores if we should advance in the conversation
     bool shouldAdvance = false;
     for(auto i = textboxes.begin(); i != textboxes.end(); i++){
+        // For every textbox, set the x and y coordinates it looks at
+        // depending on its lookingAt value (maybe there is a better
+        // way to do this)
         CharName lookingAt = i->second->getLookingAt();
+        // If the character looks at the player, set both coordinates
+        // to -1
         int x = lookingAt == PLAYER ? -1 : textboxes[lookingAt]->getX();
         int y = lookingAt == PLAYER ? -1 : textboxes[lookingAt]->getY();
+        // Update the current textbox. If the update function return true,
+        // then it means we should advance in the conversation.
         if(i->second->update(keyPressed,x,y)) shouldAdvance = true;
     }
     return shouldAdvance;

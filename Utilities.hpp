@@ -80,7 +80,7 @@ const sf::Keyboard::Key KEY_OK = sf::Keyboard::LShift;
 // The range of pixels in which a character looks in cardinal directions.
 // If the difference in x and y axes is bigger than this tresshold, the
 // character will look at a diagonal direction
-const int TEXTBOX_TRESSHOLD = 80;
+const int TEXTBOX_THRESHOLD = 80;
 
 /* FUNCTIONS */
 

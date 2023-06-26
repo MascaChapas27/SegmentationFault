@@ -9,6 +9,10 @@
     constants, etc etc etc
 */
 
+///////////////////
+////// ENUMS //////
+///////////////////
+
 // Names for every character in the game and maybe
 // something else I forgot
 enum CharName{
@@ -17,7 +21,8 @@ enum CharName{
 
 // Identifiers for every texture used
 enum TextureID {
-    GabrielaTextbox, DanielaTextbox, BystanderTextbox
+    GabrielaTextbox, DanielaTextbox, BystanderTextbox,
+    WarningBackground, WarningNormalText, WarningGlitchText, WarningPressEnter
 };
 
 // Identifiers for every font used
@@ -34,6 +39,14 @@ enum SoundID {
 enum Position {
     TOP_LEFT, TOP_RIGHT, BOTTOM_LEFT, BOTTOM_RIGHT
 };
+
+///////////////////////
+////// CONSTANTS //////
+///////////////////////
+
+// Height and width of the main window
+const int MAIN_WINDOW_HEIGHT = 600;
+const int MAIN_WINDOW_WIDTH = 800;
 
 // Height and width of a textbox
 const int TEXTBOX_HEIGHT = 200;
@@ -82,7 +95,20 @@ const sf::Keyboard::Key KEY_OK = sf::Keyboard::LShift;
 // character will look at a diagonal direction
 const int TEXTBOX_THRESHOLD = 80;
 
-/* FUNCTIONS */
+// The width and height of the warning background text
+const int WARNING_BACKGROUND_WIDTH = 80;
+const int WARNING_BACKGROUND_HEIGHT = 30;
+
+// The height of the glitch text in the warning window
+const int WARNING_GLITCH_HEIGHT = 100;
+
+// Position in the Y axis in which the glitch text of
+// the warning window should be
+const int WARNING_GLITCH_Y = 450;
+
+///////////////////////
+////// FUNCTIONS //////
+///////////////////////
 
 // Function that inputs an error message whenever a file cannot
 // be accessed (it also exits with error code 1)

@@ -1,6 +1,7 @@
 #include "Textbox.hpp"
 #include "ResourceHolder.hpp"
 #include "ConversationHolder.hpp"
+#include "WarningWindow.hpp"
 #include <thread>
 #include <chrono>
 int main(){
@@ -10,6 +11,10 @@ int main(){
     textureHolder.load(GabrielaTextbox,"sprites/textbox/gabrielaTextbox.png");
     textureHolder.load(DanielaTextbox,"sprites/textbox/danielaTextbox.png");
     textureHolder.load(BystanderTextbox,"sprites/textbox/bystanderTextbox.png");
+    textureHolder.load(WarningBackground,"sprites/warning/warningBackground.png");
+    textureHolder.load(WarningNormalText,"sprites/warning/warningNormalText.png");
+    textureHolder.load(WarningGlitchText,"sprites/warning/warningGlitchText.png");
+    textureHolder.load(WarningPressEnter,"sprites/warning/warningPressEnter.png");
 
     std::cout << "Loading sound effects..." << std::endl;
     // All sound buffers are initialized
@@ -31,8 +36,16 @@ int main(){
     ConversationHolder conversationHolder(soundHolder);
     conversationHolder.load("files/Conversations.txt");
 
-    int codigo = 0;
+    // int codigo = 0;
 
+    sf::RenderWindow window(sf::VideoMode(800,600),"amai");
+    window.setFramerateLimit(60);
+
+    WarningWindow ww(&window,textureHolder);
+
+    ww.run();
+
+    /*
     while(true){
         std::cout << "Enter a conversation code (or -1 to end): ";
         std::cin >> codigo;
@@ -43,5 +56,7 @@ int main(){
 
         while(conversationHolder.updateConversation());
 
+
     }
+    */
 }

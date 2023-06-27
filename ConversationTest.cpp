@@ -5,7 +5,7 @@
 #include <thread>
 #include <chrono>
 
-int main(){
+int amain(){
     std::cout << "Loading textures..." << std::endl;
     // All textures are initialized
     ResourceHolder<sf::Texture,TextureID> textureHolder;
@@ -37,16 +37,8 @@ int main(){
     ConversationHolder conversationHolder(soundHolder);
     conversationHolder.load("files/Conversations.txt");
 
-    // int codigo = 0;
+    int codigo = 0;
 
-    sf::RenderWindow window(sf::VideoMode(800,600),"amai");
-    window.setFramerateLimit(60);
-
-    WarningWindow ww(&window,textureHolder);
-
-    ww.run();
-
-    /*
     while(true){
         std::cout << "Enter a conversation code (or -1 to end): ";
         std::cin >> codigo;
@@ -59,6 +51,5 @@ int main(){
 
 
     }
-    */
     return 0;
 }

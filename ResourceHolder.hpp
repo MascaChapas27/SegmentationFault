@@ -2,6 +2,8 @@
 #define __RESOURCE_HOLDER__
 
 #include "Utilities.hpp"
+#include <SFML/Graphics.hpp>
+#include <SFML/Audio.hpp>
 #include <memory>
 #include <map>
 
@@ -26,6 +28,11 @@ class ResourceHolder
         // Gets a resource given its ID
         Resource& get(Identifier id);
 };
+
+// Typedefs for the different types of resource holders
+typedef ResourceHolder<sf::Texture,TextureID> TextureHolder;
+typedef ResourceHolder<sf::SoundBuffer,SoundID> SoundHolder;
+typedef ResourceHolder<sf::Font,FontID> FontHolder;
 
 // Because we used templates, it's impossible to include ResourceHolder.hpp in
 // the ResourceHolder.cpp file, so it's necessary to do it the other way around.

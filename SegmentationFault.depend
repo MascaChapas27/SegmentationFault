@@ -1184,3 +1184,76 @@
 	<SFML/Graphics.hpp>
 	"ResourceHolder.hpp"
 
+1687857028 source:/home/angel/Escritorio/SegmentationFault/Conversation.cpp
+	"Conversation.hpp"
+	<assert.h>
+
+1686679224 /home/angel/Escritorio/SegmentationFault/Conversation.hpp
+	<list>
+	"Interaction.hpp"
+	"Textbox.hpp"
+	"ResourceHolder.hpp"
+
+1686679224 /home/angel/Escritorio/SegmentationFault/Interaction.hpp
+	"Utilities.hpp"
+
+1687857028 /home/angel/Escritorio/SegmentationFault/Utilities.hpp
+	<iostream>
+	<SFML/Window.hpp>
+
+1686679224 /home/angel/Escritorio/SegmentationFault/Textbox.hpp
+	<string>
+	"Utilities.hpp"
+	<SFML/Graphics.hpp>
+	<SFML/Audio.hpp>
+
+1686679224 /home/angel/Escritorio/SegmentationFault/ResourceHolder.hpp
+	"Utilities.hpp"
+	<memory>
+	<map>
+	"ResourceHolder.tpp"
+
+1686679224 /home/angel/Escritorio/SegmentationFault/ResourceHolder.tpp
+	<assert.h>
+
+1686679224 source:/home/angel/Escritorio/SegmentationFault/ConversationHolder.cpp
+	"ConversationHolder.hpp"
+	<fstream>
+
+1686679224 /home/angel/Escritorio/SegmentationFault/ConversationHolder.hpp
+	<map>
+	<memory>
+	"Conversation.hpp"
+
+1686679224 source:/home/angel/Escritorio/SegmentationFault/Interaction.cpp
+	"Interaction.hpp"
+
+1687857259 source:/home/angel/Escritorio/SegmentationFault/main.cpp
+	"Textbox.hpp"
+	"ResourceHolder.hpp"
+	"ConversationHolder.hpp"
+	"WarningWindow.hpp"
+	<thread>
+	<chrono>
+
+1687857028 /home/angel/Escritorio/SegmentationFault/WarningWindow.hpp
+	<SFML/Graphics.hpp>
+	"ResourceHolder.hpp"
+
+1687857028 source:/home/angel/Escritorio/SegmentationFault/Textbox.cpp
+	"Textbox.hpp"
+
+1686679224 source:/home/angel/Escritorio/SegmentationFault/Utilities.cpp
+	"Textbox.hpp"
+
+1687857028 source:/home/angel/Escritorio/SegmentationFault/WarningWindow.cpp
+	"WarningWindow.hpp"
+
+1687857136 source:/home/angel/Escritorio/SegmentationFault/ConversationTest.cpp
+	"Textbox.hpp"
+	"ResourceHolder.hpp"
+	"ConversationHolder.hpp"
+	"WarningWindow.hpp"
+	<thread>
+	<chrono>
+

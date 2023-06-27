@@ -27,8 +27,11 @@ class WarningWindow
         // Sprite for the Press Enter message at the bottom
         sf::Sprite pressEnterSprite;
 
+        // Sound for the glitch text
+        sf::Sound glitchSound;
+
     public:
-        WarningWindow(sf::RenderWindow * window, ResourceHolder<sf::Texture,TextureID>& textureHolder);
+        WarningWindow(sf::RenderWindow * window, TextureHolder& textureHolder, SoundHolder& soundHolder);
         void run();
 };
 

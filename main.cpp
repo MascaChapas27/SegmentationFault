@@ -7,7 +7,7 @@
 int main(){
     std::cout << "Loading textures..." << std::endl;
     // All textures are initialized
-    ResourceHolder<sf::Texture,TextureID> textureHolder;
+    TextureHolder textureHolder;
     textureHolder.load(GabrielaTextbox,"sprites/textbox/gabrielaTextbox.png");
     textureHolder.load(DanielaTextbox,"sprites/textbox/danielaTextbox.png");
     textureHolder.load(BystanderTextbox,"sprites/textbox/bystanderTextbox.png");
@@ -18,7 +18,7 @@ int main(){
 
     std::cout << "Loading sound effects..." << std::endl;
     // All sound buffers are initialized
-    ResourceHolder<sf::SoundBuffer,SoundID> soundHolder;
+    SoundHolder soundHolder;
     soundHolder.load(GabrielaSpeaking,"sounds/speaking/gabrielaSpeaking.wav");
     soundHolder.load(DanielaSpeaking,"sounds/speaking/danielaSpeaking.wav");
     soundHolder.load(Glitch0,"sounds/speaking/glitch0.wav");
@@ -27,7 +27,7 @@ int main(){
 
     std::cout << "Loading fonts..." << std::endl;
     // All fonts are initialized
-    ResourceHolder<sf::Font,FontID> fontHolder;
+    FontHolder fontHolder;
     fontHolder.load(Gabriela,"fonts/gabriela.ttf");
     fontHolder.load(Daniela,"fonts/daniela.ttf");
 
@@ -36,27 +36,14 @@ int main(){
     ConversationHolder conversationHolder(soundHolder);
     conversationHolder.load("files/Conversations.txt");
 
-    // int codigo = 0;
-
+    // This is the main window we are going to use through the
+    // whole game
     sf::RenderWindow window(sf::VideoMode(800,600),"amai");
     window.setFramerateLimit(60);
 
-    WarningWindow ww(&window,textureHolder);
+    // The warning window is created using a pointer to the main window
+    WarningWindow ww(&window,textureHolder,soundHolder);
 
+    // Then, the warning window runs
     ww.run();
-
-    /*
-    while(true){
-        std::cout << "Enter a conversation code (or -1 to end): ";
-        std::cin >> codigo;
-
-        if(codigo == -1) break;
-
-        conversationHolder.start(codigo,textureHolder,soundHolder,fontHolder);
-
-        while(conversationHolder.updateConversation());
-
-
-    }
-    */
 }

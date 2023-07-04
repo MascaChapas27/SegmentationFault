@@ -532,7 +532,7 @@
 1685631559 source:c:\users\angel\desktop\segmentationfault\utilities.cpp
 	"Textbox.hpp"
 
-1687851403 source:c:\users\angel\desktop\mis programas\segmentationfault\main.cpp
+1688031950 source:c:\users\angel\desktop\mis programas\segmentationfault\main.cpp
 	"Textbox.hpp"
 	"ResourceHolder.hpp"
 	"ConversationHolder.hpp"
@@ -540,7 +540,7 @@
 	<thread>
 	<chrono>
 
-1686087374 c:\users\angel\desktop\mis programas\segmentationfault\textbox.hpp
+1688472374 c:\users\angel\desktop\mis programas\segmentationfault\textbox.hpp
 	<string>
 	"Utilities.hpp"
 	<SFML/Graphics.hpp>
@@ -550,7 +550,7 @@
 	<iostream>
 	<SFML/Window.hpp>
 
-1687798821 source:c:\users\angel\desktop\mis programas\segmentationfault\textbox.cpp
+1688473092 source:c:\users\angel\desktop\mis programas\segmentationfault\textbox.cpp
 	"Textbox.hpp"
 
 1686125295 source:c:\users\angel\desktop\mis programas\segmentationfault\utilities.cpp
@@ -586,21 +586,21 @@
 1686087096 c:\users\angel\desktop\mis programas\segmentationfault\interaction.hpp
 	"Utilities.hpp"
 
-1687798680 source:c:\users\angel\desktop\mis programas\segmentationfault\conversation.cpp
+1688472008 source:c:\users\angel\desktop\mis programas\segmentationfault\conversation.cpp
 	"Conversation.hpp"
 	<assert.h>
 
-1686081122 c:\users\angel\desktop\mis programas\segmentationfault\conversation.hpp
+1688471684 c:\users\angel\desktop\mis programas\segmentationfault\conversation.hpp
 	<list>
 	"Interaction.hpp"
 	"Textbox.hpp"
 	"ResourceHolder.hpp"
 
-1686499742 source:c:\users\angel\desktop\mis programas\segmentationfault\conversationholder.cpp
+1688472017 source:c:\users\angel\desktop\mis programas\segmentationfault\conversationholder.cpp
 	"ConversationHolder.hpp"
 	<fstream>
 
-1686498928 c:\users\angel\desktop\mis programas\segmentationfault\conversationholder.hpp
+1688471684 c:\users\angel\desktop\mis programas\segmentationfault\conversationholder.hpp
 	<map>
 	<memory>
 	"Conversation.hpp"
@@ -1252,6 +1252,14 @@
 	"WarningWindow.hpp"
 
 1687857136 source:/home/angel/Escritorio/SegmentationFault/ConversationTest.cpp
+	"Textbox.hpp"
+	"ResourceHolder.hpp"
+	"ConversationHolder.hpp"
+	"WarningWindow.hpp"
+	<thread>
+	<chrono>
+
+1688031930 source:c:\users\angel\desktop\mis programas\segmentationfault\conversationtest.cpp
 	"Textbox.hpp"
 	"ResourceHolder.hpp"
 	"ConversationHolder.hpp"

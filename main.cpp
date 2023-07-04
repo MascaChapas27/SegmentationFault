@@ -5,7 +5,7 @@
 #include <thread>
 #include <chrono>
 
-int main(){
+int amain(){
     std::cout << "Loading textures..." << std::endl;
     // All textures are initialized
     TextureHolder textureHolder;
@@ -47,4 +47,5 @@ int main(){
 
     // Then, the warning window runs
     ww.run();
+    return 0;
 }

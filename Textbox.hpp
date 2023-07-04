@@ -68,16 +68,9 @@ private:
     // Boolean value that is set to true if the textbox needs to be closed
     bool shouldEnd;
 
-    // Position in the y axis that the window should have (this is useful to
-    // do that cool effect that makes the window associated to the speaker
-    // bounce when it starts speaking)
-    int posY;
-
-    // Position in the x axis that the window shound have (this is useful
-    // because if you change the position of the window manually it's necessary to
-    // know that it wasn't because of the special effect that happens when
-    // advancing in the conversation)
-    int posX;
+    // A counter that stores how much the window should move upwards
+    // to do the bouce thingy when speaking
+    int bounceCounter;
 
 public:
     Textbox(CharName speaker, CharName lookingAt, sf::Texture& texture, sf::SoundBuffer& soundBuffer, sf::Font& font, Position pos);
@@ -90,7 +83,7 @@ public:
     CharName getLookingAt();
     int getX();
     int getY();
-    bool update(bool& keyPressed, int target_x, int target_y);
+    bool update(bool checkIfAdvance, int target_x, int target_y);
     bool isClosed();
     void end();
 };

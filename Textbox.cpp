@@ -9,9 +9,12 @@ Textbox::Textbox(CharName speaker, CharName lookingAt, sf::Texture& texture, sf:
     // The emotion is initialized as 1 (neutral)
     emotion = 1;
 
-    // Very obvious
+    // The speaker and the lookingAt are initialized
     this->speaker = speaker;
     this->lookingAt = lookingAt;
+
+    // The bounceCounter is set to 0
+    bounceCounter = 0;
 
     // The text is initialized
     text.setFont(font);
@@ -73,10 +76,7 @@ Textbox::Textbox(CharName speaker, CharName lookingAt, sf::Texture& texture, sf:
             break;
     }
 
-    // The window is set to its corresponding position and the posY
-    // is set to its initial value
-    posY = position.y;
-    posX = position.x;
+    // The window is set to its corresponding position
     window.setPosition(position);
 
     // The rectangles are given values
@@ -102,11 +102,15 @@ Textbox(speaker,lookingAt,texture,soundBuffer, font, pos){
 void Textbox::setText(std::string text){
     currentText = "";
     finalText = text;
-    // When the text is set, the window moves down a bit
-    // except for BYSTANDER
-    if(speaker!=BYSTANDER){
+    // When the text is set, the bounce
+    // counter is increased and the window is
+    // moved down a bit (if it's not BYSTANDER)
+
+    bounceCounter+=TEXTBOX_BOUNCE;
+
+    if(speaker != BYSTANDER){
         sf::Vector2i pos = window.getPosition();
-        pos.y += TEXTBOX_BOUNCE;
+        pos.y+=TEXTBOX_BOUNCE;
         window.setPosition(pos);
     }
 }
@@ -114,39 +118,30 @@ void Textbox::setText(std::string text){
 // Updates the textbox, making the character look the right way,
 // making it speak and drawing the sprites
 // True means the conversation related to this textbox must advance
-// because the textbox
-bool Textbox::update(bool& keyPressed, int target_x, int target_y){
+// because checkIfAdvance is true and the textbox is ready to advance
+bool Textbox::update(bool checkIfAdvance, int target_x, int target_y){
 
     // If the window is closed, then always return true (that means
     // that at least one character is glitchy and it's doing the final glitch)
     if(!window.isOpen()) return true;
 
-    // Check if the window was manually moved and update posY and posX
-    if(window.getPosition().x != posX){
-        // If there was a change in the x axis, update
-        posX = window.getPosition().x;
-        posY = window.getPosition().y;
-    } else if(abs(window.getPosition().y-posY) > TEXTBOX_BOUNCE){
-        // If there was a change in the y axis, update
-        // but ONLY when the position is bigger than the TEXTBOX_BOUNCE
-        // because if it's smaller it could be the animation and not
-        // manual movement you know
-        posX = window.getPosition().x;
-        posY = window.getPosition().y;
+    // If the checkIfAdvance flag is set to true, then check if the current
+    // textbox is ready to advance
+    if(checkIfAdvance){
+        // If the character said everything it needed to say (and the character
+        // was currently speaking, because an empty final text means that the character
+        // was not speaking currently) then return true and also specify that the current
+        // character is no longer speaking
+        if(currentText == finalText && finalText != "") {
+            currentText = "";
+            finalText = "";
+            return true;
+        }
+        // If not, the text is set to be equal to the final text so that it's
+        // possible to go through the conversation faster
+        else currentText = finalText;
     }
 
-    // First we check if the conversation should advance
-    if (sf::Keyboard::isKeyPressed(KEY_OK) && !keyPressed){
-        // Now we are pressing the key, the conversation advances only if
-        // the current text is equal to the final text
-        keyPressed = true;
-        if(currentText == finalText) return true;
-        // If not, the text is set to be equal to the final text
-        else currentText = finalText;
-    } else if (!sf::Keyboard::isKeyPressed(KEY_OK) && keyPressed){
-        // Now the key is being released
-        keyPressed = false;
-    }
 
     // Poll events so that the window do
     sf::Event event;
@@ -182,10 +177,17 @@ bool Textbox::update(bool& keyPressed, int target_x, int target_y){
     }
 
     // If the window is lower than it should, put it back in its place slowly
-    if(window.getPosition().y > posY) {
+    if(bounceCounter > 0) {
         sf::Vector2i pos = window.getPosition();
-        pos.y -= 1;
+
+        // If the speaker isn't BYSTANDER then the textbox
+        // is moved up a bit, but if it's BYSTANDER, the textbox moves
+        // a bit towards the speaker
+
+        if(speaker!=BYSTANDER) pos.y -= 1;
+        else pos = window.getPosition() + (sf::Vector2i(target_x,target_y) - pos) / 100;
         window.setPosition(pos);
+        bounceCounter-=1;
     }
 
     // If the window is still open, clear everything
@@ -206,11 +208,6 @@ bool Textbox::update(bool& keyPressed, int target_x, int target_y){
             window.setTitle(finalText);
             finalText = " ";
             currentText = " ";
-            // Also, we get a bit closer
-            sf::Vector2i vec = window.getPosition();
-            vec.x+= (target_x-vec.x)*0.1;
-            vec.y+= (target_y-vec.y)*0.1;
-            window.setPosition(vec);
         } else {
             currentText+=finalText[(int)currentText.length()];
             speakingSound.setPitch(randDouble());

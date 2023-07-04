@@ -29,11 +29,6 @@ class Conversation{
         // An iterator that points at the current Interaction
         std::list<Interaction>::iterator it;
 
-        // This indicates if the advance key is pressed. If it is, prevent the conversation
-        // from advancing. This prevents the user from advancing 999 times by pressing the
-        // key once and holding it, forcing the user to release the key and then pressing again
-        bool keyPressed;
-
     public:
         Conversation(std::list<Interaction>& interactions, std::list<CharName>& characters, std::list<CharName>& glitchedCharacters);
 
@@ -41,7 +36,7 @@ class Conversation{
         void initialize(ResourceHolder<sf::Texture,TextureID>& textureHolder,
                                       ResourceHolder<sf::SoundBuffer,SoundID>& soundHolder,
                                       ResourceHolder<sf::Font,FontID>& fontHolder);
-        bool update();
+        bool update(bool checkIfAdvance);
 
         ~Conversation();
 

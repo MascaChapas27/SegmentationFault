@@ -2,6 +2,7 @@
 #include <fstream>
 
 ConversationHolder::ConversationHolder(ResourceHolder<sf::SoundBuffer,SoundID>& soundHolder){
+    keyPressed = false;
     advanceSound.setBuffer(soundHolder.get(AdvanceConversation));
     names["GABRIELA"] = GABRIELA;
     names["DANIELA"] = DANIELA;
@@ -110,14 +111,31 @@ void ConversationHolder::load(std::string path){
 void ConversationHolder::start(int code, ResourceHolder<sf::Texture,TextureID>& textureHolder,
            ResourceHolder<sf::SoundBuffer,SoundID>& soundHolder,
            ResourceHolder<sf::Font,FontID>& fontHolder){
+
     currentConversation = code;
     advanceSound.play();
     conversations[code]->initialize(textureHolder,soundHolder,fontHolder);
+    keyPressed = false;
 }
 
 // It updates the current conversation
 bool ConversationHolder::updateConversation(){
-    if(conversations[currentConversation]->update()) {
+
+    bool checkIfAdvance = false;
+
+    if (sf::Keyboard::isKeyPressed(KEY_OK) && !keyPressed){
+        // Now we are pressing the key, the conversation advances only if
+        // the current text is equal to the final text, and the current character
+        // is speaking (if it's not, then the current text and final text
+        // are both empty)
+        keyPressed = true;
+        checkIfAdvance = true;
+    } else if (!sf::Keyboard::isKeyPressed(KEY_OK) && keyPressed){
+        // Now the key is being released
+        keyPressed = false;
+    }
+
+    if(conversations[currentConversation]->update(checkIfAdvance)) {
         // A sound plays when advancing
         advanceSound.play();
         return conversations[currentConversation]->advance();

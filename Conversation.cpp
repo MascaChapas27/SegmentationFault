@@ -90,8 +90,6 @@ void Conversation::initialize(ResourceHolder<sf::Texture,TextureID>& textureHold
         numTextboxes++;
     }
 
-    keyPressed = false;
-
     advance();
 }
 
@@ -135,7 +133,9 @@ bool Conversation::advance(){
 // Update the conversation, which returns true if the conversation
 // should advance, or false if the conversation is OK right now and
 // doesn't need to advance
-bool Conversation::update(){
+// bool checkIfAdvance means we pressed the advance key but maybe
+// the character didn't finish speaking
+bool Conversation::update(bool checkIfAdvance){
     // Helper boolean, stores if we should advance in the conversation
     bool shouldAdvance = false;
     for(auto i = textboxes.begin(); i != textboxes.end(); i++){
@@ -147,9 +147,9 @@ bool Conversation::update(){
         // to -1
         int x = lookingAt == PLAYER ? -1 : textboxes[lookingAt]->getX();
         int y = lookingAt == PLAYER ? -1 : textboxes[lookingAt]->getY();
-        // Update the current textbox. If the update function return true,
-        // then it means we should advance in the conversation.
-        if(i->second->update(keyPressed,x,y)) shouldAdvance = true;
+        // Update the current textbox. If the update function returns true,
+        // then it means we should advance in the conversation
+        if(i->second->update(checkIfAdvance,x,y)) shouldAdvance = true;
     }
     return shouldAdvance;
 }

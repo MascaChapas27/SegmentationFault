@@ -47,6 +47,8 @@
 		<Linker>
 			<Add directory="C:/SFML-2.5.1/lib" />
 		</Linker>
+		<Unit filename="ControlsWindow.cpp" />
+		<Unit filename="ControlsWindow.hpp" />
 		<Unit filename="Conversation.cpp" />
 		<Unit filename="Conversation.hpp" />
 		<Unit filename="ConversationHolder.cpp" />
@@ -54,6 +56,8 @@
 		<Unit filename="ConversationTest.cpp" />
 		<Unit filename="Interaction.cpp" />
 		<Unit filename="Interaction.hpp" />
+		<Unit filename="MusicPlayer.cpp" />
+		<Unit filename="MusicPlayer.hpp" />
 		<Unit filename="ResourceHolder.hpp" />
 		<Unit filename="ResourceHolder.tpp" />
 		<Unit filename="Textbox.cpp" />

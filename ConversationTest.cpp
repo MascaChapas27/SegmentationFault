@@ -5,7 +5,7 @@
 #include <thread>
 #include <chrono>
 
-int main(){
+int amain(){
     std::cout << "Loading textures..." << std::endl;
     // All textures are initialized
     ResourceHolder<sf::Texture,TextureID> textureHolder;

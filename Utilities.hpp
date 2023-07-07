@@ -3,6 +3,7 @@
 
 #include <iostream>
 #include <SFML/Window.hpp>
+#include <SFML/System.hpp>
 
 /*
     This file contains lots of useful stuff: enums,
@@ -22,7 +23,8 @@ enum CharName{
 // Identifiers for every texture used
 enum TextureID {
     GabrielaTextbox, DanielaTextbox, BystanderTextbox,
-    WarningBackground, WarningNormalText, WarningGlitchText, WarningPressEnter
+    WarningBackground, WarningNormalText, WarningGlitchText, WarningPressEnter,
+    ControlsGabriela
 };
 
 // Identifiers for every font used
@@ -32,7 +34,13 @@ enum FontID {
 
 // Identifiers for every sound effect used
 enum SoundID {
-    GabrielaSpeaking, DanielaSpeaking, AdvanceConversation, Glitch0, Glitch1
+    GabrielaSpeaking, DanielaSpeaking, AdvanceConversation, Glitch0, Glitch1,
+    ControlsGlitchSound
+};
+
+// Identifiers for every music theme
+enum MusicID {
+    WarningMusic
 };
 
 // Positions of a textbox
@@ -105,6 +113,18 @@ const int WARNING_GLITCH_HEIGHT = 100;
 // Position in the Y axis in which the glitch text of
 // the warning window should be
 const int WARNING_GLITCH_Y = 450;
+
+// Width of the texture for the control window (the left part is
+// full of glitch effects)
+const int CONTROLS_TEXTURE_WIDTH = MAIN_WINDOW_WIDTH*3;
+
+// Keys that Gabriela uses for moving and interacting
+const sf::Keyboard::Key GABRIELA_UP = sf::Keyboard::W;
+const sf::Keyboard::Key GABRIELA_DOWN = sf::Keyboard::S;
+const sf::Keyboard::Key GABRIELA_LEFT = sf::Keyboard::A;
+const sf::Keyboard::Key GABRIELA_RIGHT = sf::Keyboard::D;
+const sf::Keyboard::Key GABRIELA_INTERACT = sf::Keyboard::LShift;
+const sf::Keyboard::Key GABRIELA_ESCAPE = sf::Keyboard::Escape;
 
 ///////////////////////
 ////// FUNCTIONS //////

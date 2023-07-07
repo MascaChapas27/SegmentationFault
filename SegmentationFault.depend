@@ -532,11 +532,13 @@
 1685631559 source:c:\users\angel\desktop\segmentationfault\utilities.cpp
 	"Textbox.hpp"
 
-1688031950 source:c:\users\angel\desktop\mis programas\segmentationfault\main.cpp
+1688746174 source:c:\users\angel\desktop\mis programas\segmentationfault\main.cpp
 	"Textbox.hpp"
 	"ResourceHolder.hpp"
 	"ConversationHolder.hpp"
+	"MusicPlayer.hpp"
 	"WarningWindow.hpp"
+	"ControlsWindow.hpp"
 	<thread>
 	<chrono>
 
@@ -546,9 +548,10 @@
 	<SFML/Graphics.hpp>
 	<SFML/Audio.hpp>
 
-1687816556 c:\users\angel\desktop\mis programas\segmentationfault\utilities.hpp
+1688745689 c:\users\angel\desktop\mis programas\segmentationfault\utilities.hpp
 	<iostream>
 	<SFML/Window.hpp>
+	<SFML/System.hpp>
 
 1688473092 source:c:\users\angel\desktop\mis programas\segmentationfault\textbox.cpp
 	"Textbox.hpp"
@@ -1259,11 +1262,27 @@
 	<thread>
 	<chrono>
 
-1688031930 source:c:\users\angel\desktop\mis programas\segmentationfault\conversationtest.cpp
+1688738404 source:c:\users\angel\desktop\mis programas\segmentationfault\conversationtest.cpp
 	"Textbox.hpp"
 	"ResourceHolder.hpp"
 	"ConversationHolder.hpp"
 	"WarningWindow.hpp"
 	<thread>
 	<chrono>
+
+1688744938 source:c:\users\angel\desktop\mis programas\segmentationfault\controlswindow.cpp
+	"ControlsWindow.hpp"
+
+1688738847 c:\users\angel\desktop\mis programas\segmentationfault\controlswindow.hpp
+	<SFML/Graphics.hpp>
+	"ResourceHolder.hpp"
+
+1688746116 source:c:\users\angel\desktop\mis programas\segmentationfault\musicplayer.cpp
+	"MusicPlayer.hpp"
+
+1688745923 c:\users\angel\desktop\mis programas\segmentationfault\musicplayer.hpp
+	<SFML/Audio.hpp>
+	"Utilities.hpp"
+	<string>
+	<map>
 

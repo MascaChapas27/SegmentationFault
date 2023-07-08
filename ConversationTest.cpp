@@ -29,8 +29,8 @@ int amain(){
     std::cout << "Loading fonts..." << std::endl;
     // All fonts are initialized
     ResourceHolder<sf::Font,FontID> fontHolder;
-    fontHolder.load(Gabriela,"fonts/gabriela.ttf");
-    fontHolder.load(Daniela,"fonts/daniela.ttf");
+    fontHolder.load(GabrielaFont,"fonts/gabriela.ttf");
+    fontHolder.load(DanielaFont,"fonts/daniela.ttf");
 
     std::cout << "Loading conversations..." << std::endl;
     // All conversations are initialized

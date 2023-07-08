@@ -47,8 +47,8 @@
 		<Linker>
 			<Add directory="C:/SFML-2.5.1/lib" />
 		</Linker>
-		<Unit filename="ControlsWindow.cpp" />
-		<Unit filename="ControlsWindow.hpp" />
+		<Unit filename="ControlsManager.cpp" />
+		<Unit filename="ControlsManager.hpp" />
 		<Unit filename="Conversation.cpp" />
 		<Unit filename="Conversation.hpp" />
 		<Unit filename="ConversationHolder.cpp" />

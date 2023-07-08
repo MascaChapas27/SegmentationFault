@@ -29,7 +29,7 @@ enum TextureID {
 
 // Identifiers for every font used
 enum FontID {
-    Gabriela, Daniela
+    GabrielaFont, DanielaFont
 };
 
 // Identifiers for every sound effect used
@@ -46,6 +46,13 @@ enum MusicID {
 // Positions of a textbox
 enum Position {
     TOP_LEFT, TOP_RIGHT, BOTTOM_LEFT, BOTTOM_RIGHT
+};
+
+// Possible controls a character can use
+enum Control{
+    KEYBOARD_LEFT, KEYBOARD_RIGHT,
+    JOYSTICK0, JOYSTICK1, JOYSTICK2, JOYSTICK3,
+    JOYSTICK4, JOYSTICK5, JOYSTICK6, JOYSTICK7
 };
 
 ///////////////////////

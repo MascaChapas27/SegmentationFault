@@ -532,13 +532,13 @@
 1685631559 source:c:\users\angel\desktop\segmentationfault\utilities.cpp
 	"Textbox.hpp"
 
-1688746174 source:c:\users\angel\desktop\mis programas\segmentationfault\main.cpp
+1688796728 source:c:\users\angel\desktop\mis programas\segmentationfault\main.cpp
 	"Textbox.hpp"
 	"ResourceHolder.hpp"
 	"ConversationHolder.hpp"
 	"MusicPlayer.hpp"
 	"WarningWindow.hpp"
-	"ControlsWindow.hpp"
+	"ControlsManager.hpp"
 	<thread>
 	<chrono>
 
@@ -548,7 +548,7 @@
 	<SFML/Graphics.hpp>
 	<SFML/Audio.hpp>
 
-1688745689 c:\users\angel\desktop\mis programas\segmentationfault\utilities.hpp
+1688796694 c:\users\angel\desktop\mis programas\segmentationfault\utilities.hpp
 	<iostream>
 	<SFML/Window.hpp>
 	<SFML/System.hpp>
@@ -589,7 +589,7 @@
 1686087096 c:\users\angel\desktop\mis programas\segmentationfault\interaction.hpp
 	"Utilities.hpp"
 
-1688472008 source:c:\users\angel\desktop\mis programas\segmentationfault\conversation.cpp
+1688796728 source:c:\users\angel\desktop\mis programas\segmentationfault\conversation.cpp
 	"Conversation.hpp"
 	<assert.h>
 
@@ -1262,7 +1262,7 @@
 	<thread>
 	<chrono>
 
-1688738404 source:c:\users\angel\desktop\mis programas\segmentationfault\conversationtest.cpp
+1688796737 source:c:\users\angel\desktop\mis programas\segmentationfault\conversationtest.cpp
 	"Textbox.hpp"
 	"ResourceHolder.hpp"
 	"ConversationHolder.hpp"
@@ -1270,7 +1270,7 @@
 	<thread>
 	<chrono>
 
-1688744938 source:c:\users\angel\desktop\mis programas\segmentationfault\controlswindow.cpp
+1688757741 source:c:\users\angel\desktop\mis programas\segmentationfault\controlswindow.cpp
 	"ControlsWindow.hpp"
 
 1688738847 c:\users\angel\desktop\mis programas\segmentationfault\controlswindow.hpp
@@ -1284,5 +1284,13 @@
 	<SFML/Audio.hpp>
 	"Utilities.hpp"
 	<string>
+	<map>
+
+1688796666 source:c:\users\angel\desktop\mis programas\segmentationfault\controlsmanager.cpp
+	"ControlsManager.hpp"
+
+1688796539 c:\users\angel\desktop\mis programas\segmentationfault\controlsmanager.hpp
+	<SFML/Graphics.hpp>
+	"ResourceHolder.hpp"
 	<map>
 

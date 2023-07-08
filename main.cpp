@@ -3,7 +3,7 @@
 #include "ConversationHolder.hpp"
 #include "MusicPlayer.hpp"
 #include "WarningWindow.hpp"
-#include "ControlsWindow.hpp"
+#include "ControlsManager.hpp"
 #include <thread>
 #include <chrono>
 
@@ -38,8 +38,8 @@ int main(){
     std::cout << "Loading fonts..." << std::endl;
     // All fonts are initialized
     FontHolder fontHolder;
-    fontHolder.load(Gabriela,"fonts/gabriela.ttf");
-    fontHolder.load(Daniela,"fonts/daniela.ttf");
+    fontHolder.load(GabrielaFont,"fonts/gabriela.ttf");
+    fontHolder.load(DanielaFont,"fonts/daniela.ttf");
 
     std::cout << "Loading conversations..." << std::endl;
     // All conversations are initialized
@@ -63,8 +63,8 @@ int main(){
 
     // The controls window is created with a pointer to the main window
     // as well (this main window will always be used)
-    ControlsWindow cw(&window,textureHolder,soundHolder);
-    cw.run();
+    ControlsManager cw(&window,textureHolder,soundHolder);
+    cw.showControls(GABRIELA);
 
     return 0;
 }

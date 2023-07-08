@@ -28,21 +28,21 @@ void Conversation::initialize(ResourceHolder<sf::Texture,TextureID>& textureHold
         switch(c){
         case GABRIELA:
             {
-                std::unique_ptr<Textbox> t(new Textbox(GABRIELA,PLAYER,textureHolder.get(GabrielaTextbox),soundHolder.get(GabrielaSpeaking),fontHolder.get(Gabriela),positions[numTextboxes%4]));
+                std::unique_ptr<Textbox> t(new Textbox(GABRIELA,PLAYER,textureHolder.get(GabrielaTextbox),soundHolder.get(GabrielaSpeaking),fontHolder.get(GabrielaFont),positions[numTextboxes%4]));
                 auto inserted = textboxes.insert(std::make_pair(GABRIELA,std::move(t)));
                 assert(inserted.second == true);
             }
             break;
         case DANIELA:
             {
-                std::unique_ptr<Textbox> t(new Textbox(DANIELA,PLAYER,textureHolder.get(DanielaTextbox),soundHolder.get(DanielaSpeaking),fontHolder.get(Daniela),positions[numTextboxes%4]));
+                std::unique_ptr<Textbox> t(new Textbox(DANIELA,PLAYER,textureHolder.get(DanielaTextbox),soundHolder.get(DanielaSpeaking),fontHolder.get(DanielaFont),positions[numTextboxes%4]));
                 auto inserted = textboxes.insert(std::make_pair(DANIELA,std::move(t)));
                 assert(inserted.second == true);
             }
             break;
         case BYSTANDER:
             {
-                std::unique_ptr<Textbox> t(new Textbox(BYSTANDER,PLAYER,textureHolder.get(BystanderTextbox),soundHolder.get(Glitch1),fontHolder.get(Gabriela),positions[numTextboxes%4]));
+                std::unique_ptr<Textbox> t(new Textbox(BYSTANDER,PLAYER,textureHolder.get(BystanderTextbox),soundHolder.get(Glitch1),fontHolder.get(GabrielaFont),positions[numTextboxes%4]));
                 auto inserted = textboxes.insert(std::make_pair(BYSTANDER,std::move(t)));
                 assert(inserted.second == true);
             }
@@ -61,21 +61,21 @@ void Conversation::initialize(ResourceHolder<sf::Texture,TextureID>& textureHold
         switch(c){
         case GABRIELA:
             {
-                std::unique_ptr<Textbox> t(new Textbox(GABRIELA,PLAYER,textureHolder.get(GabrielaTextbox),soundHolder.get(GabrielaSpeaking),fontHolder.get(Gabriela),positions[numTextboxes%4],soundHolder.get(Glitch0)));
+                std::unique_ptr<Textbox> t(new Textbox(GABRIELA,PLAYER,textureHolder.get(GabrielaTextbox),soundHolder.get(GabrielaSpeaking),fontHolder.get(GabrielaFont),positions[numTextboxes%4],soundHolder.get(Glitch0)));
                 auto inserted = textboxes.insert(std::make_pair(GABRIELA,std::move(t)));
                 assert(inserted.second == true);
             }
             break;
         case DANIELA:
             {
-                std::unique_ptr<Textbox> t(new Textbox(DANIELA,PLAYER,textureHolder.get(DanielaTextbox),soundHolder.get(DanielaSpeaking),fontHolder.get(Daniela),positions[numTextboxes%4],soundHolder.get(Glitch1)));
+                std::unique_ptr<Textbox> t(new Textbox(DANIELA,PLAYER,textureHolder.get(DanielaTextbox),soundHolder.get(DanielaSpeaking),fontHolder.get(DanielaFont),positions[numTextboxes%4],soundHolder.get(Glitch1)));
                 auto inserted = textboxes.insert(std::make_pair(DANIELA,std::move(t)));
                 assert(inserted.second == true);
             }
             break;
         case BYSTANDER:
             {
-                std::unique_ptr<Textbox> t(new Textbox(BYSTANDER,PLAYER,textureHolder.get(BystanderTextbox),soundHolder.get(Glitch1),fontHolder.get(Gabriela),positions[numTextboxes%4],soundHolder.get(Glitch0)));
+                std::unique_ptr<Textbox> t(new Textbox(BYSTANDER,PLAYER,textureHolder.get(BystanderTextbox),soundHolder.get(Glitch1),fontHolder.get(GabrielaFont),positions[numTextboxes%4],soundHolder.get(Glitch0)));
                 auto inserted = textboxes.insert(std::make_pair(BYSTANDER,std::move(t)));
                 assert(inserted.second == true);
             }

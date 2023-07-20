@@ -25,7 +25,7 @@ void ControlsManager::showControls(CharName character)
 
     // Counter for the glitch effect that happens when the window
     // is created
-    int glitchCounter = 0;
+    int glitchCounter = 1;
 
     // The first available control is assigned to the character
 
@@ -35,7 +35,7 @@ void ControlsManager::showControls(CharName character)
         }
     }
 
-    while(true)
+    while(true && glitchCounter != -15)
     {
 
         sf::Event event;
@@ -43,23 +43,31 @@ void ControlsManager::showControls(CharName character)
         {
             if(event.type == sf::Event::KeyPressed && event.key.code == GABRIELA_INTERACT)
             {
-                return;
+                // The sound is played again after pressing the proceed key
+                glitchSound.play();
+                glitchCounter=-1;
+
             }
         }
 
         sf::IntRect glitchRect = controlsSprite.getTextureRect();
 
         // While the glitchCounter is small, the controls window is glitchy
-        if(glitchCounter<15)
+        if(glitchCounter<15 && glitchCounter >= 0)
         {
             // The position of the x axis of the texture is set to a position so that
             // only a glitch part is seen
             glitchRect.left = rand()%(CONTROLS_TEXTURE_WIDTH-MAIN_WINDOW_WIDTH*2);
             glitchCounter++;
-        } else {
+        } else if(glitchCounter == 15){
             // The position of the x axis is set to the rightmost possible position
             glitchRect.left = CONTROLS_TEXTURE_WIDTH-MAIN_WINDOW_WIDTH;
             glitchSound.stop();
+        } else {
+            // If we press the proceed key then the glitch counter goes down instead of up
+            // until it reaches 15, in which case the run method ends
+            glitchRect.left = rand()%(CONTROLS_TEXTURE_WIDTH-MAIN_WINDOW_WIDTH*2);
+            glitchCounter--;
         }
 
         controlsSprite.setTextureRect( glitchRect );

@@ -7,6 +7,24 @@
 #include <thread>
 #include <chrono>
 
+void conversationTest(TextureHolder& textureHolder, SoundHolder& soundHolder, FontHolder& fontHolder, ConversationHolder& conversationHolder){
+    int codigo = 0;
+
+    while(true){
+        std::cout << "Enter a conversation code (or -1 to end): ";
+        std::cin >> codigo;
+
+        if(codigo == -1) break;
+
+        conversationHolder.start(codigo,textureHolder,soundHolder,fontHolder);
+
+        while(conversationHolder.updateConversation());
+
+
+    }
+    exit(0);
+}
+
 int main(){
     std::cout << "Loading textures..." << std::endl;
     // All textures are initialized
@@ -45,6 +63,9 @@ int main(){
     // All conversations are initialized
     ConversationHolder conversationHolder(soundHolder);
     conversationHolder.load("files/Conversations.txt");
+
+    // Uncomment to test conversations
+    // conversationTest(textureHolder,soundHolder,fontHolder,conversationHolder);
 
     // This is the main window we are going to use through the
     // whole game

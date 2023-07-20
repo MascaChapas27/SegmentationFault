@@ -53,7 +53,6 @@
 		<Unit filename="Conversation.hpp" />
 		<Unit filename="ConversationHolder.cpp" />
 		<Unit filename="ConversationHolder.hpp" />
-		<Unit filename="ConversationTest.cpp" />
 		<Unit filename="Interaction.cpp" />
 		<Unit filename="Interaction.hpp" />
 		<Unit filename="MusicPlayer.cpp" />

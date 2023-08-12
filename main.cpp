@@ -26,6 +26,10 @@ void conversationTest(TextureHolder& textureHolder, SoundHolder& soundHolder, Fo
 }
 
 int main(){
+
+    // This thing makes error messages disappear because they keep appearing oh god
+    sf::err().rdbuf(NULL);
+
     std::cout << "Loading textures..." << std::endl;
     // All textures are initialized
     TextureHolder textureHolder;
@@ -84,8 +88,8 @@ int main(){
 
     // The controls window is created with a pointer to the main window
     // as well (this main window will always be used)
-    ControlsManager cw(&window,textureHolder,soundHolder);
-    cw.showControls(GABRIELA);
+    ControlsManager controlsManager(&window,textureHolder,soundHolder);
+    controlsManager.showControls(GABRIELA);
 
     return 0;
 }

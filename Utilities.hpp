@@ -44,7 +44,7 @@ enum MusicID {
 };
 
 // Positions of a textbox
-enum Position {
+enum TextboxPosition {
     TOP_LEFT, TOP_RIGHT, BOTTOM_LEFT, BOTTOM_RIGHT
 };
 
@@ -53,6 +53,11 @@ enum Control{
     KEYBOARD_LEFT, KEYBOARD_RIGHT,
     JOYSTICK0, JOYSTICK1, JOYSTICK2, JOYSTICK3,
     JOYSTICK4, JOYSTICK5, JOYSTICK6, JOYSTICK7
+};
+
+// Things a player can do by pressing keys
+enum KeyAction{
+    UP, DOWN, LEFT, RIGHT, INTERACT, EXIT
 };
 
 ///////////////////////
@@ -125,13 +130,13 @@ const int WARNING_GLITCH_Y = 450;
 // full of glitch effects)
 const int CONTROLS_TEXTURE_WIDTH = MAIN_WINDOW_WIDTH*3;
 
-// Keys that Gabriela uses for moving and interacting
-const sf::Keyboard::Key GABRIELA_UP = sf::Keyboard::W;
-const sf::Keyboard::Key GABRIELA_DOWN = sf::Keyboard::S;
-const sf::Keyboard::Key GABRIELA_LEFT = sf::Keyboard::A;
-const sf::Keyboard::Key GABRIELA_RIGHT = sf::Keyboard::D;
-const sf::Keyboard::Key GABRIELA_INTERACT = sf::Keyboard::LShift;
-const sf::Keyboard::Key GABRIELA_ESCAPE = sf::Keyboard::Escape;
+// Keys that the left half of the keyboard uses
+const sf::Keyboard::Key KL_UP = sf::Keyboard::W;
+const sf::Keyboard::Key KL_DOWN = sf::Keyboard::S;
+const sf::Keyboard::Key KL_LEFT = sf::Keyboard::A;
+const sf::Keyboard::Key KL_RIGHT = sf::Keyboard::D;
+const sf::Keyboard::Key KL_INTERACT = sf::Keyboard::LShift;
+const sf::Keyboard::Key KL_ESCAPE = sf::Keyboard::Escape;
 
 ///////////////////////
 ////// FUNCTIONS //////

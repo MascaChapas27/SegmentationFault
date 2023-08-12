@@ -23,11 +23,20 @@ class ControlsManager
         // Map that stores, for each character, the control it uses
         std::map<CharName, Control> characterControls;
 
-        // Function that indicates if a control is free (not used by a character)
+        // Map that stores, for each keyboard control and action, the key associated with that action
+        std::map<std::pair<Control,KeyAction>,sf::Keyboard::Key> associatedKeys;
+
+        // Map that stores, for each action, the joystick button associated with it
+        std::map<KeyAction,int> associatedButtons;
+
+        // Function that indicates if a control is free
         bool isAvailable(Control c);
 
     public:
         ControlsManager(sf::RenderWindow * window, TextureHolder& textureHolder, SoundHolder& soundHolder);
+        bool isPressingKey(CharName character, KeyAction keyAction);
+        bool isPressingButton(CharName character, KeyAction keyAction);
+        bool connectJoystick(CharName character, Control joystick);
         void showControls(CharName character);
 };
 

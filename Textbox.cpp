@@ -1,7 +1,7 @@
 #include "Textbox.hpp"
 
 // The constructor. It creates a new textbox
-Textbox::Textbox(CharName speaker, CharName lookingAt, sf::Texture& texture, sf::SoundBuffer& soundBuffer, sf::Font& font, Position pos){
+Textbox::Textbox(CharName speaker, CharName lookingAt, sf::Texture& texture, sf::SoundBuffer& soundBuffer, sf::Font& font, TextboxPosition pos){
     // The textbox is initialized without text
     currentText = "";
     finalText = "";
@@ -90,7 +90,7 @@ Textbox::Textbox(CharName speaker, CharName lookingAt, sf::Texture& texture, sf:
 }
 
 // Another constructor if we want the textbox to be glitchy
-Textbox::Textbox(CharName speaker, CharName lookingAt, sf::Texture& texture, sf::SoundBuffer& soundBuffer, sf::Font& font, Position pos, sf::SoundBuffer& glitchSoundBuffer) :
+Textbox::Textbox(CharName speaker, CharName lookingAt, sf::Texture& texture, sf::SoundBuffer& soundBuffer, sf::Font& font, TextboxPosition pos, sf::SoundBuffer& glitchSoundBuffer) :
 Textbox(speaker,lookingAt,texture,soundBuffer, font, pos){
     glitchy = true;
 

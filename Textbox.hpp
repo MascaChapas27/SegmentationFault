@@ -73,8 +73,8 @@ private:
     int bounceCounter;
 
 public:
-    Textbox(CharName speaker, CharName lookingAt, sf::Texture& texture, sf::SoundBuffer& soundBuffer, sf::Font& font, Position pos);
-    Textbox(CharName speaker, CharName lookingAt, sf::Texture& texture, sf::SoundBuffer& soundBuffer, sf::Font& font, Position pos, sf::SoundBuffer& glitchSoundBuffer);
+    Textbox(CharName speaker, CharName lookingAt, sf::Texture& texture, sf::SoundBuffer& soundBuffer, sf::Font& font, TextboxPosition pos);
+    Textbox(CharName speaker, CharName lookingAt, sf::Texture& texture, sf::SoundBuffer& soundBuffer, sf::Font& font, TextboxPosition pos, sf::SoundBuffer& glitchSoundBuffer);
     ~Textbox();
     void setText(std::string text);
     void setEmotion(int emotion);

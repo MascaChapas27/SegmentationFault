@@ -22,7 +22,7 @@ void Conversation::initialize(ResourceHolder<sf::Texture,TextureID>& textureHold
     textboxes.clear();
 
     // For every character, a textbox is created
-    Position positions[4] = {TOP_LEFT, TOP_RIGHT, BOTTOM_LEFT, BOTTOM_RIGHT};
+    TextboxPosition positions[4] = {TOP_LEFT, TOP_RIGHT, BOTTOM_LEFT, BOTTOM_RIGHT};
     int numTextboxes = 0;
     for(CharName c : characters){
         switch(c){

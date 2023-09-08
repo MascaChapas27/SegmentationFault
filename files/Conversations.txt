@@ -2,18 +2,24 @@
 # pLEASEE be careful with comments, don't write them
 # in the middle of a conversation (rude ! !)
 # instead write them before and after
+#
+# An Interaction is when one character says one thing to another character
+# A Conversation is a set of Interactions
+# The names can be checked in Utilities.hpp, in the CharName enumeration
+#
 # The format for the conversation is the following:
 # 
 # Number of normal characters
 # Names of the normal characters (one in each line)
 # Number of glitch characters
 # Names of the glitch characters (one in each line)
-# Code of the speaker
-# Code of the listener
+# Blank like
+# Name of the speaker
+# Name of the listener
+# Number that represents mood (specifies the row of faces to be used as seen in the textbox sprites, being 0 the glitch row that is only used in glitch characters or special characters)
 # String that represents the text that is spoken
 # Blank line
-# ... (the four last lines repeat until the blank line is a dollar symbol)
-# Dollar symbol
+# ... (the five last lines repeat until a dollar symbol is found instead of a blank line)
 # 
 # A blank line means "this is the end of an Interaction"
 # and a dollar symbol means "this is the end of a Conversation"

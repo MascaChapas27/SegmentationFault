@@ -30,6 +30,11 @@ int main(){
     // This thing makes error messages disappear because they keep appearing oh god
     sf::err().rdbuf(NULL);
 
+    // This is the main window we are going to use through the
+    // whole game
+    sf::RenderWindow window(sf::VideoMode(800,600),"amai");
+    window.setFramerateLimit(60);
+
     std::cout << "Loading textures..." << std::endl;
     // All textures are initialized
     TextureHolder textureHolder;
@@ -37,9 +42,10 @@ int main(){
     textureHolder.load(DanielaTextbox,"sprites/textbox/danielaTextbox.png");
     textureHolder.load(BystanderTextbox,"sprites/textbox/bystanderTextbox.png");
     textureHolder.load(WarningBackground,"sprites/warning/warningBackground.png");
+    textureHolder.load(WarningTitle,"sprites/warning/warningTitle.png");
     textureHolder.load(WarningNormalText,"sprites/warning/warningNormalText.png");
     textureHolder.load(WarningGlitchText,"sprites/warning/warningGlitchText.png");
-    textureHolder.load(WarningPressEnter,"sprites/warning/warningPressEnter.png");
+    textureHolder.load(WarningPressAnyKey,"sprites/warning/warningPressAnyKey.png");
     textureHolder.load(ControlsGabriela,"sprites/controls/controlsGabriela.png");
 
     std::cout << "Loading sound effects..." << std::endl;
@@ -69,12 +75,7 @@ int main(){
     conversationHolder.load("files/Conversations.txt");
 
     // Uncomment to test conversations
-    // conversationTest(textureHolder,soundHolder,fontHolder,conversationHolder);
-
-    // This is the main window we are going to use through the
-    // whole game
-    sf::RenderWindow window(sf::VideoMode(800,600),"amai");
-    window.setFramerateLimit(60);
+    conversationTest(textureHolder,soundHolder,fontHolder,conversationHolder);
 
     // The warning window is created using a pointer to the main window
     WarningWindow ww(&window,textureHolder,soundHolder);

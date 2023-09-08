@@ -17,15 +17,17 @@ class WarningWindow
         // of times
         sf::Sprite backgroundSprite;
 
-        // Sprite for the normal text that appears saying "WARNING"
-        // and other stuff
+        // Sprite for the big text that appears saying "WARNING"
+        sf::Sprite warningTitleSprite;
+
+        // Sprite for the normal text that appears under the "WARNING" title
         sf::Sprite normalTextSprite;
 
         // Sprite for the glitched rectangles for corrupted text
         sf::Sprite glitchTextSprite;
 
-        // Sprite for the Press Enter message at the bottom
-        sf::Sprite pressEnterSprite;
+        // Sprite for the Press Any Key message at the bottom
+        sf::Sprite pressAnyKeySprite;
 
         // Sound for the glitch text
         sf::Sound glitchSound;

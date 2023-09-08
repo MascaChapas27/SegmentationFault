@@ -17,8 +17,12 @@ WarningWindow::WarningWindow(sf::RenderWindow * window, TextureHolder& textureHo
     sf::IntRect backgroundRect = sf::IntRect(0,0,MAIN_WINDOW_WIDTH+WARNING_BACKGROUND_WIDTH,MAIN_WINDOW_HEIGHT+WARNING_BACKGROUND_HEIGHT);
     backgroundSprite.setTextureRect(backgroundRect);
 
-    // The normal text is set as usual
+    // The normal text and the title text are set as usual
     normalTextSprite.setTexture(textureHolder.get(WarningNormalText));
+    warningTitleSprite.setTexture(textureHolder.get(WarningTitle));
+
+    // The title is positioned according to the value stored in Utilities
+    warningTitleSprite.setPosition(WARNING_TITLE_INITIAL_POSITION);
 
     // The glitch text is assigned a texture and is positioned properly
     glitchTextSprite.setTexture(textureHolder.get(WarningGlitchText));
@@ -28,7 +32,7 @@ WarningWindow::WarningWindow(sf::RenderWindow * window, TextureHolder& textureHo
     glitchTextSprite.setPosition(0,WARNING_GLITCH_Y);
 
     // The sprite for the Press Enter text is set normally
-    pressEnterSprite.setTexture(textureHolder.get(WarningPressEnter));
+    pressAnyKeySprite.setTexture(textureHolder.get(WarningPressAnyKey));
 
     // The glitch text sound is initialized
     glitchSound.setBuffer(soundHolder.get(Glitch0));
@@ -40,26 +44,79 @@ void WarningWindow::run()
     // every frame it's added 2 until it reaches 255
     int aux = -199;
 
-    // This boolean helps the Press Enter text become transparent
+    // This boolean helps the Press Any Key text become transparent
     // and then opaque infinitely
-    bool pressEnterBecomingTransparent = true;
+    bool pressAnyKeyBecomingTransparent = true;
 
-    // The Press Enter sprite begins transparent
-    pressEnterSprite.setColor(sf::Color(255,255,255,0));
+    // The Press Any Key sprite begins transparent
+    pressAnyKeySprite.setColor(sf::Color(255,255,255,0));
+
+    // First thing that happens: there is nothing on screen, then the "WARNING" text
+    // appears in the middle of the screen
+
+    int warningTitleTransparency = 0;
+    while(warningTitleTransparency < 400){
+
+        sf::Event event;
+        while(window->pollEvent(event));
+
+        warningTitleTransparency+=3;
+        warningTitleSprite.setColor(sf::Color(255,255,255,warningTitleTransparency > 255 ? 255 : warningTitleTransparency));
+
+        window->clear();
+        window->draw(warningTitleSprite);
+        window->display();
+    }
+
+    // Second thing: The "WARNING" title goes up and the background begins to be visible
+    int backgroundTransparency = 0;
+
+    while(abs(warningTitleSprite.getPosition().y - WARNING_TITLE_FINAL_POSITION.y) > 3){
+
+            sf::Event event;
+            while(window->pollEvent(event));
+
+            backgroundTransparency+=1;
+            backgroundSprite.setColor(sf::Color(255,255,255,backgroundTransparency > 255 ? 255 : backgroundTransparency));
+
+            sf::Vector2f movement = WARNING_TITLE_FINAL_POSITION-warningTitleSprite.getPosition();
+            movement = sf::Vector2f(movement.x/30.0, movement.y/30.0);
+
+            // The background moves to the left and up until it loops back and starts over,
+            // making it look like it's endless
+            backgroundSprite.move(-((float)WARNING_BACKGROUND_WIDTH/(float)WARNING_BACKGROUND_HEIGHT)/10.f,-1/10.f);
+            if(backgroundSprite.getPosition().x < -WARNING_BACKGROUND_WIDTH)
+            {
+                backgroundSprite.setPosition(0,0);
+            }
+
+            warningTitleSprite.move(movement);
+
+            window->clear();
+            window->draw(backgroundSprite);
+            window->draw(warningTitleSprite);
+            window->display();
+        }
+
+    // Third thing: the normal text and the glitch text appears, as well as
+    // the "Press Any Key" text, allowing the player to continue
 
     while(true)
     {
-        // If the user presses Enter, the warning window ends
+        // If the user presses any key, the warning window ends
         sf::Event event;
         while(window->pollEvent(event))
         {
-            if(event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Key::Return)
+            if(event.type == sf::Event::KeyPressed)
             {
                 return;
             }
         }
 
-        // The background moves to the right and down until it loops back and starts over,
+        backgroundTransparency+=1;
+        backgroundSprite.setColor(sf::Color(255,255,255,backgroundTransparency > 255 ? 255 : backgroundTransparency));
+
+        // The background moves to the left and up until it loops back and starts over,
         // making it look like it's endless
         backgroundSprite.move(-((float)WARNING_BACKGROUND_WIDTH/(float)WARNING_BACKGROUND_HEIGHT)/10.f,-1/10.f);
         if(backgroundSprite.getPosition().x < -WARNING_BACKGROUND_WIDTH)
@@ -92,24 +149,23 @@ void WarningWindow::run()
         }
         glitchTextSprite.setTextureRect(glitchTextRect);
 
-        // If we reach the value 255 for the aux counter, the Press Enter text appears
+        // If we reach the value 255 for the aux counter, the Press Any Key text appears
         // and becomes more transparent and then more opaque
         if(aux==255){
-            if(pressEnterSprite.getColor().a==0) pressEnterBecomingTransparent = false;
-            if(pressEnterSprite.getColor().a==255) pressEnterBecomingTransparent = true;
-            int a = pressEnterSprite.getColor().a;
-            if(pressEnterBecomingTransparent) pressEnterSprite.setColor(sf::Color(255,255,255,a-5));
-            else pressEnterSprite.setColor(sf::Color(255,255,255,a+5));
+            if(pressAnyKeySprite.getColor().a==0) pressAnyKeyBecomingTransparent = false;
+            if(pressAnyKeySprite.getColor().a==255) pressAnyKeyBecomingTransparent = true;
+            int a = pressAnyKeySprite.getColor().a;
+            if(pressAnyKeyBecomingTransparent) pressAnyKeySprite.setColor(sf::Color(255,255,255,a-5));
+            else pressAnyKeySprite.setColor(sf::Color(255,255,255,a+5));
         }
 
         // The window is cleared and all sprites are drawn. Then, everything is displayed
         window->clear();
-
         window->draw(backgroundSprite);
+        window->draw(warningTitleSprite);
         window->draw(normalTextSprite);
         window->draw(glitchTextSprite);
-        window->draw(pressEnterSprite);
-
+        window->draw(pressAnyKeySprite);
         window->display();
     }
 }

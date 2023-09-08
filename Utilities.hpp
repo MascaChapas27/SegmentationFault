@@ -23,7 +23,7 @@ enum CharName{
 // Identifiers for every texture used
 enum TextureID {
     GabrielaTextbox, DanielaTextbox, BystanderTextbox,
-    WarningBackground, WarningNormalText, WarningGlitchText, WarningPressEnter,
+    WarningTitle, WarningBackground, WarningNormalText, WarningGlitchText, WarningPressAnyKey,
     ControlsGabriela
 };
 
@@ -118,6 +118,10 @@ const int TEXTBOX_THRESHOLD = 80;
 // The width and height of the warning background text
 const int WARNING_BACKGROUND_WIDTH = 80;
 const int WARNING_BACKGROUND_HEIGHT = 30;
+
+// Initial and final position of the "WARNING" title
+const sf::Vector2f WARNING_TITLE_INITIAL_POSITION = sf::Vector2f(260,268);
+const sf::Vector2f WARNING_TITLE_FINAL_POSITION = sf::Vector2f(260,70);
 
 // The height of the glitch text in the warning window
 const int WARNING_GLITCH_HEIGHT = 100;

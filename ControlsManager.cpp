@@ -89,13 +89,13 @@ void ControlsManager::showControls(CharName character)
     else if(isAvailable(KEYBOARD_RIGHT)) characterControls[character] = KEYBOARD_RIGHT;
     else mustConnectJoystick = true;
 
-    while(true && glitchCounter != -15)
+    while(glitchCounter != -15)
     {
 
         sf::Event event;
         while(window->pollEvent(event))
         {
-            if(event.type == sf::Event::KeyPressed && isPressingKey(character,INTERACT))
+            if(event.type == sf::Event::KeyPressed && isPressingKey(character,INTERACT) && glitchCounter >= 0)
             {
                 // The sound is played again after pressing the proceed key
                 glitchSound.play();
@@ -109,7 +109,7 @@ void ControlsManager::showControls(CharName character)
                 if(connectJoystick(character,joystick)){
                     glitchCounter = 1;
                     glitchSound.play();
-                } else if(isPressingButton(character,INTERACT)) {
+                } else if(isPressingButton(character,INTERACT) && glitchCounter >= 0) {
                     // The sound is played again after pressing the proceed key
                     glitchSound.play();
                     glitchCounter=-1;

@@ -75,7 +75,7 @@ int main(){
     conversationHolder.load("files/Conversations.txt");
 
     // Uncomment to test conversations
-    conversationTest(textureHolder,soundHolder,fontHolder,conversationHolder);
+    // conversationTest(textureHolder,soundHolder,fontHolder,conversationHolder);
 
     // The warning window is created using a pointer to the main window
     WarningWindow ww(&window,textureHolder,soundHolder);

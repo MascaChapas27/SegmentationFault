@@ -32,8 +32,11 @@ class ControlsManager
         // Function that indicates if a control is free
         bool isAvailable(Control c);
 
+        // Pointer to the texture holder so that it can be used later
+        TextureHolder* textureHolder;
+
     public:
-        ControlsManager(sf::RenderWindow * window, TextureHolder& textureHolder, SoundHolder& soundHolder);
+        ControlsManager(sf::RenderWindow * window, TextureHolder* textureHolder, SoundHolder& soundHolder);
         bool isPressingKey(CharName character, KeyAction keyAction);
         bool isPressingButton(CharName character, KeyAction keyAction);
         bool connectJoystick(CharName character, Control joystick);

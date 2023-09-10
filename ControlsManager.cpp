@@ -1,11 +1,10 @@
 #include "ControlsManager.hpp"
 
-ControlsManager::ControlsManager(sf::RenderWindow * window, TextureHolder& textureHolder, SoundHolder& soundHolder)
+ControlsManager::ControlsManager(sf::RenderWindow * window, TextureHolder* textureHolder, SoundHolder& soundHolder)
 {
     this->window = window;
 
-    this->controlsSprite.setTexture(textureHolder.get(ControlsGabriela));
-    this->controlsSprite.setTextureRect(sf::IntRect(0,0,MAIN_WINDOW_WIDTH,MAIN_WINDOW_HEIGHT));
+    this->textureHolder = textureHolder;
 
     this->glitchSound.setBuffer(soundHolder.get(ControlsGlitchSound));
 
@@ -71,6 +70,7 @@ bool ControlsManager::isPressingButton(CharName character, KeyAction keyAction){
 
 void ControlsManager::showControls(CharName character)
 {
+
     // The sound is played once at the beginning
     glitchSound.play();
 
@@ -88,6 +88,27 @@ void ControlsManager::showControls(CharName character)
     if(isAvailable(KEYBOARD_LEFT)) characterControls[character] = KEYBOARD_LEFT;
     else if(isAvailable(KEYBOARD_RIGHT)) characterControls[character] = KEYBOARD_RIGHT;
     else mustConnectJoystick = true;
+
+    // Depending on the character and the controls, a texture for the controls window is chosen
+    switch(character){
+        case GABRIELA:
+            if (mustConnectJoystick){
+                // this->controlsSprite.setTexture(textureHolder->get(ControlsGabrielaMustConnectJoystick));
+            } else if(characterControls[GABRIELA] == KEYBOARD_LEFT){
+                this->controlsSprite.setTexture(textureHolder->get(ControlsGabrielaLeftKeyboard));
+            } else if (characterControls[GABRIELA] == KEYBOARD_RIGHT){
+                // this->controlsSprite.setTexture(textureHolder->get(ControlsGabrielaRightKeyboard));
+            }
+
+            break;
+
+        default:
+            break;
+    }
+
+    // The rectangle for the texture is always the same size (the position changes for the
+    // glitch effect)
+    this->controlsSprite.setTextureRect(sf::IntRect(0,0,MAIN_WINDOW_WIDTH,MAIN_WINDOW_HEIGHT));
 
     while(glitchCounter != -15)
     {
@@ -109,6 +130,8 @@ void ControlsManager::showControls(CharName character)
                 if(connectJoystick(character,joystick)){
                     glitchCounter = 1;
                     glitchSound.play();
+                    mustConnectJoystick = false;
+                    // this->controlsSprite.setTexture(textureHolder->get(ControlsGabrielaJoystick));
                 } else if(isPressingButton(character,INTERACT) && glitchCounter >= 0) {
                     // The sound is played again after pressing the proceed key
                     glitchSound.play();

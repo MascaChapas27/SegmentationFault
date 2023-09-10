@@ -24,7 +24,7 @@ enum CharName{
 enum TextureID {
     GabrielaTextbox, DanielaTextbox, BystanderTextbox,
     WarningTitle, WarningBackground, WarningNormalText, WarningGlitchText, WarningPressAnyKey,
-    ControlsGabriela
+    ControlsGabrielaLeftKeyboard
 };
 
 // Identifiers for every font used

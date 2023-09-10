@@ -46,7 +46,7 @@ int main(){
     textureHolder.load(WarningNormalText,"sprites/warning/warningNormalText.png");
     textureHolder.load(WarningGlitchText,"sprites/warning/warningGlitchText.png");
     textureHolder.load(WarningPressAnyKey,"sprites/warning/warningPressAnyKey.png");
-    textureHolder.load(ControlsGabriela,"sprites/controls/controlsGabriela.png");
+    textureHolder.load(ControlsGabrielaLeftKeyboard,"sprites/controls/controlsGabrielaLeftKeyboard.png");
 
     std::cout << "Loading sound effects..." << std::endl;
     // All sound buffers are initialized
@@ -89,7 +89,7 @@ int main(){
 
     // The controls window is created with a pointer to the main window
     // as well (this main window will always be used)
-    ControlsManager controlsManager(&window,textureHolder,soundHolder);
+    ControlsManager controlsManager(&window,&textureHolder,soundHolder);
     controlsManager.showControls(GABRIELA);
 
     return 0;

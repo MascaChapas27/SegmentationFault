@@ -47,6 +47,7 @@ int main(){
     textureHolder.load(WarningGlitchText,"sprites/warning/warningGlitchText.png");
     textureHolder.load(WarningPressAnyKey,"sprites/warning/warningPressAnyKey.png");
     textureHolder.load(ControlsGabrielaLeftKeyboard,"sprites/controls/controlsGabrielaLeftKeyboard.png");
+    textureHolder.load(FloatingLeftKeyboardGabriela,"sprites/controls/floatingLeftKeyboardGabriela.png");
 
     std::cout << "Loading sound effects..." << std::endl;
     // All sound buffers are initialized
@@ -80,6 +81,10 @@ int main(){
     // The warning window is created using a pointer to the main window
     WarningWindow ww(&window,textureHolder,soundHolder);
 
+    // The controls window is created with a pointer to the main window
+    // as well (this main window will always be used)
+    ControlsManager controlsManager(&window,&textureHolder,soundHolder);
+
     // Then, the warning window runs (and the warning music plays)
     musicPlayer.play(WarningMusic);
     ww.run();
@@ -87,9 +92,7 @@ int main(){
     // When the warning window ends, then the music stops as well
     musicPlayer.stop();
 
-    // The controls window is created with a pointer to the main window
-    // as well (this main window will always be used)
-    ControlsManager controlsManager(&window,&textureHolder,soundHolder);
+    // The controls for Gabriela arw shown
     controlsManager.showControls(GABRIELA);
 
     return 0;

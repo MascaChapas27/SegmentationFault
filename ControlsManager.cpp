@@ -24,6 +24,46 @@ ControlsManager::ControlsManager(sf::RenderWindow * window, TextureHolder* textu
     associatedButtons[INTERACT] = 0;
     associatedButtons[EXIT] = 0;
 
+    // The vector of floating symbols is initialized
+    for(int i=0;i<FLOATING_CONTROLS_NUM;i++){
+        sf::Sprite s;
+        int randomScale = 1+rand()%5;
+        s.setPosition(rand()%MAIN_WINDOW_WIDTH-s.getTextureRect().width*s.getScale().x/2,
+                      rand()%MAIN_WINDOW_HEIGHT-s.getTextureRect().height*s.getScale().y/2);
+        s.setScale(randomScale,randomScale);
+        s.setColor(FLOATING_CONTROLS_COLOR);
+        floatingControls.push_back(s);
+
+        // The speeds too
+        floatingSpeeds.push_back(sf::Vector2f(1.0-(rand()%201)/100.0,1.0-(rand()%201)/100.0));
+    }
+}
+
+void ControlsManager::moveFloatingControls(){
+    for(int i=0;i<FLOATING_CONTROLS_NUM;i++){
+        floatingControls[i].move(floatingSpeeds[i]);
+        if(floatingControls[i].getPosition().x > MAIN_WINDOW_WIDTH)
+            floatingControls[i].setPosition(-(floatingControls[i].getTextureRect().width*floatingControls[i].getScale().x),
+                                            floatingControls[i].getPosition().y);
+
+        else if(floatingControls[i].getPosition().x < -(floatingControls[i].getTextureRect().width*floatingControls[i].getScale().x))
+            floatingControls[i].setPosition(MAIN_WINDOW_WIDTH,
+                                            floatingControls[i].getPosition().y);
+
+        if(floatingControls[i].getPosition().y > MAIN_WINDOW_HEIGHT)
+            floatingControls[i].setPosition(floatingControls[i].getPosition().x,
+                                            -(floatingControls[i].getTextureRect().height*floatingControls[i].getScale().y));
+
+        else if(floatingControls[i].getPosition().y < -(floatingControls[i].getTextureRect().height*floatingControls[i].getScale().y))
+            floatingControls[i].setPosition(floatingControls[i].getPosition().x,
+                                            MAIN_WINDOW_HEIGHT);
+    }
+}
+
+void ControlsManager::drawFloatingControls(){
+    for(int i=0;i<FLOATING_CONTROLS_NUM;i++){
+        window->draw(floatingControls[i]);
+    }
 }
 
 bool ControlsManager::isAvailable(Control c){
@@ -85,9 +125,12 @@ void ControlsManager::showControls(CharName character)
     // The first available control is assigned to the character. The static cast thing allows
     // you to transform an integer into an element of an enum
 
-    if(isAvailable(KEYBOARD_LEFT)) characterControls[character] = KEYBOARD_LEFT;
-    else if(isAvailable(KEYBOARD_RIGHT)) characterControls[character] = KEYBOARD_RIGHT;
-    else mustConnectJoystick = true;
+    if(!characterControls.count(character)){
+        if(isAvailable(KEYBOARD_LEFT)) characterControls[character] = KEYBOARD_LEFT;
+        else if(isAvailable(KEYBOARD_RIGHT)) characterControls[character] = KEYBOARD_RIGHT;
+        else mustConnectJoystick = true;
+    }
+
 
     // Depending on the character and the controls, a texture for the controls window is chosen
     switch(character){
@@ -96,6 +139,9 @@ void ControlsManager::showControls(CharName character)
                 // this->controlsSprite.setTexture(textureHolder->get(ControlsGabrielaMustConnectJoystick));
             } else if(characterControls[GABRIELA] == KEYBOARD_LEFT){
                 this->controlsSprite.setTexture(textureHolder->get(ControlsGabrielaLeftKeyboard));
+                for(int i=0;i<FLOATING_CONTROLS_NUM;i++){
+                    floatingControls[i].setTexture(textureHolder->get(FloatingLeftKeyboardGabriela));
+                }
             } else if (characterControls[GABRIELA] == KEYBOARD_RIGHT){
                 // this->controlsSprite.setTexture(textureHolder->get(ControlsGabrielaRightKeyboard));
             }
@@ -164,9 +210,12 @@ void ControlsManager::showControls(CharName character)
 
         controlsSprite.setTextureRect( glitchRect );
 
+        moveFloatingControls();
+
         window->clear();
 
         window->draw(controlsSprite);
+        if(glitchCounter==15)drawFloatingControls();
 
         window->display();
     }

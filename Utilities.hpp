@@ -4,6 +4,7 @@
 #include <iostream>
 #include <SFML/Window.hpp>
 #include <SFML/System.hpp>
+#include <SFML/Graphics.hpp>
 
 /*
     This file contains lots of useful stuff: enums,
@@ -24,7 +25,8 @@ enum CharName{
 enum TextureID {
     GabrielaTextbox, DanielaTextbox, BystanderTextbox,
     WarningTitle, WarningBackground, WarningNormalText, WarningGlitchText, WarningPressAnyKey,
-    ControlsGabrielaLeftKeyboard
+    ControlsGabrielaLeftKeyboard,
+    FloatingLeftKeyboardGabriela
 };
 
 // Identifiers for every font used
@@ -133,6 +135,17 @@ const int WARNING_GLITCH_Y = 450;
 // Width of the texture for the control window (the left part is
 // full of glitch effects)
 const int CONTROLS_TEXTURE_WIDTH = MAIN_WINDOW_WIDTH*3;
+
+// Number of keyboard/joystick symbols that float
+// in the background of the controls window
+const int FLOATING_CONTROLS_NUM = 6;
+
+// Max speed that the floating controls can reach
+// (acts as a positive limit and a negative limit so 3 means 3 and -3)
+const int FLOATING_CONTROLS_MAX_SPEED = 1;
+
+// Color for the floating controls (most importantly transparency)
+const sf::Color FLOATING_CONTROLS_COLOR = sf::Color(255,255,255,10);
 
 // Keys that the left half of the keyboard uses
 const sf::Keyboard::Key KL_UP = sf::Keyboard::W;

@@ -4,6 +4,7 @@
 #include <SFML/Graphics.hpp>
 #include "ResourceHolder.hpp"
 #include <map>
+#include <vector>
 
 // Class that manages everything related to controls
 class ControlsManager
@@ -34,6 +35,20 @@ class ControlsManager
 
         // Pointer to the texture holder so that it can be used later
         TextureHolder* textureHolder;
+
+        // Vector of floating symbols of controls that show in the background
+        std::vector<sf::Sprite> floatingControls;
+
+        // Vector of speeds for every floating control (this could be done in a separate class)
+        std::vector<sf::Vector2f> floatingSpeeds;
+
+        // Function that moves the floating controls in the background
+        void moveFloatingControls();
+
+        // Function that draw the floating controls (i swear to god this should
+        // be done in a different class but i dont want to make 19048084 classes for
+        // silly effects that are going to be used for just one specific situation)
+        void drawFloatingControls();
 
     public:
         ControlsManager(sf::RenderWindow * window, TextureHolder* textureHolder, SoundHolder& soundHolder);

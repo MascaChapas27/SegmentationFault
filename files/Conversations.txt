@@ -23,10 +23,12 @@
 # 
 # A blank line means "this is the end of an Interaction"
 # and a dollar symbol means "this is the end of a Conversation"
-# Finally, a @ symbol means "end of the file"
+# Finally, the @ symbol means "end of the file"
 # Every conversation has a code, which appears in the comment that comes before it
 #
-# 0: Test conversation
+########################
+# 0: Test conversation #
+########################
 0
 2
 GABRIELA
@@ -64,7 +66,9 @@ GABRIELA
 1
 No se pero es Bien
 $
-# 1: Second test in which Gabriela speaks with Bystander
+##########################################################
+# 1: Second test in which Gabriela speaks with Bystander #
+##########################################################
 1
 GABRIELA
 1
@@ -130,7 +134,9 @@ GABRIELA
 1
 amai la kuki
 $
-# 2: Third test in which three characters speak
+#################################################
+# 2: Third test in which three characters speak #
+#################################################
 2
 GABRIELA
 DANIELA

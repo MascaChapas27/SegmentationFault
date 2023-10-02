@@ -28,12 +28,18 @@ void conversationTest(TextureHolder& textureHolder, SoundHolder& soundHolder, Fo
 int main(){
 
     // This thing makes error messages disappear because they keep appearing oh god
+    // they are everywhere go straight to hell and dont come back
     sf::err().rdbuf(NULL);
 
     // This is the main window we are going to use through the
     // whole game
     sf::RenderWindow window(sf::VideoMode(800,600),"amai");
     window.setFramerateLimit(60);
+
+    // Here, the window icon is created and established
+    sf::Image icon;
+    icon.loadFromFile("sprites/icons/iconNormal.png");
+    window.setIcon(icon.getSize().x, icon.getSize().y, icon.getPixelsPtr());
 
     std::cout << "Loading textures..." << std::endl;
     // All textures are initialized

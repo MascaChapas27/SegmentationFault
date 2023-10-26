@@ -8,7 +8,7 @@ void ResourceHolder<Resource,Identifier>::load(Identifier id, const std::string&
 
     // We try to load the resource. If there is an error, we throw an exception
     if(!resource->loadFromFile(fileName))
-        throw std::runtime_error("ResourceHolder::load - Failed to load " + fileName);
+        throw std::runtime_error("Tried to load " + fileName + " but it went catastrophically bad :(");
 
     // It's important to std::move the pointer so that it's not destroyed
     // as soon as the function ends. Also, the insert function returns a pair

@@ -31,6 +31,9 @@ int main(){
     // they are everywhere go straight to hell and dont come back
     sf::err().rdbuf(NULL);
 
+    // Some graphics cards are not good enough for some texture sizes, so let's check it
+    checkGraphicsCard();
+
     // This is the main window we are going to use through the
     // whole game
     sf::RenderWindow window(sf::VideoMode(800,600),"amai");
@@ -82,7 +85,7 @@ int main(){
     conversationHolder.load("files/Conversations.txt");
 
     // Uncomment to test conversations
-    conversationTest(textureHolder,soundHolder,fontHolder,conversationHolder);
+    // conversationTest(textureHolder,soundHolder,fontHolder,conversationHolder);
 
     // The warning window is created using a pointer to the main window
     WarningWindow ww(&window,textureHolder,soundHolder);

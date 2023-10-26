@@ -11,6 +11,14 @@
     constants, etc etc etc
 */
 
+////////////////////
+//GLOBAL VARIABLES//
+////////////////////
+
+// I know global variables are fckuking bad but ehheheh
+
+// Placeholder for the window and the stuffHolders
+
 ///////////////////
 ////// ENUMS //////
 ///////////////////
@@ -65,6 +73,9 @@ enum KeyAction{
 ///////////////////////
 ////// CONSTANTS //////
 ///////////////////////
+
+// Max sixe of a texture (your graphics card should support it)
+const int MAX_TEXTURE_SIZE = 2048;
 
 // Height and width of the main window
 const int MAIN_WINDOW_HEIGHT = 600;
@@ -170,5 +181,8 @@ double randDouble();
 
 // Causes a Segmentation Fault
 void segfault();
+
+// Checks if your graphics card is good enough
+void checkGraphicsCard();
 
 #endif // __UTILITIES_HPP__

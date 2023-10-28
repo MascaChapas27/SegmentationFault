@@ -4,8 +4,14 @@
 #include "MusicPlayer.hpp"
 #include "WarningWindow.hpp"
 #include "ControlsManager.hpp"
+#include "Utilities.hpp"
 #include <thread>
 #include <chrono>
+#include <ctime>
+
+// Only definition of the global variables
+std::ofstream logFile;
+bool shadersOn;
 
 void conversationTest(TextureHolder& textureHolder, SoundHolder& soundHolder, FontHolder& fontHolder, ConversationHolder& conversationHolder){
     int codigo = 0;
@@ -19,8 +25,6 @@ void conversationTest(TextureHolder& textureHolder, SoundHolder& soundHolder, Fo
         conversationHolder.start(codigo,textureHolder,soundHolder,fontHolder);
 
         while(conversationHolder.updateConversation());
-
-
     }
     exit(0);
 }
@@ -31,20 +35,31 @@ int main(){
     // they are everywhere go straight to hell and dont come back
     sf::err().rdbuf(NULL);
 
+    // The error messages will go to this amazingly global error file
+    logFile.open("segfault.log",std::ios_base::app);
+    time_t tt;
+    struct tm* ti;
+    time(&tt);
+    ti = localtime(&tt);
+
+    logFile << "----------------------------------------------" << std::endl;
+    logFile << "Log File created. Today's date is: " << asctime(ti) << std::endl << std::endl;
+
     // Some graphics cards are not good enough for some texture sizes, so let's check it
     checkGraphicsCard();
 
     // This is the main window we are going to use through the
     // whole game
-    sf::RenderWindow window(sf::VideoMode(800,600),"amai");
-    window.setFramerateLimit(60);
+    sf::RenderWindow window(sf::VideoMode(MAIN_WINDOW_WIDTH,MAIN_WINDOW_HEIGHT),MAIN_WINDOW_NAME);
+    window.setFramerateLimit(MAX_FPS);
 
     // Here, the window icon is created and established
     sf::Image icon;
-    icon.loadFromFile("sprites/icons/iconNormal.png");
+    if(!icon.loadFromFile(ICON_FILE_NORMAL))
+        printFileError(ICON_FILE_NORMAL);
     window.setIcon(icon.getSize().x, icon.getSize().y, icon.getPixelsPtr());
 
-    std::cout << "Loading textures..." << std::endl;
+    logFile << "Loading textures..." << std::endl;
     // All textures are initialized
     TextureHolder textureHolder;
     textureHolder.load(GabrielaTextbox,"sprites/textbox/gabrielaTextbox.png");
@@ -58,7 +73,7 @@ int main(){
     textureHolder.load(ControlsGabrielaLeftKeyboard,"sprites/controls/controlsGabrielaLeftKeyboard.png");
     textureHolder.load(FloatingLeftKeyboardGabriela,"sprites/controls/floatingLeftKeyboardGabriela.png");
 
-    std::cout << "Loading sound effects..." << std::endl;
+    logFile << "Loading sound effects..." << std::endl;
     // All sound buffers are initialized
     SoundHolder soundHolder;
     soundHolder.load(GabrielaSpeaking,"sounds/speaking/gabrielaSpeaking.wav");
@@ -68,18 +83,18 @@ int main(){
     soundHolder.load(AdvanceConversation,"sounds/speaking/advanceConversation.wav");
     soundHolder.load(ControlsGlitchSound,"sounds/glitch/controlsGlitchSound.wav");
 
-    std::cout << "Loading music..." << std::endl;
+    logFile << "Loading music..." << std::endl;
     // Al music themes are initialized
     MusicPlayer musicPlayer;
     musicPlayer.load(WarningMusic,"music/warning/warningMusic.wav");
 
-    std::cout << "Loading fonts..." << std::endl;
+    logFile << "Loading fonts..." << std::endl;
     // All fonts are initialized
     FontHolder fontHolder;
     fontHolder.load(GabrielaFont,"fonts/gabriela.ttf");
     fontHolder.load(DanielaFont,"fonts/daniela.ttf");
 
-    std::cout << "Loading conversations..." << std::endl;
+    logFile << "Loading conversations..." << std::endl << std::endl;
     // All conversations are initialized
     ConversationHolder conversationHolder(soundHolder);
     conversationHolder.load("files/Conversations.txt");

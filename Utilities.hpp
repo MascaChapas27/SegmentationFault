@@ -2,6 +2,7 @@
 #define __UTILITIES_HPP__
 
 #include <iostream>
+#include <fstream>
 #include <SFML/Window.hpp>
 #include <SFML/System.hpp>
 #include <SFML/Graphics.hpp>
@@ -18,6 +19,12 @@
 // I know global variables are fckuking bad but ehheheh
 
 // Placeholder for the window and the stuffHolders
+
+// Flag that is activated when shaders are allowed
+extern bool shadersOn;
+
+// Log file that tells everything that happened
+extern std::ofstream logFile;
 
 ///////////////////
 ////// ENUMS //////
@@ -74,12 +81,21 @@ enum KeyAction{
 ////// CONSTANTS //////
 ///////////////////////
 
+// Icons used for the window
+const std::string ICON_FILE_NORMAL = "sprites/icons/iconNormal.png";
+
 // Max sixe of a texture (your graphics card should support it)
 const int MAX_TEXTURE_SIZE = 2048;
 
 // Height and width of the main window
 const int MAIN_WINDOW_HEIGHT = 600;
 const int MAIN_WINDOW_WIDTH = 800;
+
+// Name of the main window
+const std::string MAIN_WINDOW_NAME = "amailakuki";
+
+// Max amount of frames per second for the main window
+const int MAX_FPS = 60;
 
 // Height and width of a textbox
 const int TEXTBOX_HEIGHT = 200;

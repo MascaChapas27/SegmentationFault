@@ -36,7 +36,7 @@ int main(){
     sf::err().rdbuf(NULL);
 
     // The error messages will go to this amazingly global error file
-    logFile.open("segfault.log",std::ios_base::app);
+    logFile.open(LOG_FILE_PATH,std::ios_base::app);
     time_t tt;
     struct tm* ti;
     time(&tt);
@@ -50,7 +50,7 @@ int main(){
 
     // This is the main window we are going to use through the
     // whole game
-    sf::RenderWindow window(sf::VideoMode(MAIN_WINDOW_WIDTH,MAIN_WINDOW_HEIGHT),MAIN_WINDOW_NAME);
+    sf::RenderWindow window(sf::VideoMode(MAIN_WINDOW_WIDTH,MAIN_WINDOW_HEIGHT),MAIN_WINDOW_NAME,sf::Style::Titlebar);
     window.setFramerateLimit(MAX_FPS);
 
     // Here, the window icon is created and established

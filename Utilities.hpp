@@ -81,6 +81,9 @@ enum KeyAction{
 ////// CONSTANTS //////
 ///////////////////////
 
+// Path in which the log file will be created
+const std::string LOG_FILE_PATH = "segfault.log";
+
 // Icons used for the window
 const std::string ICON_FILE_NORMAL = "sprites/icons/iconNormal.png";
 

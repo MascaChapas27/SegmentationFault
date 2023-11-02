@@ -25,3 +25,13 @@ void MusicPlayer::stop()
 {
     currentMusic.stop();
 }
+
+float MusicPlayer::getVolume()
+{
+    return currentMusic.getVolume();
+}
+
+void MusicPlayer::alterVolume(float change)
+{
+    currentMusic.setVolume(currentMusic.getVolume()+change);
+}

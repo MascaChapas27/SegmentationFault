@@ -17,6 +17,11 @@ class MusicPlayer
         void load(MusicID identifier, const std::string path);
         void play(MusicID theme);
         void stop();
+        float getVolume();
+        void alterVolume(float change);
 };
+
+// The one and only MusicPlayer that will be used in the whole game
+extern MusicPlayer musicPlayer;
 
 #endif // __MUSIC_PLAYER_HPP__

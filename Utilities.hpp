@@ -20,9 +20,6 @@
 
 // Placeholder for the window and the stuffHolders
 
-// Flag that is activated when shaders are allowed
-extern bool shadersOn;
-
 // Log file that tells everything that happened
 extern std::ofstream logFile;
 

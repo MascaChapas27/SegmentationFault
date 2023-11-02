@@ -3,6 +3,7 @@
 
 #include <SFML/Graphics.hpp>
 #include "ResourceHolder.hpp"
+#include "MusicPlayer.hpp"
 
 // Class for the warning window that appears at the beginning
 class WarningWindow

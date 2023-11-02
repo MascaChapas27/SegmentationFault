@@ -12,6 +12,7 @@
 // Only definition of the global variables
 std::ofstream logFile;
 bool shadersOn;
+MusicPlayer musicPlayer;
 
 void conversationTest(TextureHolder& textureHolder, SoundHolder& soundHolder, FontHolder& fontHolder, ConversationHolder& conversationHolder){
     int codigo = 0;
@@ -85,7 +86,6 @@ int main(){
 
     logFile << "Loading music..." << std::endl;
     // Al music themes are initialized
-    MusicPlayer musicPlayer;
     musicPlayer.load(WarningMusic,"music/warning/warningMusic.wav");
 
     logFile << "Loading fonts..." << std::endl;
@@ -110,13 +110,9 @@ int main(){
     ControlsManager controlsManager(&window,&textureHolder,soundHolder);
 
     // Then, the warning window runs (and the warning music plays)
-    musicPlayer.play(WarningMusic);
     ww.run();
 
-    // When the warning window ends, then the music stops as well
-    musicPlayer.stop();
-
-    // The controls for Gabriela arw shown
+    // The controls for Gabriela are shown
     controlsManager.showControls(GABRIELA);
 
     return 0;

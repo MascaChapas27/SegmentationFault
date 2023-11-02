@@ -31,9 +31,7 @@ void checkGraphicsCard(){
     if(!sf::Shader::isAvailable()){
         logFile << "It seems like your graphics card doesn't support the use of shaders!!" << std::endl;
         logFile << "This shouldn't be a problem, don't worry (the game will lose some cool effects though...)" << std::endl << std::endl;
-        shadersOn = false;
     } else {
         logFile << "Your graphics card supports shaders!" << std::endl << std::endl;
-        shadersOn = true;
     }
 }

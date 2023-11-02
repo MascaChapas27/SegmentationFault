@@ -40,6 +40,9 @@ WarningWindow::WarningWindow(sf::RenderWindow * window, TextureHolder& textureHo
 
 void WarningWindow::run()
 {
+    // First of all, the music plays
+    musicPlayer.play(WarningMusic);
+
     // This counter starts at a low odd number so that
     // every frame it's added 2 until it reaches 255
     int aux = -199;
@@ -101,6 +104,15 @@ void WarningWindow::run()
     // Third thing: the normal text and the glitch text appears, as well as
     // the "Press Any Key" text, allowing the player to continue
 
+    // This flag is set to true if we press any key
+    bool exiting = false;
+
+    // This rectangle will cover the screen and make it completely black at the end
+    sf::RectangleShape bigBlackRectangle;
+    bigBlackRectangle.setFillColor(sf::Color(0,0,0,0));
+    bigBlackRectangle.setPosition(0,0);
+    bigBlackRectangle.setSize(sf::Vector2f(MAIN_WINDOW_WIDTH,MAIN_WINDOW_HEIGHT));
+
     while(true)
     {
         // If the user presses any key, the warning window ends
@@ -109,8 +121,17 @@ void WarningWindow::run()
         {
             if(event.type == sf::Event::KeyPressed)
             {
-                return;
+                exiting = true;
             }
+        }
+
+        if(exiting){
+            if(bigBlackRectangle.getFillColor().a < 255)
+                bigBlackRectangle.setFillColor(sf::Color(0,0,0,bigBlackRectangle.getFillColor().a+5));
+            if(musicPlayer.getVolume() > 2)
+                musicPlayer.alterVolume(-1);
+            else
+                return;
         }
 
         backgroundTransparency+=1;
@@ -139,7 +160,7 @@ void WarningWindow::run()
         // Just like with glitch characters and their textbox, the glitch text
         // glitches sometimes. When this happens, a glitch sound plays
         sf::IntRect glitchTextRect = glitchTextSprite.getTextureRect();
-        if(aux>0 && (glitchTextSprite.getTextureRect().top == 0 ? rand()%50 == 11 : rand()%2 == 1))
+        if(!exiting && aux>0 && (glitchTextSprite.getTextureRect().top == 0 ? rand()%50 == 11 : rand()%2 == 1))
         {
             glitchTextRect.top = (rand()%3 + 1) * WARNING_GLITCH_HEIGHT;
             glitchSound.play();
@@ -166,6 +187,9 @@ void WarningWindow::run()
         window->draw(normalTextSprite);
         window->draw(glitchTextSprite);
         window->draw(pressAnyKeySprite);
+        window->draw(bigBlackRectangle);
         window->display();
     }
+
+    musicPlayer.stop();
 }

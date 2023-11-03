@@ -18,6 +18,7 @@ void MusicPlayer::play(MusicID theme)
         printFileError(filename);
 
     currentMusic.setLoop(true);
+    currentMusic.setVolume(MAX_MUSIC_VOLUME);
     currentMusic.play();
 }
 

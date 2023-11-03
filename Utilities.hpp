@@ -84,6 +84,10 @@ const std::string LOG_FILE_PATH = "segfault.log";
 // Icons used for the window
 const std::string ICON_FILE_NORMAL = "sprites/icons/iconNormal.png";
 
+// Max and min volume for music
+const int MAX_MUSIC_VOLUME = 100;
+const int MIN_MUSIC_VOLUME = 0;
+
 // Max sixe of a texture (your graphics card should support it)
 const int MAX_TEXTURE_SIZE = 2048;
 

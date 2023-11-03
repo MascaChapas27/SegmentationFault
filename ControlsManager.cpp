@@ -189,7 +189,6 @@ void ControlsManager::showControls(CharName character)
         }
 
         sf::IntRect glitchRect = controlsSprite.getTextureRect();
-
         // While the glitchCounter is small, the controls window is glitchy
         if(glitchCounter<15 && glitchCounter >= 0)
         {

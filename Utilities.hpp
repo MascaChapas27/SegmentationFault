@@ -84,6 +84,9 @@ const std::string LOG_FILE_PATH = "segfault.log";
 // Icons used for the window
 const std::string ICON_FILE_NORMAL = "sprites/icons/iconNormal.png";
 
+// Key that you have to press in order to start conversation debug mode
+const sf::Keyboard::Key DEBUG_KEY = sf::Keyboard::Semicolon;
+
 // Max and min volume for music
 const int MAX_MUSIC_VOLUME = 100;
 const int MIN_MUSIC_VOLUME = 0;

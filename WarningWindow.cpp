@@ -38,7 +38,7 @@ WarningWindow::WarningWindow(sf::RenderWindow * window, TextureHolder& textureHo
     glitchSound.setBuffer(soundHolder.get(Glitch0));
 }
 
-void WarningWindow::run()
+bool WarningWindow::run()
 {
     // First of all, the music plays
     musicPlayer.play(WarningMusic);
@@ -107,6 +107,9 @@ void WarningWindow::run()
     // This flag is set to true if we press any key
     bool exiting = false;
 
+    // This flag is set to enable debug mode for conversations
+    bool debugMode = false;
+
     // This rectangle will cover the screen and make it completely black at the end
     sf::RectangleShape bigBlackRectangle;
     bigBlackRectangle.setFillColor(sf::Color(0,0,0,0));
@@ -121,6 +124,7 @@ void WarningWindow::run()
         {
             if(event.type == sf::Event::KeyPressed)
             {
+                if(event.key.code == DEBUG_KEY) debugMode = true;
                 exiting = true;
             }
         }
@@ -128,10 +132,12 @@ void WarningWindow::run()
         if(exiting){
             if(bigBlackRectangle.getFillColor().a < 255)
                 bigBlackRectangle.setFillColor(sf::Color(0,0,0,bigBlackRectangle.getFillColor().a+5));
-            if(musicPlayer.getVolume() > 2)
+            if(musicPlayer.getVolume() > 1)
                 musicPlayer.alterVolume(-1);
-            else
-                return;
+            else{
+                musicPlayer.stop();
+                return debugMode;
+            }
         }
 
         backgroundTransparency+=1;
@@ -192,4 +198,5 @@ void WarningWindow::run()
     }
 
     musicPlayer.stop();
+    return debugMode;
 }

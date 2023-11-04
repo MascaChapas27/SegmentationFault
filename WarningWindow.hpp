@@ -35,7 +35,7 @@ class WarningWindow
 
     public:
         WarningWindow(sf::RenderWindow * window, TextureHolder& textureHolder, SoundHolder& soundHolder);
-        void run();
+        bool run();
 };
 
 #endif // __WARNING_WINDOW_HPP__

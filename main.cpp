@@ -11,23 +11,26 @@
 
 // Only definition of the global variables
 std::ofstream logFile;
-bool shadersOn;
 MusicPlayer musicPlayer;
 
 void conversationTest(TextureHolder& textureHolder, SoundHolder& soundHolder, FontHolder& fontHolder, ConversationHolder& conversationHolder){
-    int codigo = 0;
+    int code = 0;
+    std::cout << "Welcome to conversation debug mode!" << std::endl;
 
     while(true){
         std::cout << "Enter a conversation code (or -1 to end): ";
-        std::cin >> codigo;
+        std::cin >> code;
 
-        if(codigo == -1) break;
+        if(code == -1) break;
 
-        conversationHolder.start(codigo,textureHolder,soundHolder,fontHolder);
+        conversationHolder.start(code,textureHolder,soundHolder,fontHolder);
 
         while(conversationHolder.updateConversation());
     }
-    exit(0);
+
+
+
+    exit(EXIT_SUCCESS);
 }
 
 int main(){
@@ -99,9 +102,6 @@ int main(){
     ConversationHolder conversationHolder(soundHolder);
     conversationHolder.load("files/Conversations.txt");
 
-    // Uncomment to test conversations
-    // conversationTest(textureHolder,soundHolder,fontHolder,conversationHolder);
-
     // The warning window is created using a pointer to the main window
     WarningWindow ww(&window,textureHolder,soundHolder);
 
@@ -109,11 +109,15 @@ int main(){
     // as well (this main window will always be used)
     ControlsManager controlsManager(&window,&textureHolder,soundHolder);
 
-    // Then, the warning window runs (and the warning music plays)
-    ww.run();
+    // Then, the warning window runs. If you press ñ (or semicolon)
+    // the conversation test will start
+    if(ww.run()){
+        window.close();
+        conversationTest(textureHolder,soundHolder,fontHolder,conversationHolder);
+    }
 
     // The controls for Gabriela are shown
     controlsManager.showControls(GABRIELA);
 
-    return 0;
+    return EXIT_SUCCESS;
 }

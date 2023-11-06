@@ -28,3 +28,7 @@
 
 # Log files
 *.log
+
+# Code::Blocks stuff
+*.depend
+*.layout

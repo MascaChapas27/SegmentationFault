@@ -8,11 +8,12 @@
 // Class for the warning window that appears at the beginning
 class WarningWindow
 {
+    protected:
+        WarningWindow();
+
+        static WarningWindow * warningWindow;
+
     private:
-        // Window in which everything is shown (it's a pointer
-        // because the window lives in the main function, we are
-        // just going to store a reference to it)
-        sf::RenderWindow * window;
 
         // Sprite for the background that shows "warning" a lot
         // of times
@@ -34,8 +35,21 @@ class WarningWindow
         sf::Sound glitchSound;
 
     public:
-        WarningWindow(sf::RenderWindow * window, TextureHolder& textureHolder, SoundHolder& soundHolder);
+
+        // Warn the players about what could happen if
+        //
+        //
+        //
         bool run();
+
+        // NEVER CLONE A SINGLETON
+        WarningWindow(WarningWindow &other) = delete;
+
+        // NEVER ASSIGN A SINGLETON
+        void operator=(const WarningWindow &) = delete;
+
+        // Get the instance
+        static WarningWindow * getInstance();
 };
 
 #endif // __WARNING_WINDOW_HPP__

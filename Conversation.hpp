@@ -33,9 +33,7 @@ class Conversation{
         Conversation(std::list<Interaction>& interactions, std::list<CharName>& characters, std::list<CharName>& glitchedCharacters);
 
         bool advance();
-        void initialize(ResourceHolder<sf::Texture,TextureID>& textureHolder,
-                                      ResourceHolder<sf::SoundBuffer,SoundID>& soundHolder,
-                                      ResourceHolder<sf::Font,FontID>& fontHolder);
+        void initialize();
         bool update(bool checkIfAdvance);
 
         ~Conversation();

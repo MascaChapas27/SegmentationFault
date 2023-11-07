@@ -30,11 +30,9 @@ class ConversationHolder{
         bool keyPressed;
 
     public:
-        ConversationHolder(ResourceHolder<sf::SoundBuffer,SoundID>& soundHolder);
+        ConversationHolder();
         void load(std::string path);
-        void start(int code, ResourceHolder<sf::Texture,TextureID>& textureHolder,
-                   ResourceHolder<sf::SoundBuffer,SoundID>& soundHolder,
-                   ResourceHolder<sf::Font,FontID>& fontHolder);
+        void start(int code);
         bool updateConversation();
         ~ConversationHolder();
 };

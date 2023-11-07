@@ -1,17 +1,13 @@
-#include "Textbox.hpp"
+#include "Utilities.hpp"
 #include "ResourceHolder.hpp"
 #include "ConversationHolder.hpp"
 #include "MusicPlayer.hpp"
 #include "WarningWindow.hpp"
 #include "ControlsManager.hpp"
-#include "Utilities.hpp"
-#include <thread>
-#include <chrono>
-#include <ctime>
 
 // If you are using Windows, a Windows Factory will be created,
 // but if you are using Linux, a Linux Factory will be created.
-// Factories create stuff specific to an operating system in this case
+// These factories create stuff specific to an operating system
 
 #ifdef _WIN32
 
@@ -25,14 +21,14 @@ AbstractFactory * abstractFactory = new WindowsFactory();
 
 AbstractFactory * abstractFactory = new LinuxFactory();
 
-#endif // __linux__
-
+#endif
 
 // Only definition of the global variables
 std::ofstream logFile;
-MusicPlayer musicPlayer;
+sf::RenderWindow window;
 
-void conversationTest(TextureHolder& textureHolder, SoundHolder& soundHolder, FontHolder& fontHolder, ConversationHolder& conversationHolder){
+// Debug mode to check if conversations are correct
+void conversationTest(ConversationHolder& conversationHolder){
     int code = 0;
     std::cout << "Welcome to conversation debug mode!" << std::endl;
 
@@ -42,12 +38,10 @@ void conversationTest(TextureHolder& textureHolder, SoundHolder& soundHolder, Fo
 
         if(code == -1) break;
 
-        conversationHolder.start(code,textureHolder,soundHolder,fontHolder);
+        conversationHolder.start(code);
 
         while(conversationHolder.updateConversation());
     }
-
-
 
     exit(EXIT_SUCCESS);
 }
@@ -71,9 +65,8 @@ int main(){
     // Some graphics cards are not good enough for some texture sizes, so let's check it
     checkGraphicsCard();
 
-    // This is the main window we are going to use through the
-    // whole game
-    sf::RenderWindow window(sf::VideoMode(MAIN_WINDOW_WIDTH,MAIN_WINDOW_HEIGHT),MAIN_WINDOW_NAME,sf::Style::Titlebar);
+    // This is the main window we are going to use through the whole game
+    window.create(sf::VideoMode(MAIN_WINDOW_WIDTH,MAIN_WINDOW_HEIGHT),MAIN_WINDOW_NAME,sf::Style::Titlebar);
     window.setFramerateLimit(MAX_FPS);
 
     // Here, the window icon is created and established
@@ -84,64 +77,60 @@ int main(){
 
     logFile << "Loading textures..." << std::endl;
     // All textures are initialized
-    TextureHolder textureHolder;
-    textureHolder.load(GabrielaTextbox,"sprites/textbox/gabrielaTextbox.png");
-    textureHolder.load(DanielaTextbox,"sprites/textbox/danielaTextbox.png");
-    textureHolder.load(BystanderTextbox,"sprites/textbox/bystanderTextbox.png");
-    textureHolder.load(WarningBackground,"sprites/warning/warningBackground.png");
-    textureHolder.load(WarningTitle,"sprites/warning/warningTitle.png");
-    textureHolder.load(WarningNormalText,"sprites/warning/warningNormalText.png");
-    textureHolder.load(WarningGlitchText,"sprites/warning/warningGlitchText.png");
-    textureHolder.load(WarningPressAnyKey,"sprites/warning/warningPressAnyKey.png");
-    textureHolder.load(ControlsGabrielaLeftKeyboard,"sprites/controls/controlsGabrielaLeftKeyboard.png");
-    textureHolder.load(FloatingLeftKeyboardGabriela,"sprites/controls/floatingLeftKeyboardGabriela.png");
+    TextureHolder * textureHolder = TextureHolder::getTextureInstance();
+    textureHolder->load(GabrielaTextbox,"sprites/textbox/gabrielaTextbox.png");
+    textureHolder->load(DanielaTextbox,"sprites/textbox/danielaTextbox.png");
+    textureHolder->load(BystanderTextbox,"sprites/textbox/bystanderTextbox.png");
+    textureHolder->load(WarningBackground,"sprites/warning/warningBackground.png");
+    textureHolder->load(WarningTitle,"sprites/warning/warningTitle.png");
+    textureHolder->load(WarningNormalText,"sprites/warning/warningNormalText.png");
+    textureHolder->load(WarningGlitchText,"sprites/warning/warningGlitchText.png");
+    textureHolder->load(WarningPressAnyKey,"sprites/warning/warningPressAnyKey.png");
+    textureHolder->load(ControlsGabrielaLeftKeyboard,"sprites/controls/controlsGabrielaLeftKeyboard.png");
+    textureHolder->load(FloatingLeftKeyboardGabriela,"sprites/controls/floatingLeftKeyboardGabriela.png");
 
     logFile << "Loading sound effects..." << std::endl;
     // All sound buffers are initialized
-    SoundHolder soundHolder;
-    soundHolder.load(GabrielaSpeaking,"sounds/speaking/gabrielaSpeaking.wav");
-    soundHolder.load(DanielaSpeaking,"sounds/speaking/danielaSpeaking.wav");
-    soundHolder.load(Glitch0,"sounds/glitch/glitch0.wav");
-    soundHolder.load(Glitch1,"sounds/glitch/glitch1.wav");
-    soundHolder.load(AdvanceConversation,"sounds/speaking/advanceConversation.wav");
-    soundHolder.load(ControlsGlitchSound,"sounds/glitch/controlsGlitchSound.wav");
+    SoundHolder * soundHolder = SoundHolder::getSoundInstance();
+    soundHolder->load(GabrielaSpeaking,"sounds/speaking/gabrielaSpeaking.wav");
+    soundHolder->load(DanielaSpeaking,"sounds/speaking/danielaSpeaking.wav");
+    soundHolder->load(Glitch0,"sounds/glitch/glitch0.wav");
+    soundHolder->load(Glitch1,"sounds/glitch/glitch1.wav");
+    soundHolder->load(AdvanceConversation,"sounds/speaking/advanceConversation.wav");
+    soundHolder->load(ControlsGlitchSound,"sounds/glitch/controlsGlitchSound.wav");
 
     logFile << "Loading music..." << std::endl;
     // Al music themes are initialized
-    musicPlayer.load(WarningMusic,"music/warning/warningMusic.wav");
+    MusicPlayer * musicPlayer = MusicPlayer::getInstance();
+    musicPlayer->load(WarningMusic,"music/warning/warningMusic.wav");
 
     logFile << "Loading fonts..." << std::endl;
     // All fonts are initialized
-    FontHolder fontHolder;
-    fontHolder.load(GabrielaFont,"fonts/gabriela.ttf");
-    fontHolder.load(DanielaFont,"fonts/daniela.ttf");
+    FontHolder * fontHolder = FontHolder::getFontInstance();
+    fontHolder->load(GabrielaFont,"fonts/gabriela.ttf");
+    fontHolder->load(DanielaFont,"fonts/daniela.ttf");
 
     logFile << "Loading conversations..." << std::endl << std::endl;
     // All conversations are initialized
-    ConversationHolder conversationHolder(soundHolder);
+    ConversationHolder conversationHolder;
     conversationHolder.load("files/Conversations.txt");
 
-    // The warning window is created using a pointer to the main window
-    WarningWindow ww(&window,textureHolder,soundHolder);
-
-    // The controls window is created with a pointer to the main window
-    // as well (this main window will always be used)
-    ControlsManager controlsManager(&window,&textureHolder,soundHolder);
-
-    // Then, the warning window runs. If you press ñ (or semicolon)
-    // the conversation test will start
-    if(ww.run()){
+    // Then, the warning window runs. If you press ñ (or semicolon
+    // (or ` (or whatever just try))) the conversation test will start
+    if(WarningWindow::getInstance()->run()){
         window.close();
-        conversationTest(textureHolder,soundHolder,fontHolder,conversationHolder);
+        conversationTest(conversationHolder);
     }
 
+    // Create a window just to try
     abstractFactory->createWindow("amai","amailakuki");
 
     // The controls for Gabriela are shown
-    controlsManager.showControls(GABRIELA);
+    ControlsManager::getInstance()->showControls(GABRIELA);
 
-
+    // Delete the abstract factory
     delete abstractFactory;
 
+    // The end
     return EXIT_SUCCESS;
 }

@@ -1,12 +1,20 @@
 #include "ControlsManager.hpp"
 
-ControlsManager::ControlsManager(sf::RenderWindow * window, TextureHolder* textureHolder, SoundHolder& soundHolder)
+// The instance is initially null
+ControlsManager * ControlsManager::controlsManager = nullptr;
+
+ControlsManager * ControlsManager::getInstance()
 {
-    this->window = window;
+    if(controlsManager == nullptr)
+        controlsManager = new ControlsManager;
+    return controlsManager;
+}
 
-    this->textureHolder = textureHolder;
+ControlsManager::ControlsManager()
+{
+    SoundHolder * soundHolder = SoundHolder::getSoundInstance();
 
-    this->glitchSound.setBuffer(soundHolder.get(ControlsGlitchSound));
+    this->glitchSound.setBuffer(soundHolder->get(ControlsGlitchSound));
 
     // Keys for the left part of the keyboard
     associatedKeys[std::pair<Control,KeyAction>(KEYBOARD_LEFT,DOWN)] = sf::Keyboard::S;
@@ -62,7 +70,7 @@ void ControlsManager::moveFloatingControls(){
 
 void ControlsManager::drawFloatingControls(){
     for(int i=0;i<FLOATING_CONTROLS_NUM;i++){
-        window->draw(floatingControls[i]);
+        window.draw(floatingControls[i]);
     }
 }
 
@@ -110,6 +118,7 @@ bool ControlsManager::isPressingButton(CharName character, KeyAction keyAction){
 
 void ControlsManager::showControls(CharName character)
 {
+    TextureHolder * textureHolder = TextureHolder::getTextureInstance();
 
     // The sound is played once at the beginning
     glitchSound.play();
@@ -160,7 +169,7 @@ void ControlsManager::showControls(CharName character)
     {
 
         sf::Event event;
-        while(window->pollEvent(event))
+        while(window.pollEvent(event))
         {
             if(event.type == sf::Event::KeyPressed && isPressingKey(character,INTERACT) && glitchCounter >= 0)
             {
@@ -211,11 +220,11 @@ void ControlsManager::showControls(CharName character)
 
         moveFloatingControls();
 
-        window->clear();
+        window.clear();
 
-        window->draw(controlsSprite);
-        if(glitchCounter==15)drawFloatingControls();
+        window.draw(controlsSprite);
+        if(glitchCounter==15) drawFloatingControls();
 
-        window->display();
+        window.display();
     }
 }

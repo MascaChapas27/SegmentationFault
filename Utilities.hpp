@@ -20,6 +20,7 @@
 // I know global variables are fckuking bad but ehheheh
 
 // Placeholder for the window and the stuffHolders
+extern sf::RenderWindow window;
 
 // Log file that tells everything that happened
 extern std::ofstream logFile;

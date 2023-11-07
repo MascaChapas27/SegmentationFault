@@ -1,14 +1,23 @@
 #include "WarningWindow.hpp"
 
-WarningWindow::WarningWindow(sf::RenderWindow * window, TextureHolder& textureHolder, SoundHolder& soundHolder)
+WarningWindow * WarningWindow::warningWindow = nullptr;
+
+WarningWindow * WarningWindow::getInstance()
 {
-    // The window pointer points at the window living in main
-    this->window = window;
+    if(warningWindow == nullptr)
+        warningWindow = new WarningWindow;
+    return warningWindow;
+}
+
+WarningWindow::WarningWindow()
+{
+    TextureHolder * textureHolder = TextureHolder::getTextureInstance();
+    SoundHolder * soundHolder = SoundHolder::getSoundInstance();
 
     // The texture for the background is set to repeat itself, then
     // it's assigned to the background sprite (possible because
     // it's a reference)
-    sf::Texture& auxTexture = textureHolder.get(WarningBackground);
+    sf::Texture& auxTexture = textureHolder->get(WarningBackground);
     auxTexture.setRepeated(true);
     backgroundSprite.setTexture(auxTexture);
 
@@ -18,30 +27,31 @@ WarningWindow::WarningWindow(sf::RenderWindow * window, TextureHolder& textureHo
     backgroundSprite.setTextureRect(backgroundRect);
 
     // The normal text and the title text are set as usual
-    normalTextSprite.setTexture(textureHolder.get(WarningNormalText));
-    warningTitleSprite.setTexture(textureHolder.get(WarningTitle));
+    normalTextSprite.setTexture(textureHolder->get(WarningNormalText));
+    warningTitleSprite.setTexture(textureHolder->get(WarningTitle));
 
     // The title is positioned according to the value stored in Utilities
     warningTitleSprite.setPosition(WARNING_TITLE_INITIAL_POSITION);
 
     // The glitch text is assigned a texture and is positioned properly
-    glitchTextSprite.setTexture(textureHolder.get(WarningGlitchText));
+    glitchTextSprite.setTexture(textureHolder->get(WarningGlitchText));
     sf::IntRect auxRect = glitchTextSprite.getTextureRect();
     auxRect.height = WARNING_GLITCH_HEIGHT;
     glitchTextSprite.setTextureRect(auxRect);
     glitchTextSprite.setPosition(0,WARNING_GLITCH_Y);
 
     // The sprite for the Press Enter text is set normally
-    pressAnyKeySprite.setTexture(textureHolder.get(WarningPressAnyKey));
+    pressAnyKeySprite.setTexture(textureHolder->get(WarningPressAnyKey));
 
     // The glitch text sound is initialized
-    glitchSound.setBuffer(soundHolder.get(Glitch0));
+    glitchSound.setBuffer(soundHolder->get(Glitch0));
 }
 
 bool WarningWindow::run()
 {
     // First of all, the music plays
-    musicPlayer.play(WarningMusic);
+    MusicPlayer * musicPlayer = MusicPlayer::getInstance();
+    musicPlayer->play(WarningMusic);
 
     // This counter starts at a low odd number so that
     // every frame it's added 2 until it reaches 255
@@ -61,14 +71,14 @@ bool WarningWindow::run()
     while(warningTitleTransparency < 400){
 
         sf::Event event;
-        while(window->pollEvent(event));
+        while(window.pollEvent(event));
 
         warningTitleTransparency+=3;
         warningTitleSprite.setColor(sf::Color(255,255,255,warningTitleTransparency > 255 ? 255 : warningTitleTransparency));
 
-        window->clear();
-        window->draw(warningTitleSprite);
-        window->display();
+        window.clear();
+        window.draw(warningTitleSprite);
+        window.display();
     }
 
     // Second thing: The "WARNING" title goes up and the background begins to be visible
@@ -77,7 +87,7 @@ bool WarningWindow::run()
     while(abs(warningTitleSprite.getPosition().y - WARNING_TITLE_FINAL_POSITION.y) > 3){
 
             sf::Event event;
-            while(window->pollEvent(event));
+            while(window.pollEvent(event));
 
             backgroundTransparency+=1;
             backgroundSprite.setColor(sf::Color(255,255,255,backgroundTransparency > 255 ? 255 : backgroundTransparency));
@@ -95,10 +105,10 @@ bool WarningWindow::run()
 
             warningTitleSprite.move(movement);
 
-            window->clear();
-            window->draw(backgroundSprite);
-            window->draw(warningTitleSprite);
-            window->display();
+            window.clear();
+            window.draw(backgroundSprite);
+            window.draw(warningTitleSprite);
+            window.display();
         }
 
     // Third thing: the normal text and the glitch text appears, as well as
@@ -120,7 +130,7 @@ bool WarningWindow::run()
     {
         // If the user presses any key, the warning window ends
         sf::Event event;
-        while(window->pollEvent(event))
+        while(window.pollEvent(event))
         {
             if(event.type == sf::Event::KeyPressed)
             {
@@ -132,10 +142,10 @@ bool WarningWindow::run()
         if(exiting){
             if(bigBlackRectangle.getFillColor().a < 255)
                 bigBlackRectangle.setFillColor(sf::Color(0,0,0,bigBlackRectangle.getFillColor().a+5));
-            if(musicPlayer.getVolume() > 1)
-                musicPlayer.alterVolume(-1);
+            if(musicPlayer->getVolume() > 1)
+                musicPlayer->alterVolume(-1);
             else{
-                musicPlayer.stop();
+                musicPlayer->stop();
                 return debugMode;
             }
         }
@@ -187,16 +197,16 @@ bool WarningWindow::run()
         }
 
         // The window is cleared and all sprites are drawn. Then, everything is displayed
-        window->clear();
-        window->draw(backgroundSprite);
-        window->draw(warningTitleSprite);
-        window->draw(normalTextSprite);
-        window->draw(glitchTextSprite);
-        window->draw(pressAnyKeySprite);
-        window->draw(bigBlackRectangle);
-        window->display();
+        window.clear();
+        window.draw(backgroundSprite);
+        window.draw(warningTitleSprite);
+        window.draw(normalTextSprite);
+        window.draw(glitchTextSprite);
+        window.draw(pressAnyKeySprite);
+        window.draw(bigBlackRectangle);
+        window.display();
     }
 
-    musicPlayer.stop();
+    musicPlayer->stop();
     return debugMode;
 }

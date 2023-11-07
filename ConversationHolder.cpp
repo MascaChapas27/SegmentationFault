@@ -1,9 +1,10 @@
 #include "ConversationHolder.hpp"
+#include "ResourceHolder.hpp"
 #include <fstream>
 
-ConversationHolder::ConversationHolder(ResourceHolder<sf::SoundBuffer,SoundID>& soundHolder){
+ConversationHolder::ConversationHolder(){
     keyPressed = false;
-    advanceSound.setBuffer(soundHolder.get(AdvanceConversation));
+    advanceSound.setBuffer(SoundHolder::getSoundInstance()->get(AdvanceConversation));
     names["GABRIELA"] = GABRIELA;
     names["DANIELA"] = DANIELA;
     names["BYSTANDER"] = BYSTANDER;
@@ -108,13 +109,11 @@ void ConversationHolder::load(std::string path){
 }
 
 // It starts the given conversation
-void ConversationHolder::start(int code, ResourceHolder<sf::Texture,TextureID>& textureHolder,
-           ResourceHolder<sf::SoundBuffer,SoundID>& soundHolder,
-           ResourceHolder<sf::Font,FontID>& fontHolder){
+void ConversationHolder::start(int code){
 
     currentConversation = code;
     advanceSound.play();
-    conversations[code]->initialize(textureHolder,soundHolder,fontHolder);
+    conversations[code]->initialize();
     keyPressed = false;
 }
 

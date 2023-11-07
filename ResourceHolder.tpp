@@ -1,5 +1,15 @@
 #include <assert.h>
 
+
+template <class Resource, class Identifier>
+TextureHolder * ResourceHolder<Resource,Identifier>::textureHolder = nullptr;
+
+template <class Resource, class Identifier>
+SoundHolder * ResourceHolder<Resource,Identifier>::soundHolder = nullptr;
+
+template <class Resource, class Identifier>
+FontHolder * ResourceHolder<Resource,Identifier>::fontHolder = nullptr;
+
 template <class Resource, class Identifier>
 void ResourceHolder<Resource,Identifier>::load(Identifier id, const std::string& fileName){
     // Unique pointers are better because they delete themselves when
@@ -34,4 +44,28 @@ Resource& ResourceHolder<Resource,Identifier>::get(Identifier id){
     // Once we have the element, which is a pair, we return
     // the texture, which is the second element
     return *found -> second;
+}
+
+template <class Resource, class Identifier>
+TextureHolder * ResourceHolder<Resource,Identifier>::getTextureInstance()
+{
+    if(textureHolder == nullptr)
+        textureHolder = new TextureHolder;
+    return textureHolder;
+}
+
+template <class Resource, class Identifier>
+SoundHolder * ResourceHolder<Resource,Identifier>::getSoundInstance()
+{
+    if(soundHolder == nullptr)
+        soundHolder = new SoundHolder;
+    return soundHolder;
+}
+
+template <class Resource, class Identifier>
+FontHolder * ResourceHolder<Resource,Identifier>::getFontInstance()
+{
+    if(fontHolder == nullptr)
+        fontHolder = new FontHolder;
+    return fontHolder;
 }

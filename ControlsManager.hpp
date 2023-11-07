@@ -9,12 +9,11 @@
 // Class that manages everything related to controls
 class ControlsManager
 {
-    private:
-        // Window in which the controls are shown (it's a pointer
-        // because the window lives in the main function, we are
-        // just going to store a reference to it)
-        sf::RenderWindow * window;
+    protected:
+        ControlsManager();
+        static ControlsManager * controlsManager;
 
+    private:
         // Sprite for the image that contains the controls
         sf::Sprite controlsSprite;
 
@@ -33,9 +32,6 @@ class ControlsManager
         // Function that indicates if a control is free
         bool isAvailable(Control c);
 
-        // Pointer to the texture holder so that it can be used later
-        TextureHolder* textureHolder;
-
         // Vector of floating symbols of controls that show in the background
         std::vector<sf::Sprite> floatingControls;
 
@@ -51,11 +47,26 @@ class ControlsManager
         void drawFloatingControls();
 
     public:
-        ControlsManager(sf::RenderWindow * window, TextureHolder* textureHolder, SoundHolder& soundHolder);
+        // Check if a character is pressing a key on the keyboard
         bool isPressingKey(CharName character, KeyAction keyAction);
+        // Check if a character is pressing a fuck dude what the hell
+        // I have to change this
         bool isPressingButton(CharName character, KeyAction keyAction);
+
+        // Connect a joystick to a character
         bool connectJoystick(CharName character, Control joystick);
+
+        // Assign a control to a character and show its controls
         void showControls(CharName character);
+
+        // NEVER CLONE A SINGLETON
+        ControlsManager(ControlsManager &other) = delete;
+
+        // NEVER ASSIGN A SINGLETON
+        void operator=(const ControlsManager &) = delete;
+
+        // Get the instance
+        static ControlsManager * getInstance();
 };
 
 #endif // __CONTROLS_WINDOW_HPP__

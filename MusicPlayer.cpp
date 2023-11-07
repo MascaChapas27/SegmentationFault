@@ -1,8 +1,12 @@
 #include "MusicPlayer.hpp"
 
-MusicPlayer::MusicPlayer()
-{
+MusicPlayer * MusicPlayer::musicPlayer = nullptr;
 
+MusicPlayer * MusicPlayer::getInstance()
+{
+    if(musicPlayer==nullptr)
+        musicPlayer = new MusicPlayer();
+    return musicPlayer;
 }
 
 void MusicPlayer::load(MusicID identifier, const std::string path)

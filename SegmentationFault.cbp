@@ -48,6 +48,7 @@
 		<Linker>
 			<Add directory="C:/SFML-2.5.1/lib" />
 		</Linker>
+		<Unit filename="AbstractFactory.hpp" />
 		<Unit filename="ControlsManager.cpp" />
 		<Unit filename="ControlsManager.hpp" />
 		<Unit filename="Conversation.cpp" />
@@ -66,6 +67,8 @@
 		<Unit filename="Utilities.hpp" />
 		<Unit filename="WarningWindow.cpp" />
 		<Unit filename="WarningWindow.hpp" />
+		<Unit filename="WindowsFactory.cpp" />
+		<Unit filename="WindowsFactory.hpp" />
 		<Unit filename="main.cpp" />
 		<Extensions>
 			<lib_finder disable_auto="1" />

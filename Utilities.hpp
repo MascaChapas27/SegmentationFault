@@ -6,6 +6,7 @@
 #include <SFML/Window.hpp>
 #include <SFML/System.hpp>
 #include <SFML/Graphics.hpp>
+#include "AbstractFactory.hpp"
 
 /*
     This file contains lots of useful stuff: enums,
@@ -22,6 +23,8 @@
 
 // Log file that tells everything that happened
 extern std::ofstream logFile;
+
+extern AbstractFactory * abstractFactory;
 
 ///////////////////
 ////// ENUMS //////

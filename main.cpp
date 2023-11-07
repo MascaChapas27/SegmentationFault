@@ -9,6 +9,25 @@
 #include <chrono>
 #include <ctime>
 
+// If you are using Windows, a Windows Factory will be created,
+// but if you are using Linux, a Linux Factory will be created.
+// Factories create stuff specific to an operating system in this case
+
+#ifdef _WIN32
+
+#include "WindowsFactory.hpp"
+
+AbstractFactory * abstractFactory = new WindowsFactory();
+
+#elif __linux__
+
+#include "LinuxFactory.hpp"
+
+AbstractFactory * abstractFactory = new LinuxFactory();
+
+#endif // __linux__
+
+
 // Only definition of the global variables
 std::ofstream logFile;
 MusicPlayer musicPlayer;
@@ -116,8 +135,13 @@ int main(){
         conversationTest(textureHolder,soundHolder,fontHolder,conversationHolder);
     }
 
+    abstractFactory->createWindow("amai","amailakuki");
+
     // The controls for Gabriela are shown
     controlsManager.showControls(GABRIELA);
+
+
+    delete abstractFactory;
 
     return EXIT_SUCCESS;
 }

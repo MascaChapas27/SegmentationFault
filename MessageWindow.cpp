@@ -1,9 +1,11 @@
+#include "MessageWindow.hpp"
+
+// Windows-specific implementation
 #ifdef _WIN32
 
-#include "WindowsFactory.hpp"
 #include <windows.h>
 
-wchar_t* WindowsFactory::stringToWChar(std::string text)
+wchar_t* stringToWChar(std::string text)
 {
     size_t size = text.length() + 1;
     char classic_string[size];
@@ -17,7 +19,7 @@ wchar_t* WindowsFactory::stringToWChar(std::string text)
     return wa;
 }
 
-void WindowsFactory::createWindow(std::string title, std::string subtitle){
+void MessageWindow::show(std::string title, std::string subtitle){
     MessageBoxW(NULL,stringToWChar(title),stringToWChar(subtitle),MB_ICONERROR | MB_OK);
 }
 

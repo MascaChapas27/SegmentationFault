@@ -6,7 +6,6 @@
 #include <SFML/Window.hpp>
 #include <SFML/System.hpp>
 #include <SFML/Graphics.hpp>
-#include "AbstractFactory.hpp"
 
 /*
     This file contains lots of useful stuff: enums,
@@ -19,13 +18,8 @@
 
 // I know global variables are fckuking bad but ehheheh
 
-// Placeholder for the window and the stuffHolders
+// The main window
 extern sf::RenderWindow window;
-
-// Log file that tells everything that happened
-extern std::ofstream logFile;
-
-extern AbstractFactory * abstractFactory;
 
 ///////////////////
 ////// ENUMS //////

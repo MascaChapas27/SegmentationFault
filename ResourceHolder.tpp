@@ -69,3 +69,36 @@ FontHolder * ResourceHolder<Resource,Identifier>::getFontInstance()
         fontHolder = new FontHolder;
     return fontHolder;
 }
+
+template <class Resource, class Identifier>
+void ResourceHolder<Resource,Identifier>::loadAllTextures()
+{
+    load(GabrielaTextbox,"sprites/textbox/gabrielaTextbox.png");
+    load(DanielaTextbox,"sprites/textbox/danielaTextbox.png");
+    load(BystanderTextbox,"sprites/textbox/bystanderTextbox.png");
+    load(WarningBackground,"sprites/warning/warningBackground.png");
+    load(WarningTitle,"sprites/warning/warningTitle.png");
+    load(WarningNormalText,"sprites/warning/warningNormalText.png");
+    load(WarningGlitchText,"sprites/warning/warningGlitchText.png");
+    load(WarningPressAnyKey,"sprites/warning/warningPressAnyKey.png");
+    load(ControlsGabrielaLeftKeyboard,"sprites/controls/controlsGabrielaLeftKeyboard.png");
+    load(FloatingLeftKeyboardGabriela,"sprites/controls/floatingLeftKeyboardGabriela.png");
+}
+
+template <class Resource, class Identifier>
+void ResourceHolder<Resource,Identifier>::loadAllSounds()
+{
+    load(GabrielaSpeaking,"sounds/speaking/gabrielaSpeaking.wav");
+    load(DanielaSpeaking,"sounds/speaking/danielaSpeaking.wav");
+    load(Glitch0,"sounds/glitch/glitch0.wav");
+    load(Glitch1,"sounds/glitch/glitch1.wav");
+    load(AdvanceConversation,"sounds/speaking/advanceConversation.wav");
+    load(ControlsGlitchSound,"sounds/glitch/controlsGlitchSound.wav");
+}
+
+template <class Resource, class Identifier>
+void ResourceHolder<Resource,Identifier>::loadAllFonts()
+{
+    load(GabrielaFont,"fonts/gabriela.ttf");
+    load(DanielaFont,"fonts/daniela.ttf");
+}

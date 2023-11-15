@@ -4,27 +4,10 @@
 #include "MusicPlayer.hpp"
 #include "WarningWindow.hpp"
 #include "ControlsManager.hpp"
-
-// If you are using Windows, a Windows Factory will be created,
-// but if you are using Linux, a Linux Factory will be created.
-// These factories create stuff specific to an operating system
-
-#ifdef _WIN32
-
-#include "WindowsFactory.hpp"
-
-AbstractFactory * abstractFactory = new WindowsFactory();
-
-#elif __linux__
-
-#include "LinuxFactory.hpp"
-
-AbstractFactory * abstractFactory = new LinuxFactory();
-
-#endif
+#include "MessageWindow.hpp"
+#include "Log.hpp"
 
 // Only definition of the global variables
-std::ofstream logFile;
 sf::RenderWindow window;
 
 // Debug mode to check if conversations are correct
@@ -52,18 +35,8 @@ int main(){
     // they are everywhere go straight to hell and dont come back
     sf::err().rdbuf(NULL);
 
-    // The error messages will go to this amazingly global error file
-    logFile.open(LOG_FILE_PATH,std::ios_base::app);
-    time_t tt;
-    struct tm* ti;
-    time(&tt);
-    ti = localtime(&tt);
-
-    logFile << "----------------------------------------------" << std::endl;
-    logFile << "Log File created. Today's date is: " << asctime(ti) << std::endl << std::endl;
-
     // Some graphics cards are not good enough for some texture sizes, so let's check it
-    checkGraphicsCard();
+    Log::getInstance()->checkGraphicsCard();
 
     // This is the main window we are going to use through the whole game
     window.create(sf::VideoMode(MAIN_WINDOW_WIDTH,MAIN_WINDOW_HEIGHT),MAIN_WINDOW_NAME,sf::Style::Titlebar);
@@ -72,46 +45,27 @@ int main(){
     // Here, the window icon is created and established
     sf::Image icon;
     if(!icon.loadFromFile(ICON_FILE_NORMAL))
-        printFileError(ICON_FILE_NORMAL);
+        Log::getInstance()->printFileError(ICON_FILE_NORMAL);
     window.setIcon(icon.getSize().x, icon.getSize().y, icon.getPixelsPtr());
 
-    logFile << "Loading textures..." << std::endl;
     // All textures are initialized
-    TextureHolder * textureHolder = TextureHolder::getTextureInstance();
-    textureHolder->load(GabrielaTextbox,"sprites/textbox/gabrielaTextbox.png");
-    textureHolder->load(DanielaTextbox,"sprites/textbox/danielaTextbox.png");
-    textureHolder->load(BystanderTextbox,"sprites/textbox/bystanderTextbox.png");
-    textureHolder->load(WarningBackground,"sprites/warning/warningBackground.png");
-    textureHolder->load(WarningTitle,"sprites/warning/warningTitle.png");
-    textureHolder->load(WarningNormalText,"sprites/warning/warningNormalText.png");
-    textureHolder->load(WarningGlitchText,"sprites/warning/warningGlitchText.png");
-    textureHolder->load(WarningPressAnyKey,"sprites/warning/warningPressAnyKey.png");
-    textureHolder->load(ControlsGabrielaLeftKeyboard,"sprites/controls/controlsGabrielaLeftKeyboard.png");
-    textureHolder->load(FloatingLeftKeyboardGabriela,"sprites/controls/floatingLeftKeyboardGabriela.png");
+    Log::getInstance()->write("Loading textures...");
+    TextureHolder::getTextureInstance()->loadAllTextures();
 
-    logFile << "Loading sound effects..." << std::endl;
     // All sound buffers are initialized
-    SoundHolder * soundHolder = SoundHolder::getSoundInstance();
-    soundHolder->load(GabrielaSpeaking,"sounds/speaking/gabrielaSpeaking.wav");
-    soundHolder->load(DanielaSpeaking,"sounds/speaking/danielaSpeaking.wav");
-    soundHolder->load(Glitch0,"sounds/glitch/glitch0.wav");
-    soundHolder->load(Glitch1,"sounds/glitch/glitch1.wav");
-    soundHolder->load(AdvanceConversation,"sounds/speaking/advanceConversation.wav");
-    soundHolder->load(ControlsGlitchSound,"sounds/glitch/controlsGlitchSound.wav");
+    Log::getInstance()->write("Loading sound effects...");
+    SoundHolder::getSoundInstance()->loadAllSounds();
 
-    logFile << "Loading music..." << std::endl;
-    // Al music themes are initialized
-    MusicPlayer * musicPlayer = MusicPlayer::getInstance();
-    musicPlayer->load(WarningMusic,"music/warning/warningMusic.wav");
+    // All songs are initialized
+    Log::getInstance()->write("Loading music...");
+    MusicPlayer::getInstance()->loadAllMusic();
 
-    logFile << "Loading fonts..." << std::endl;
     // All fonts are initialized
-    FontHolder * fontHolder = FontHolder::getFontInstance();
-    fontHolder->load(GabrielaFont,"fonts/gabriela.ttf");
-    fontHolder->load(DanielaFont,"fonts/daniela.ttf");
+    Log::getInstance()->write("Loading fonts...");
+    FontHolder::getFontInstance()->loadAllFonts();
 
-    logFile << "Loading conversations..." << std::endl << std::endl;
     // All conversations are initialized
+    Log::getInstance()->write("Loading conversations...");
     ConversationHolder conversationHolder;
     conversationHolder.load("files/Conversations.txt");
 
@@ -123,13 +77,10 @@ int main(){
     }
 
     // Create a window just to try
-    abstractFactory->createWindow("amai","amailakuki");
+    MessageWindow::show("amai","amailakuki");
 
     // The controls for Gabriela are shown
     ControlsManager::getInstance()->showControls(GABRIELA);
-
-    // Delete the abstract factory
-    delete abstractFactory;
 
     // The end
     return EXIT_SUCCESS;

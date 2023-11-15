@@ -1,6 +1,7 @@
 #include "ConversationHolder.hpp"
 #include "ResourceHolder.hpp"
 #include <fstream>
+#include "Log.hpp"
 
 ConversationHolder::ConversationHolder(){
     keyPressed = false;
@@ -14,7 +15,7 @@ ConversationHolder::ConversationHolder(){
 void ConversationHolder::load(std::string path){
     // Open the file
     std::fstream f(path);
-    if(!f) printFileError(path);
+    if(!f) Log::getInstance()->printFileError(path);
 
     // The auxiliar variables are declared
     std::list<Interaction> interactions;

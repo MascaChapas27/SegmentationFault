@@ -26,6 +26,9 @@ class MusicPlayer
         float getVolume();
         void alterVolume(float change);
 
+        // Load all music from its files in disk
+        void loadAllMusic();
+
         // NEVER COPY A SINGLETON
         MusicPlayer(MusicPlayer &other) = delete;
 
@@ -36,8 +39,5 @@ class MusicPlayer
         static MusicPlayer * getInstance();
 
 };
-
-// The one and only MusicPlayer that will be used in the whole game
-extern MusicPlayer musicPlayer;
 
 #endif // __MUSIC_PLAYER_HPP__

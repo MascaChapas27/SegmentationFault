@@ -48,7 +48,6 @@
 		<Linker>
 			<Add directory="C:/SFML-2.5.1/lib" />
 		</Linker>
-		<Unit filename="AbstractFactory.hpp" />
 		<Unit filename="ControlsManager.cpp" />
 		<Unit filename="ControlsManager.hpp" />
 		<Unit filename="Conversation.cpp" />
@@ -57,6 +56,10 @@
 		<Unit filename="ConversationHolder.hpp" />
 		<Unit filename="Interaction.cpp" />
 		<Unit filename="Interaction.hpp" />
+		<Unit filename="Log.cpp" />
+		<Unit filename="Log.hpp" />
+		<Unit filename="MessageWindow.cpp" />
+		<Unit filename="MessageWindow.hpp" />
 		<Unit filename="MusicPlayer.cpp" />
 		<Unit filename="MusicPlayer.hpp" />
 		<Unit filename="ResourceHolder.hpp" />
@@ -67,8 +70,6 @@
 		<Unit filename="Utilities.hpp" />
 		<Unit filename="WarningWindow.cpp" />
 		<Unit filename="WarningWindow.hpp" />
-		<Unit filename="WindowsFactory.cpp" />
-		<Unit filename="WindowsFactory.hpp" />
 		<Unit filename="main.cpp" />
 		<Extensions>
 			<lib_finder disable_auto="1" />

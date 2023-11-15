@@ -48,6 +48,11 @@ class ResourceHolder
         // Gets a resource given its ID
         Resource& get(Identifier id);
 
+        // Loads all resources (implementation-specific)
+        void loadAllTextures();
+        void loadAllSounds();
+        void loadAllFonts();
+
         // NEVER CLONE A SINGLETON
         ResourceHolder(ResourceHolder &other) = delete;
 

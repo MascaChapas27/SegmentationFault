@@ -1,4 +1,5 @@
 #include "MusicPlayer.hpp"
+#include "Log.hpp"
 
 MusicPlayer * MusicPlayer::musicPlayer = nullptr;
 
@@ -19,7 +20,7 @@ void MusicPlayer::play(MusicID theme)
     std::string filename = filenames[theme];
 
     if(!currentMusic.openFromFile(filename))
-        printFileError(filename);
+        Log::getInstance()->printFileError(filename);
 
     currentMusic.setLoop(true);
     currentMusic.setVolume(MAX_MUSIC_VOLUME);
@@ -39,4 +40,9 @@ float MusicPlayer::getVolume()
 void MusicPlayer::alterVolume(float change)
 {
     currentMusic.setVolume(currentMusic.getVolume()+change);
+}
+
+void MusicPlayer::loadAllMusic()
+{
+    load(WarningMusic,"music/warning/warningMusic.wav");
 }

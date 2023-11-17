@@ -1,5 +1,10 @@
 #include "Textbox.hpp"
 
+// Helper function that just returns a random double in the range ([0.6,1.5])
+double randPitch(){
+    return (rand()%10 + 1) / 10.f + 0.5;
+}
+
 // The constructor. It creates a new textbox
 Textbox::Textbox(CharName speaker, CharName lookingAt, sf::Texture& texture, sf::SoundBuffer& soundBuffer, sf::Font& font, TextboxPosition pos){
     // The textbox is initialized without text
@@ -143,7 +148,7 @@ bool Textbox::update(bool checkIfAdvance, int target_x, int target_y){
     }
 
 
-    // Poll events so that the window do
+    // Poll events so that the window doesn't get stuck
     sf::Event event;
     while (window.pollEvent(event));
     /*
@@ -210,7 +215,7 @@ bool Textbox::update(bool checkIfAdvance, int target_x, int target_y){
             currentText = " ";
         } else {
             currentText+=finalText[(int)currentText.length()];
-            speakingSound.setPitch(randDouble());
+            speakingSound.setPitch(randPitch());
             window.requestFocus();
         }
 

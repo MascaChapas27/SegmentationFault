@@ -24,13 +24,9 @@ ControlsManager::ControlsManager()
     associatedKeys[std::pair<Control,KeyAction>(KEYBOARD_LEFT,INTERACT)] = sf::Keyboard::LShift;
     associatedKeys[std::pair<Control,KeyAction>(KEYBOARD_LEFT,EXIT)] = sf::Keyboard::Escape;
 
-    // Keys for the joysticks
-    associatedButtons[DOWN] = 0;
-    associatedButtons[UP] = 0;
-    associatedButtons[LEFT] = 0;
-    associatedButtons[RIGHT] = 0;
+    // Buttons for the joysticks
     associatedButtons[INTERACT] = 0;
-    associatedButtons[EXIT] = 0;
+    associatedButtons[EXIT] = 6;
 
     // The vector of floating symbols is initialized
     for(int i=0;i<FLOATING_CONTROLS_NUM;i++){
@@ -96,6 +92,28 @@ bool ControlsManager::connectJoystick(CharName character, Control joystick){
     return true;
 }
 
+// Given a character and a key action, finds whether the character is using
+// the keyboard or a controller, and then calls the corresponding function
+bool ControlsManager::isPressing(CharName character, KeyAction keyAction){
+
+    // Try to find the character and its control
+    auto result = characterControls.find(character);
+
+    // If that character doesn't have a controller assigned, return false
+    if(result == characterControls.end()) {
+        Log::getInstance()->write("Character doesn't have a control assigned!");
+        return false;
+    }
+
+    // result is a pair of CharName and Control. If the second element is a keyboard control,
+    // then use isPressingKey. If not then it has to be a joystick so use IsPressingButton
+    if(result->second == Control::KEYBOARD_LEFT || result->second == Control::KEYBOARD_RIGHT)
+        return isPressingKey(character,keyAction);
+    else
+        return isPressingButton(character,keyAction);
+
+}
+
 // Given a character and a key action, it finds the control being used by the character
 // (in this case a part of the keyboard) and then checks if the corresponding key is being pressed
 bool ControlsManager::isPressingKey(CharName character, KeyAction keyAction){
@@ -112,10 +130,52 @@ bool ControlsManager::isPressingButton(CharName character, KeyAction keyAction){
     // First we get the joystick being used by the character
     int joystickID = static_cast<int>(characterControls[character])-2;
 
-    // Then we check if the button is being pressed
-    return sf::Joystick::isButtonPressed(joystickID,associatedButtons[keyAction]);
+    // Only for GABRIELA, check if the game should exit
+    if(character == CharName::GABRIELA && keyAction == KeyAction::EXIT)
+        return sf::Joystick::isButtonPressed(joystickID,associatedButtons[keyAction]);
+
+    // If it's an INTERACTION action, check the button
+    // If it's a movement action, check the joystick's axis position
+    switch(keyAction){
+    case KeyAction::INTERACT:
+        return sf::Joystick::isButtonPressed(joystickID,associatedButtons[keyAction]);
+
+    case KeyAction::LEFT:
+        return sf::Joystick::getAxisPosition(joystickID,sf::Joystick::X) < JOYSTICK_AXIS_THRESHOLD;
+
+    case KeyAction::RIGHT:
+        return sf::Joystick::getAxisPosition(joystickID,sf::Joystick::X) > JOYSTICK_AXIS_THRESHOLD;
+
+    case KeyAction::UP:
+        return sf::Joystick::getAxisPosition(joystickID,sf::Joystick::Y) > JOYSTICK_AXIS_THRESHOLD;
+
+    case KeyAction::DOWN:
+        return sf::Joystick::getAxisPosition(joystickID,sf::Joystick::Y) < JOYSTICK_AXIS_THRESHOLD;
+    default:
+        return false;
+    }
+
 }
 
+// Returns true if the character has a control assigned
+bool ControlsManager::assignControl(CharName character)
+{
+    // Check if the character is in the characterControls map
+    if(characterControls.find(character) == characterControls.end()){
+        // Try to assign a keyboard part
+        if(isAvailable(KEYBOARD_LEFT)) characterControls[character] = KEYBOARD_LEFT;
+        else if(isAvailable(KEYBOARD_RIGHT)) characterControls[character] = KEYBOARD_RIGHT;
+
+        // If no keyboard part could be assigned, false because the character still doesn't have a control
+
+        else return false;
+    }
+
+    // True because the character already has a control
+    return true;
+}
+
+// Show a character's controls
 void ControlsManager::showControls(CharName character)
 {
     TextureHolder * textureHolder = TextureHolder::getTextureInstance();
@@ -129,17 +189,7 @@ void ControlsManager::showControls(CharName character)
 
     // A flag that indicates if the left part of the keyboard and the right part
     // are already in use by other characters, forcing the player to connect a joystick
-    bool mustConnectJoystick = false;
-
-    // The first available control is assigned to the character. The static cast thing allows
-    // you to transform an integer into an element of an enum
-
-    if(!characterControls.count(character)){
-        if(isAvailable(KEYBOARD_LEFT)) characterControls[character] = KEYBOARD_LEFT;
-        else if(isAvailable(KEYBOARD_RIGHT)) characterControls[character] = KEYBOARD_RIGHT;
-        else mustConnectJoystick = true;
-    }
-
+    bool mustConnectJoystick = !assignControl(character);
 
     // Depending on the character and the controls, a texture for the controls window is chosen
     switch(character){
@@ -171,13 +221,18 @@ void ControlsManager::showControls(CharName character)
         sf::Event event;
         while(window.pollEvent(event))
         {
-            if(event.type == sf::Event::KeyPressed && isPressingKey(character,INTERACT) && glitchCounter >= 0)
+            if(event.type == sf::Event::KeyPressed)
             {
-                // The sound is played again after pressing the proceed key
-                glitchSound.play();
-                glitchCounter=-1;
+                if(isPressingKey(character,INTERACT) && glitchCounter >= 0){
+                    // The sound is played again after pressing the proceed key
+                    glitchSound.play();
+                    glitchCounter=-1;
+                } else if(isPressingKey(CharName::GABRIELA,EXIT))
+                    exit(EXIT_SUCCESS);
+
             } else if(event.type == sf::Event::JoystickButtonPressed)
             {
+
                 // We get the control associated with the joystick whose button was pressed
                 Control joystick = static_cast<Control>(event.joystickButton.joystickId+2);
 
@@ -191,6 +246,8 @@ void ControlsManager::showControls(CharName character)
                     // The sound is played again after pressing the proceed key
                     glitchSound.play();
                     glitchCounter=-1;
+                } else if(isPressingButton(CharName::GABRIELA,EXIT)){
+                    exit(EXIT_SUCCESS);
                 }
 
                 std::cout << event.joystickButton.button << std::endl;

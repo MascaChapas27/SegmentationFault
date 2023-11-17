@@ -132,7 +132,7 @@ bool WarningWindow::run()
         sf::Event event;
         while(window.pollEvent(event))
         {
-            if(event.type == sf::Event::KeyPressed)
+            if(event.type == sf::Event::KeyPressed || event.type == sf::Event::JoystickButtonPressed)
             {
                 if(event.key.code == DEBUG_KEY) debugMode = true;
                 exiting = true;

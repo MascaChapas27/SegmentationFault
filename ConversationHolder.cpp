@@ -1,5 +1,6 @@
 #include "ConversationHolder.hpp"
 #include "ResourceHolder.hpp"
+#include "ControlsManager.hpp"
 #include <fstream>
 #include "Log.hpp"
 
@@ -123,14 +124,19 @@ bool ConversationHolder::updateConversation(){
 
     bool checkIfAdvance = false;
 
-    if (sf::Keyboard::isKeyPressed(KEY_OK) && !keyPressed){
+    // True if the key (or button) iis being pressed exactly at this moment, as opposed to keyPressed, which
+    // tells if it was being pressed the last time this function was called. This prevents from pressing
+    // the key once and advancing 131233 times unintentionally
+    bool pressingRightNow = ControlsManager::getInstance()->isPressing(CharName::GABRIELA,KeyAction::INTERACT);
+
+    if (pressingRightNow && !keyPressed){
         // Now we are pressing the key, the conversation advances only if
         // the current text is equal to the final text, and the current character
         // is speaking (if it's not, then the current text and final text
         // are both empty)
         keyPressed = true;
         checkIfAdvance = true;
-    } else if (!sf::Keyboard::isKeyPressed(KEY_OK) && keyPressed){
+    } else if (!pressingRightNow && keyPressed){
         // Now the key is being released
         keyPressed = false;
     }

@@ -46,15 +46,21 @@ class ControlsManager
         // silly effects that are going to be used for just one specific situation)
         void drawFloatingControls();
 
-    public:
-        // Check if a character is pressing a key on the keyboard
+        // Helper functions for the isPressing function
         bool isPressingKey(CharName character, KeyAction keyAction);
-        // Check if a character is pressing a fuck dude what the hell
-        // I have to change this
         bool isPressingButton(CharName character, KeyAction keyAction);
 
-        // Connect a joystick to a character
+        // Assign a joystick to a character
         bool connectJoystick(CharName character, Control joystick);
+
+    public:
+
+        // Check if the character is performing that keyAction
+        bool isPressing(CharName character, KeyAction keyAction);
+
+        // Automatically tries to assign a keyboard control to a character
+        // if that character doesn't have a control assigned
+        bool assignControl(CharName character);
 
         // Assign a control to a character and show its controls
         void showControls(CharName character);

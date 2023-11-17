@@ -1,6 +1,7 @@
 #include <assert.h>
+#include "Log.hpp"
 
-
+// Singleton static variables are initialized as null
 template <class Resource, class Identifier>
 TextureHolder * ResourceHolder<Resource,Identifier>::textureHolder = nullptr;
 
@@ -16,19 +17,16 @@ void ResourceHolder<Resource,Identifier>::load(Identifier id, const std::string&
     // they go out of scope
     std::unique_ptr<Resource> resource(new Resource());
 
-    // We try to load the resource. If there is an error, we throw an exception
-    if(!resource->loadFromFile(fileName))
-        throw std::runtime_error("Tried to load " + fileName + " but it went catastrophically bad :(");
+    // We try to load the resource. If there is an error, we log it and die horribly
+    if(!resource->loadFromFile(fileName)){
+        Log::getInstance()->write("Tried to load " + fileName + " but it went catastrophically bad :(");
+        Log::getInstance()->write("Please check that the file is present and check that the name is correct!!");
+        exit(EXIT_FAILURE);
+    }
 
     // It's important to std::move the pointer so that it's not destroyed
-    // as soon as the function ends. Also, the insert function returns a pair
-    // of elements. The second one is a boolean, which is true if everything went OK
-    auto inserted = resourceMap.insert(std::make_pair(id,std::move(resource)));
-
-    // The insertion MUST be valid. If it's not, I screwed up while writing code and
-    // loaded the same thing twice. Also, I know writing assert(insert.second) would have
-    // the same effect, but I want the code to be very readable and obvious
-    assert(inserted.second == true);
+    // as soon as the function ends.
+    resourceMap.insert(std::make_pair(id,std::move(resource)));
 }
 
 template <class Resource, class Identifier>
@@ -36,10 +34,6 @@ Resource& ResourceHolder<Resource,Identifier>::get(Identifier id){
     // First we find the element in the map (auto means that the
     // type is automatically infered from the context)
     auto found = resourceMap.find(id);
-
-    // If the element is not found, then the variable found contains
-    // a special value that is associated with the "end" of the map
-    assert(found != resourceMap.end());
 
     // Once we have the element, which is a pair, we return
     // the texture, which is the second element

@@ -141,9 +141,6 @@ const int FINAL_GLITCH_LIMIT = TEXTBOX_FPS;
 // in a conversation
 const int TEXTBOX_BOUNCE = 10;
 
-// The key that should be pressed to accept or interact
-const sf::Keyboard::Key KEY_OK = sf::Keyboard::LShift;
-
 // The range of pixels in which a character looks in cardinal directions.
 // If the difference in x and y axes is bigger than this tresshold, the
 // character will look at a diagonal direction
@@ -179,31 +176,9 @@ const int FLOATING_CONTROLS_MAX_SPEED = 1;
 // Color for the floating controls (most importantly transparency)
 const sf::Color FLOATING_CONTROLS_COLOR = sf::Color(255,255,255,10);
 
-// Keys that the left half of the keyboard uses
-const sf::Keyboard::Key KL_UP = sf::Keyboard::W;
-const sf::Keyboard::Key KL_DOWN = sf::Keyboard::S;
-const sf::Keyboard::Key KL_LEFT = sf::Keyboard::A;
-const sf::Keyboard::Key KL_RIGHT = sf::Keyboard::D;
-const sf::Keyboard::Key KL_INTERACT = sf::Keyboard::LShift;
-const sf::Keyboard::Key KL_ESCAPE = sf::Keyboard::Escape;
-
-///////////////////////
-////// FUNCTIONS //////
-///////////////////////
-
-// Function that inputs an error message whenever a file cannot
-// be accessed (it also exits with error code 1)
-void printFileError(std::string fileName);
-
-// Function that generates a kind-of random double
-// The doubles generated are in the range (0.6, 0.7, ..., 1.4, 1.5)
-// because it's used for the pitch of voices and sfx
-double randDouble();
-
-// Causes a Segmentation Fault
-void segfault();
-
-// Checks if your graphics card is good enough
-void checkGraphicsCard();
+// Some joystick have drift (the joytick isn't moving but
+// the control thinks it's moving a bit) so this threshold
+// helps with that
+const int JOYSTICK_AXIS_THRESHOLD = 30;
 
 #endif // __UTILITIES_HPP__

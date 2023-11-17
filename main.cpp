@@ -69,12 +69,17 @@ int main(){
     ConversationHolder conversationHolder;
     conversationHolder.load("files/Conversations.txt");
 
+    // Assign a control to Gabriela first of all just in case
+    // (this control is going to be the left part of the keyboard)
+
+    ControlsManager::getInstance()->assignControl(CharName::GABRIELA);
+
     // Then, the warning window runs. If you press ñ (or semicolon
     // (or ` (or whatever just try))) the conversation test will start
-    if(WarningWindow::getInstance()->run()){
+    /*if(WarningWindow::getInstance()->run()){
         window.close();
         conversationTest(conversationHolder);
-    }
+    }*/
 
     // Create a window just to try
     MessageWindow::show("amai","amailakuki");

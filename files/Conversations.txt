@@ -26,6 +26,9 @@
 # Finally, the @ symbol means "end of the file"
 # Every conversation has a code, which appears in the comment that comes before it
 #
+# EXTRA: putting a # symbol at the end of a line of text makes the character
+# automatically stop speaking at that moment
+#
 ########################
 # 0: Test conversation #
 ########################
@@ -77,7 +80,7 @@ BYSTANDER
 GABRIELA
 BYSTANDER
 1
-tu quien eres
+tu quien eres#
 
 BYSTANDER
 GABRIELA
@@ -87,7 +90,7 @@ yo soy bien
 GABRIELA
 BYSTANDER
 1
-a muy bien
+a muy bien#
 
 BYSTANDER
 GABRIELA
@@ -116,7 +119,7 @@ PLAYER
 1
 malas vibras como suele
 decir hoy en dia la
-joviela
+joviela#
 
 BYSTANDER
 GABRIELA

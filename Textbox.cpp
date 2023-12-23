@@ -123,7 +123,6 @@ void Textbox::setText(std::string text){
 // Updates the textbox, making the character look the right way,
 // making it speak and drawing the sprites
 // True means the conversation related to this textbox must advance
-// because checkIfAdvance is true and the textbox is ready to advance
 bool Textbox::update(bool checkIfAdvance, int target_x, int target_y){
 
     // If the window is closed, then always return true (that means
@@ -214,6 +213,13 @@ bool Textbox::update(bool checkIfAdvance, int target_x, int target_y){
             finalText = " ";
             currentText = " ";
         } else {
+            // If the sudden end character is found, end immediately
+            if(finalText[(int)currentText.length()] == SUDDEN_END_CHAR){
+                // Clear the text or else double advance happens idk why
+                finalText = "";
+                currentText = "";
+                return true;
+            }
             currentText+=finalText[(int)currentText.length()];
             speakingSound.setPitch(randPitch());
             window.requestFocus();
@@ -278,7 +284,7 @@ bool Textbox::update(bool checkIfAdvance, int target_x, int target_y){
         // If the character is calm there is a chance it starts
         // glitching. If it's glitching, there is a higher chance
         // that another glitch effect comes immediately after.
-        if(finalGlitch > 0 || (faceRect.top!=TEXTBOX_HEIGHT ? rand()%50 == 11 : rand()%2 == 1)){
+        if(finalGlitch > 0 || (faceRect.top!=TEXTBOX_HEIGHT ? rand()%30 == 11 : rand()%2 == 1)){
             // The character glitches, as well as the textbox
             // The first row, just under the textbox sprite, is the glitch row
             faceRect.top = TEXTBOX_HEIGHT;
@@ -297,21 +303,17 @@ bool Textbox::update(bool checkIfAdvance, int target_x, int target_y){
                 window.setPosition(pos);
             }
 
-            // To avoid errors, if the current text is empty, turn it into
-            // one space
-            if(currentText == ""){
-                currentText = " ";
-                finalText = " ";
-            }
-
             // We create a special string based on the current text
-            std::string glitchText = currentText;
-            for(unsigned int i=0;i<(rand()%currentText.length());i++){
-                // We are going to turn some characters into glitch characters
-                int pos = rand() % glitchText.length();
-                glitchText[pos] = rand()%255;
+            // only if there is text of course
+            if(currentText != ""){
+                std::string glitchText = currentText;
+                for(unsigned int i=0;i<(rand()%currentText.length());i++){
+                    // We are going to turn some characters into glitch characters
+                    int pos = rand() % glitchText.length();
+                    glitchText[pos] = rand()%255;
+                }
+                text.setString(glitchText);
             }
-            text.setString(glitchText);
         } else {
             // The character is calm again if there is no glitching
             if(faceRect.left != 0){

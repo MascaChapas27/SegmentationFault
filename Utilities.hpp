@@ -102,6 +102,10 @@ const std::string MAIN_WINDOW_NAME = "amailakuki";
 // Max amount of frames per second for the main window
 const int MAX_FPS = 60;
 
+// Character used to suddenly end an interaction even if the
+// player didn't press any button
+const char SUDDEN_END_CHAR = '#';
+
 // Height and width of a textbox
 const int TEXTBOX_HEIGHT = 200;
 const int TEXTBOX_WIDTH = 400;
@@ -135,7 +139,7 @@ const int EXPRESSION_NUMBER = 10;
 
 // The value at which the final glitch end. A counter starts increasing
 // its value until it equals this constant's value
-const int FINAL_GLITCH_LIMIT = TEXTBOX_FPS;
+const int FINAL_GLITCH_LIMIT = TEXTBOX_FPS / 2;
 
 // The amount of pixels the screen moves down when advancing
 // in a conversation

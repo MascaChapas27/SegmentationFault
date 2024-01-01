@@ -82,7 +82,7 @@ int main(){
     }
 
     // Create a window just to try
-    MessageWindow::show("amai","amailakuki");
+    //MessageWindow::show("amai","amailakuki");
 
     // The controls for Gabriela are shown
     ControlsManager::getInstance()->showControls(GABRIELA);

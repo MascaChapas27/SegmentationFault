@@ -111,12 +111,19 @@ void Textbox::setText(std::string text){
     // counter is increased and the window is
     // moved down a bit (if it's not BYSTANDER)
 
-    bounceCounter+=TEXTBOX_BOUNCE;
+    bounceCounter=TEXTBOX_BOUNCE;
 
     if(speaker != BYSTANDER){
+        // if the speaker is not bystander then update the y axis position
         sf::Vector2i pos = window.getPosition();
-        pos.y+=TEXTBOX_BOUNCE;
         window.setPosition(pos);
+        pos.y+=TEXTBOX_BOUNCE;
+
+        // For some reason I don't understand the fckukucing operating system won't
+        // update the position if I just try once so i constantly try until it works
+        while(window.getPosition() != pos){
+            window.setPosition(pos);
+        }
     }
 }
 
@@ -135,8 +142,11 @@ bool Textbox::update(bool checkIfAdvance, int target_x, int target_y){
         // If the character said everything it needed to say (and the character
         // was currently speaking, because an empty final text means that the character
         // was not speaking currently) then return true and also specify that the current
-        // character is no longer speaking
-        if(currentText == finalText && finalText != "") {
+        // character is no longer speaking. ALSO: if the character was speaking but their
+        // text contained a sudden end char and we press the interact key to skip that text
+        // then consider the interaction finished or else the sudden end char will show in the
+        // textbox and that's ugly!!1
+        if((currentText == finalText && finalText != "") || finalText.find(SUDDEN_END_CHAR) != std::string::npos) {
             currentText = "";
             finalText = "";
             return true;

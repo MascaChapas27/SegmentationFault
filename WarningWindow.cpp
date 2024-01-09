@@ -23,7 +23,8 @@ WarningWindow::WarningWindow()
 
     // The background is augmented so that it's a giant rectangle
     // full of the same tile
-    sf::IntRect backgroundRect = sf::IntRect(0,0,MAIN_WINDOW_WIDTH+WARNING_BACKGROUND_WIDTH,MAIN_WINDOW_HEIGHT+WARNING_BACKGROUND_HEIGHT);
+    sf::IntRect backgroundRect = sf::IntRect(0,0,MAIN_WINDOW_WIDTH+auxTexture.getSize().x,MAIN_WINDOW_HEIGHT+auxTexture.getSize().y);
+    std::cout << "Width: " << auxTexture.getSize().x << ", height: " << auxTexture.getSize().y << std::endl;
     backgroundSprite.setTextureRect(backgroundRect);
 
     // The normal text and the title text are set as usual
@@ -97,8 +98,8 @@ bool WarningWindow::run()
 
             // The background moves to the left and up until it loops back and starts over,
             // making it look like it's endless
-            backgroundSprite.move(-((float)WARNING_BACKGROUND_WIDTH/(float)WARNING_BACKGROUND_HEIGHT)/10.f,-1/10.f);
-            if(backgroundSprite.getPosition().x < -WARNING_BACKGROUND_WIDTH)
+            backgroundSprite.move(-((float)backgroundSprite.getTexture()->getSize().x/(float)backgroundSprite.getTexture()->getSize().y)/10.f,-1/10.f);
+            if(-backgroundSprite.getPosition().x >= backgroundSprite.getTexture()->getSize().x)
             {
                 backgroundSprite.setPosition(0,0);
             }
@@ -155,8 +156,8 @@ bool WarningWindow::run()
 
         // The background moves to the left and up until it loops back and starts over,
         // making it look like it's endless
-        backgroundSprite.move(-((float)WARNING_BACKGROUND_WIDTH/(float)WARNING_BACKGROUND_HEIGHT)/10.f,-1/10.f);
-        if(backgroundSprite.getPosition().x < -WARNING_BACKGROUND_WIDTH)
+        backgroundSprite.move(-((float)backgroundSprite.getTexture()->getSize().x/(float)backgroundSprite.getTexture()->getSize().y)/10.f,-1/10.f);
+        if(-backgroundSprite.getPosition().x >= backgroundSprite.getTexture()->getSize().x)
         {
             backgroundSprite.setPosition(0,0);
         }

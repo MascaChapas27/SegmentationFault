@@ -137,7 +137,7 @@ const int TEXTBOX_NUMBER = 3;
 // and an extra one for glitch effects
 const int EXPRESSION_NUMBER = 10;
 
-// The value at which the final glitch end. A counter starts increasing
+// The value at which the final glitch ends. A counter starts increasing
 // its value until it equals this constant's value
 const int FINAL_GLITCH_LIMIT = TEXTBOX_FPS / 2;
 
@@ -149,10 +149,6 @@ const int TEXTBOX_BOUNCE = 10;
 // If the difference in x and y axes is bigger than this tresshold, the
 // character will look at a diagonal direction
 const int TEXTBOX_THRESHOLD = 80;
-
-// The width and height of the warning background text
-const int WARNING_BACKGROUND_WIDTH = 80;
-const int WARNING_BACKGROUND_HEIGHT = 30;
 
 // Initial and final position of the "WARNING" title
 const sf::Vector2f WARNING_TITLE_INITIAL_POSITION = sf::Vector2f(260,268);

@@ -14,19 +14,19 @@ ControlsManager::ControlsManager()
 {
     SoundHolder * soundHolder = SoundHolder::getSoundInstance();
 
-    this->glitchSound.setBuffer(soundHolder->get(ControlsGlitchSound));
+    this->glitchSound.setBuffer(soundHolder->get(SoundID::ControlsGlitchSound));
 
     // Keys for the left part of the keyboard
-    associatedKeys[std::pair<Control,KeyAction>(KEYBOARD_LEFT,DOWN)] = sf::Keyboard::S;
-    associatedKeys[std::pair<Control,KeyAction>(KEYBOARD_LEFT,UP)] = sf::Keyboard::W;
-    associatedKeys[std::pair<Control,KeyAction>(KEYBOARD_LEFT,LEFT)] = sf::Keyboard::A;
-    associatedKeys[std::pair<Control,KeyAction>(KEYBOARD_LEFT,RIGHT)] = sf::Keyboard::D;
-    associatedKeys[std::pair<Control,KeyAction>(KEYBOARD_LEFT,INTERACT)] = sf::Keyboard::LShift;
-    associatedKeys[std::pair<Control,KeyAction>(KEYBOARD_LEFT,EXIT)] = sf::Keyboard::Escape;
+    associatedKeys[std::pair<Control,KeyAction>(Control::KEYBOARD_LEFT,KeyAction::DOWN)] = sf::Keyboard::S;
+    associatedKeys[std::pair<Control,KeyAction>(Control::KEYBOARD_LEFT,KeyAction::UP)] = sf::Keyboard::W;
+    associatedKeys[std::pair<Control,KeyAction>(Control::KEYBOARD_LEFT,KeyAction::LEFT)] = sf::Keyboard::A;
+    associatedKeys[std::pair<Control,KeyAction>(Control::KEYBOARD_LEFT,KeyAction::RIGHT)] = sf::Keyboard::D;
+    associatedKeys[std::pair<Control,KeyAction>(Control::KEYBOARD_LEFT,KeyAction::INTERACT)] = sf::Keyboard::LShift;
+    associatedKeys[std::pair<Control,KeyAction>(Control::KEYBOARD_LEFT,KeyAction::EXIT)] = sf::Keyboard::Escape;
 
-    // Buttons for the joysticks
-    associatedButtons[INTERACT] = 0;
-    associatedButtons[EXIT] = 6;
+    // Buttons for the joysticks (SHOULD BE DELETED AND USE ESC TO EXIT AND ANY BUTTON TO INTERACT)
+    associatedButtons[KeyAction::INTERACT] = 0;
+    associatedButtons[KeyAction::EXIT] = 6;
 
     // The vector of floating symbols is initialized
     for(int i=0;i<FLOATING_CONTROLS_NUM;i++){
@@ -163,8 +163,8 @@ bool ControlsManager::assignControl(CharName character)
     // Check if the character is in the characterControls map
     if(characterControls.find(character) == characterControls.end()){
         // Try to assign a keyboard part
-        if(isAvailable(KEYBOARD_LEFT)) characterControls[character] = KEYBOARD_LEFT;
-        else if(isAvailable(KEYBOARD_RIGHT)) characterControls[character] = KEYBOARD_RIGHT;
+        if(isAvailable(Control::KEYBOARD_LEFT)) characterControls[character] = Control::KEYBOARD_LEFT;
+        else if(isAvailable(Control::KEYBOARD_RIGHT)) characterControls[character] = Control::KEYBOARD_RIGHT;
 
         // If no keyboard part could be assigned, false because the character still doesn't have a control
 
@@ -193,21 +193,18 @@ void ControlsManager::showControls(CharName character)
 
     // Depending on the character and the controls, a texture for the controls window is chosen
     switch(character){
-        case GABRIELA:
+        case CharName::GABRIELA:
             if (mustConnectJoystick){
                 // this->controlsSprite.setTexture(textureHolder->get(ControlsGabrielaMustConnectJoystick));
-            } else if(characterControls[GABRIELA] == KEYBOARD_LEFT){
-                this->controlsSprite.setTexture(textureHolder->get(ControlsGabrielaLeftKeyboard));
+            } else if(characterControls[CharName::GABRIELA] == Control::KEYBOARD_LEFT){
+                this->controlsSprite.setTexture(textureHolder->get(TextureID::ControlsGabrielaLeftKeyboard));
                 for(int i=0;i<FLOATING_CONTROLS_NUM;i++){
-                    floatingControls[i].setTexture(textureHolder->get(FloatingLeftKeyboardGabriela));
+                    floatingControls[i].setTexture(textureHolder->get(TextureID::FloatingLeftKeyboardGabriela));
                 }
-            } else if (characterControls[GABRIELA] == KEYBOARD_RIGHT){
-                // this->controlsSprite.setTexture(textureHolder->get(ControlsGabrielaRightKeyboard));
+            } else if (characterControls[CharName::GABRIELA] == Control::KEYBOARD_RIGHT){
+                // this->controlsSprite.setTexture(textureHolder->get(TextureID::ControlsGabrielaRightKeyboard));
             }
 
-            break;
-
-        default:
             break;
     }
 
@@ -223,11 +220,11 @@ void ControlsManager::showControls(CharName character)
         {
             if(event.type == sf::Event::KeyPressed)
             {
-                if(isPressingKey(character,INTERACT) && glitchCounter >= 0){
+                if(isPressingKey(character,KeyAction::INTERACT) && glitchCounter >= 0){
                     // The sound is played again after pressing the proceed key
                     glitchSound.play();
                     glitchCounter=-1;
-                } else if(isPressingKey(CharName::GABRIELA,EXIT))
+                } else if(isPressingKey(CharName::GABRIELA,KeyAction::EXIT))
                     exit(EXIT_SUCCESS);
 
             } else if(event.type == sf::Event::JoystickButtonPressed)
@@ -242,11 +239,11 @@ void ControlsManager::showControls(CharName character)
                     glitchSound.play();
                     mustConnectJoystick = false;
                     // this->controlsSprite.setTexture(textureHolder->get(ControlsGabrielaJoystick));
-                } else if(isPressingButton(character,INTERACT) && glitchCounter >= 0) {
+                } else if(isPressingButton(character,KeyAction::INTERACT) && glitchCounter >= 0) {
                     // The sound is played again after pressing the proceed key
                     glitchSound.play();
                     glitchCounter=-1;
-                } else if(isPressingButton(CharName::GABRIELA,EXIT)){
+                } else if(isPressingButton(CharName::GABRIELA,KeyAction::EXIT)){
                     exit(EXIT_SUCCESS);
                 }
 

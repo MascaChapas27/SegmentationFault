@@ -7,6 +7,9 @@
 #include "MessageWindow.hpp"
 #include "Log.hpp"
 
+#include "AbstractBackground.hpp"
+#include "BackgroundContainer.hpp"
+
 // Only definition of the global variables
 sf::RenderWindow window;
 
@@ -85,7 +88,7 @@ int main(){
     //MessageWindow::show("amai","amailakuki");
 
     // The controls for Gabriela are shown
-    ControlsManager::getInstance()->showControls(GABRIELA);
+    ControlsManager::getInstance()->showControls(CharName::GABRIELA);
 
     // The end
     return EXIT_SUCCESS;

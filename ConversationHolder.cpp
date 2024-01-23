@@ -6,11 +6,11 @@
 
 ConversationHolder::ConversationHolder(){
     keyPressed = false;
-    advanceSound.setBuffer(SoundHolder::getSoundInstance()->get(AdvanceConversation));
-    names["GABRIELA"] = GABRIELA;
-    names["DANIELA"] = DANIELA;
-    names["BYSTANDER"] = BYSTANDER;
-    names["PLAYER"] = PLAYER;
+    advanceSound.setBuffer(SoundHolder::getSoundInstance()->get(SoundID::AdvanceConversation));
+    names["GABRIELA"] = CharName::GABRIELA;
+    names["DANIELA"] = CharName::DANIELA;
+    names["BYSTANDER"] = CharName::BYSTANDER;
+    names["PLAYER"] = CharName::PLAYER;
 }
 
 void ConversationHolder::load(std::string path){

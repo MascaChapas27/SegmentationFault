@@ -48,16 +48,23 @@
 		<Linker>
 			<Add directory="C:/SFML-2.5.1/lib" />
 		</Linker>
+		<Unit filename="AbstractBackground.hpp" />
+		<Unit filename="BackgroundContainer.cpp" />
+		<Unit filename="BackgroundContainer.hpp" />
 		<Unit filename="ControlsManager.cpp" />
 		<Unit filename="ControlsManager.hpp" />
 		<Unit filename="Conversation.cpp" />
 		<Unit filename="Conversation.hpp" />
 		<Unit filename="ConversationHolder.cpp" />
 		<Unit filename="ConversationHolder.hpp" />
+		<Unit filename="FadingBackground.cpp" />
+		<Unit filename="FadingBackground.hpp" />
 		<Unit filename="Interaction.cpp" />
 		<Unit filename="Interaction.hpp" />
 		<Unit filename="Log.cpp" />
 		<Unit filename="Log.hpp" />
+		<Unit filename="LoopingBackground.cpp" />
+		<Unit filename="LoopingBackground.hpp" />
 		<Unit filename="MessageWindow.cpp" />
 		<Unit filename="MessageWindow.hpp" />
 		<Unit filename="MusicPlayer.cpp" />

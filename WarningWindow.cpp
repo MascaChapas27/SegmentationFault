@@ -1,4 +1,7 @@
 #include "WarningWindow.hpp"
+#include "LoopingBackground.hpp"
+#include "AbstractBackground.hpp"
+#include "FadingBackground.hpp"
 
 WarningWindow * WarningWindow::warningWindow = nullptr;
 
@@ -14,45 +17,46 @@ WarningWindow::WarningWindow()
     TextureHolder * textureHolder = TextureHolder::getTextureInstance();
     SoundHolder * soundHolder = SoundHolder::getSoundInstance();
 
-    // The texture for the background is set to repeat itself, then
-    // it's assigned to the background sprite (possible because
-    // it's a reference)
-    sf::Texture& auxTexture = textureHolder->get(WarningBackground);
-    auxTexture.setRepeated(true);
-    backgroundSprite.setTexture(auxTexture);
+    std::unique_ptr<AbstractBackground> loopingBackground(new LoopingBackground());
+    ((LoopingBackground*)loopingBackground.get())->setTexture(textureHolder->get(TextureID::WarningBackground),Direction::UP_LEFT);
 
-    // The background is augmented so that it's a giant rectangle
-    // full of the same tile
-    sf::IntRect backgroundRect = sf::IntRect(0,0,MAIN_WINDOW_WIDTH+auxTexture.getSize().x,MAIN_WINDOW_HEIGHT+auxTexture.getSize().y);
-    std::cout << "Width: " << auxTexture.getSize().x << ", height: " << auxTexture.getSize().y << std::endl;
-    backgroundSprite.setTextureRect(backgroundRect);
+    std::unique_ptr<AbstractBackground> fadingBackground(new FadingBackground());
+    ((FadingBackground*)fadingBackground.get())->setCurrentColor(sf::Color(0,0,0,255));
+    ((FadingBackground*)fadingBackground.get())->setFinalColor(sf::Color(0,0,0,0));
+
+    background.add(std::move(loopingBackground));
+    background.add(std::move(fadingBackground));
+
+    foreground.setCurrentColor(sf::Color(0,0,0,0));
+    foreground.setFinalColor(sf::Color(0,0,0,255));
+    foreground.setFadingSpeed(5);
 
     // The normal text and the title text are set as usual
-    normalTextSprite.setTexture(textureHolder->get(WarningNormalText));
-    warningTitleSprite.setTexture(textureHolder->get(WarningTitle));
+    normalTextSprite.setTexture(textureHolder->get(TextureID::WarningNormalText));
+    warningTitleSprite.setTexture(textureHolder->get(TextureID::WarningTitle));
 
     // The title is positioned according to the value stored in Utilities
     warningTitleSprite.setPosition(WARNING_TITLE_INITIAL_POSITION);
 
     // The glitch text is assigned a texture and is positioned properly
-    glitchTextSprite.setTexture(textureHolder->get(WarningGlitchText));
+    glitchTextSprite.setTexture(textureHolder->get(TextureID::WarningGlitchText));
     sf::IntRect auxRect = glitchTextSprite.getTextureRect();
     auxRect.height = WARNING_GLITCH_HEIGHT;
     glitchTextSprite.setTextureRect(auxRect);
     glitchTextSprite.setPosition(0,WARNING_GLITCH_Y);
 
     // The sprite for the Press Enter text is set normally
-    pressAnyKeySprite.setTexture(textureHolder->get(WarningPressAnyKey));
+    pressAnyKeySprite.setTexture(textureHolder->get(TextureID::WarningPressAnyKey));
 
     // The glitch text sound is initialized
-    glitchSound.setBuffer(soundHolder->get(Glitch0));
+    glitchSound.setBuffer(soundHolder->get(SoundID::Glitch0));
 }
 
 bool WarningWindow::run()
 {
     // First of all, the music plays
     MusicPlayer * musicPlayer = MusicPlayer::getInstance();
-    musicPlayer->play(WarningMusic);
+    musicPlayer->play(MusicID::WarningMusic);
 
     // This counter starts at a low odd number so that
     // every frame it's added 2 until it reaches 255
@@ -71,6 +75,8 @@ bool WarningWindow::run()
     int warningTitleTransparency = 0;
     while(warningTitleTransparency < 400){
 
+        std::cout << "1 Transparency: " << warningTitleTransparency << std::endl;
+
         sf::Event event;
         while(window.pollEvent(event));
 
@@ -83,34 +89,25 @@ bool WarningWindow::run()
     }
 
     // Second thing: The "WARNING" title goes up and the background begins to be visible
-    int backgroundTransparency = 0;
 
     while(abs(warningTitleSprite.getPosition().y - WARNING_TITLE_FINAL_POSITION.y) > 3){
 
-            sf::Event event;
-            while(window.pollEvent(event));
+        std::cout << "2 Warning y: " << warningTitleSprite.getPosition().y << std::endl;
 
-            backgroundTransparency+=1;
-            backgroundSprite.setColor(sf::Color(255,255,255,backgroundTransparency > 255 ? 255 : backgroundTransparency));
+        sf::Event event;
+        while(window.pollEvent(event));
 
-            sf::Vector2f movement = WARNING_TITLE_FINAL_POSITION-warningTitleSprite.getPosition();
-            movement = sf::Vector2f(movement.x/30.0, movement.y/30.0);
+        sf::Vector2f movement = WARNING_TITLE_FINAL_POSITION-warningTitleSprite.getPosition();
+        movement = sf::Vector2f(movement.x/30.0, movement.y/30.0);
+        warningTitleSprite.move(movement);
 
-            // The background moves to the left and up until it loops back and starts over,
-            // making it look like it's endless
-            backgroundSprite.move(-((float)backgroundSprite.getTexture()->getSize().x/(float)backgroundSprite.getTexture()->getSize().y)/10.f,-1/10.f);
-            if(-backgroundSprite.getPosition().x >= backgroundSprite.getTexture()->getSize().x)
-            {
-                backgroundSprite.setPosition(0,0);
-            }
+        background.update();
 
-            warningTitleSprite.move(movement);
-
-            window.clear();
-            window.draw(backgroundSprite);
-            window.draw(warningTitleSprite);
-            window.display();
-        }
+        window.clear();
+        window.draw(background);
+        window.draw(warningTitleSprite);
+        window.display();
+    }
 
     // Third thing: the normal text and the glitch text appears, as well as
     // the "Press Any Key" text, allowing the player to continue
@@ -129,6 +126,9 @@ bool WarningWindow::run()
 
     while(true)
     {
+
+        std::cout << "3 Final" << std::endl;
+
         // If the user presses any key, the warning window ends
         sf::Event event;
         while(window.pollEvent(event))
@@ -141,25 +141,13 @@ bool WarningWindow::run()
         }
 
         if(exiting){
-            if(bigBlackRectangle.getFillColor().a < 255)
-                bigBlackRectangle.setFillColor(sf::Color(0,0,0,bigBlackRectangle.getFillColor().a+5));
+            foreground.update();
             if(musicPlayer->getVolume() > 1)
                 musicPlayer->alterVolume(-1);
             else{
                 musicPlayer->stop();
                 return debugMode;
             }
-        }
-
-        backgroundTransparency+=1;
-        backgroundSprite.setColor(sf::Color(255,255,255,backgroundTransparency > 255 ? 255 : backgroundTransparency));
-
-        // The background moves to the left and up until it loops back and starts over,
-        // making it look like it's endless
-        backgroundSprite.move(-((float)backgroundSprite.getTexture()->getSize().x/(float)backgroundSprite.getTexture()->getSize().y)/10.f,-1/10.f);
-        if(-backgroundSprite.getPosition().x >= backgroundSprite.getTexture()->getSize().x)
-        {
-            backgroundSprite.setPosition(0,0);
         }
 
         // The aux counter increases in 2 until it reaches 255
@@ -197,14 +185,16 @@ bool WarningWindow::run()
             else pressAnyKeySprite.setColor(sf::Color(255,255,255,a+5));
         }
 
+        background.update();
+
         // The window is cleared and all sprites are drawn. Then, everything is displayed
         window.clear();
-        window.draw(backgroundSprite);
+        window.draw(background);
         window.draw(warningTitleSprite);
         window.draw(normalTextSprite);
         window.draw(glitchTextSprite);
         window.draw(pressAnyKeySprite);
-        window.draw(bigBlackRectangle);
+        window.draw(foreground);
         window.display();
     }
 

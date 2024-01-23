@@ -27,12 +27,12 @@ extern sf::RenderWindow window;
 
 // Names for every character in the game and maybe
 // something else I forgot
-enum CharName{
+enum class CharName{
     GABRIELA, DANIELA, PLAYER, BYSTANDER
 };
 
 // Identifiers for every texture used
-enum TextureID {
+enum class TextureID {
     GabrielaTextbox, DanielaTextbox, BystanderTextbox,
     WarningTitle, WarningBackground, WarningNormalText, WarningGlitchText, WarningPressAnyKey,
     ControlsGabrielaLeftKeyboard,
@@ -40,36 +40,41 @@ enum TextureID {
 };
 
 // Identifiers for every font used
-enum FontID {
+enum class FontID {
     GabrielaFont, DanielaFont
 };
 
 // Identifiers for every sound effect used
-enum SoundID {
+enum class SoundID {
     GabrielaSpeaking, DanielaSpeaking, AdvanceConversation, Glitch0, Glitch1,
     ControlsGlitchSound
 };
 
 // Identifiers for every music theme
-enum MusicID {
+enum class MusicID {
     WarningMusic
 };
 
 // Positions of a textbox
-enum TextboxPosition {
+enum class TextboxPosition {
     TOP_LEFT, TOP_RIGHT, BOTTOM_LEFT, BOTTOM_RIGHT
 };
 
 // Possible controls a character can use
-enum Control{
+enum class Control{
     KEYBOARD_LEFT, KEYBOARD_RIGHT,
     JOYSTICK0, JOYSTICK1, JOYSTICK2, JOYSTICK3,
     JOYSTICK4, JOYSTICK5, JOYSTICK6, JOYSTICK7
 };
 
 // Things a player can do by pressing keys
-enum KeyAction{
+enum class KeyAction{
     UP, DOWN, LEFT, RIGHT, INTERACT, EXIT
+};
+
+// Directions that a movement can go to
+enum class Direction{
+    UP, UP_RIGHT, RIGHT, DOWN_RIGHT, DOWN, DOWN_LEFT, LEFT, UP_LEFT
 };
 
 ///////////////////////

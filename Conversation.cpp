@@ -24,32 +24,31 @@ void Conversation::initialize(){
     textboxes.clear();
 
     // For every character, a textbox is created
-    TextboxPosition positions[4] = {TOP_LEFT, TOP_RIGHT, BOTTOM_LEFT, BOTTOM_RIGHT};
     int numTextboxes = 0;
     for(CharName c : characters){
         switch(c){
-        case GABRIELA:
+        case CharName::GABRIELA:
             {
-                std::unique_ptr<Textbox> t(new Textbox(GABRIELA,PLAYER,textureHolder->get(GabrielaTextbox),soundHolder->get(GabrielaSpeaking),fontHolder->get(GabrielaFont),positions[numTextboxes%4]));
-                auto inserted = textboxes.insert(std::make_pair(GABRIELA,std::move(t)));
+                std::unique_ptr<Textbox> t(new Textbox(c,CharName::PLAYER,textureHolder->get(TextureID::GabrielaTextbox),soundHolder->get(SoundID::GabrielaSpeaking),fontHolder->get(FontID::GabrielaFont),static_cast<TextboxPosition>(numTextboxes)));
+                auto inserted = textboxes.insert(std::make_pair(c,std::move(t)));
                 assert(inserted.second == true);
             }
             break;
-        case DANIELA:
+        case CharName::DANIELA:
             {
-                std::unique_ptr<Textbox> t(new Textbox(DANIELA,PLAYER,textureHolder->get(DanielaTextbox),soundHolder->get(DanielaSpeaking),fontHolder->get(DanielaFont),positions[numTextboxes%4]));
-                auto inserted = textboxes.insert(std::make_pair(DANIELA,std::move(t)));
+                std::unique_ptr<Textbox> t(new Textbox(c,CharName::PLAYER,textureHolder->get(TextureID::DanielaTextbox),soundHolder->get(SoundID::DanielaSpeaking),fontHolder->get(FontID::DanielaFont),static_cast<TextboxPosition>(numTextboxes)));
+                auto inserted = textboxes.insert(std::make_pair(c,std::move(t)));
                 assert(inserted.second == true);
             }
             break;
-        case BYSTANDER:
+        case CharName::BYSTANDER:
             {
-                std::unique_ptr<Textbox> t(new Textbox(BYSTANDER,PLAYER,textureHolder->get(BystanderTextbox),soundHolder->get(Glitch1),fontHolder->get(GabrielaFont),positions[numTextboxes%4]));
-                auto inserted = textboxes.insert(std::make_pair(BYSTANDER,std::move(t)));
+                std::unique_ptr<Textbox> t(new Textbox(c,CharName::PLAYER,textureHolder->get(TextureID::BystanderTextbox),soundHolder->get(SoundID::Glitch1),fontHolder->get(FontID::GabrielaFont),static_cast<TextboxPosition>(numTextboxes)));
+                auto inserted = textboxes.insert(std::make_pair(c,std::move(t)));
                 assert(inserted.second == true);
             }
             break;
-        case PLAYER:
+        case CharName::PLAYER:
             {
                 // The player shall not talk
                 assert(false);
@@ -61,28 +60,28 @@ void Conversation::initialize(){
     // For the glitched characters it's the same thing but with a glitched textbox
     for(CharName c : glitchedCharacters){
         switch(c){
-        case GABRIELA:
+        case CharName::GABRIELA:
             {
-                std::unique_ptr<Textbox> t(new Textbox(GABRIELA,PLAYER,textureHolder->get(GabrielaTextbox),soundHolder->get(GabrielaSpeaking),fontHolder->get(GabrielaFont),positions[numTextboxes%4],soundHolder->get(Glitch0)));
-                auto inserted = textboxes.insert(std::make_pair(GABRIELA,std::move(t)));
+                std::unique_ptr<Textbox> t(new Textbox(c,CharName::PLAYER,textureHolder->get(TextureID::GabrielaTextbox),soundHolder->get(SoundID::GabrielaSpeaking),fontHolder->get(FontID::GabrielaFont),static_cast<TextboxPosition>(numTextboxes),soundHolder->get(SoundID::Glitch0)));
+                auto inserted = textboxes.insert(std::make_pair(c,std::move(t)));
                 assert(inserted.second == true);
             }
             break;
-        case DANIELA:
+        case CharName::DANIELA:
             {
-                std::unique_ptr<Textbox> t(new Textbox(DANIELA,PLAYER,textureHolder->get(DanielaTextbox),soundHolder->get(DanielaSpeaking),fontHolder->get(DanielaFont),positions[numTextboxes%4],soundHolder->get(Glitch1)));
-                auto inserted = textboxes.insert(std::make_pair(DANIELA,std::move(t)));
+                std::unique_ptr<Textbox> t(new Textbox(c,CharName::PLAYER,textureHolder->get(TextureID::DanielaTextbox),soundHolder->get(SoundID::DanielaSpeaking),fontHolder->get(FontID::DanielaFont),static_cast<TextboxPosition>(numTextboxes),soundHolder->get(SoundID::Glitch1)));
+                auto inserted = textboxes.insert(std::make_pair(c,std::move(t)));
                 assert(inserted.second == true);
             }
             break;
-        case BYSTANDER:
+        case CharName::BYSTANDER:
             {
-                std::unique_ptr<Textbox> t(new Textbox(BYSTANDER,PLAYER,textureHolder->get(BystanderTextbox),soundHolder->get(Glitch1),fontHolder->get(GabrielaFont),positions[numTextboxes%4],soundHolder->get(Glitch0)));
-                auto inserted = textboxes.insert(std::make_pair(BYSTANDER,std::move(t)));
+                std::unique_ptr<Textbox> t(new Textbox(c,CharName::PLAYER,textureHolder->get(TextureID::BystanderTextbox),soundHolder->get(SoundID::Glitch1),fontHolder->get(FontID::GabrielaFont),static_cast<TextboxPosition>(numTextboxes),soundHolder->get(SoundID::Glitch0)));
+                auto inserted = textboxes.insert(std::make_pair(c,std::move(t)));
                 assert(inserted.second == true);
             }
             break;
-        case PLAYER:
+        case CharName::PLAYER:
             {
                 // The player shall not talk
                 assert(false);
@@ -147,8 +146,8 @@ bool Conversation::update(bool checkIfAdvance){
         CharName lookingAt = i->second->getLookingAt();
         // If the character looks at the player, set both coordinates
         // to -1
-        int x = lookingAt == PLAYER ? -1 : textboxes[lookingAt]->getX();
-        int y = lookingAt == PLAYER ? -1 : textboxes[lookingAt]->getY();
+        int x = lookingAt == CharName::PLAYER ? -1 : textboxes[lookingAt]->getX();
+        int y = lookingAt == CharName::PLAYER ? -1 : textboxes[lookingAt]->getY();
         // Update the current textbox. If the update function returns true,
         // then it means we should advance in the conversation
         if(i->second->update(checkIfAdvance,x,y)) shouldAdvance = true;

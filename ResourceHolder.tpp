@@ -37,7 +37,7 @@ Resource& ResourceHolder<Resource,Identifier>::get(Identifier id){
 
     // Once we have the element, which is a pair, we return
     // the texture, which is the second element
-    return *found -> second;
+    return *(found -> second);
 }
 
 template <class Resource, class Identifier>
@@ -67,32 +67,32 @@ FontHolder * ResourceHolder<Resource,Identifier>::getFontInstance()
 template <class Resource, class Identifier>
 void ResourceHolder<Resource,Identifier>::loadAllTextures()
 {
-    load(GabrielaTextbox,"sprites/textbox/gabrielaTextbox.png");
-    load(DanielaTextbox,"sprites/textbox/danielaTextbox.png");
-    load(BystanderTextbox,"sprites/textbox/bystanderTextbox.png");
-    load(WarningBackground,"sprites/warning/warningBackground.png");
-    load(WarningTitle,"sprites/warning/warningTitle.png");
-    load(WarningNormalText,"sprites/warning/warningNormalText.png");
-    load(WarningGlitchText,"sprites/warning/warningGlitchText.png");
-    load(WarningPressAnyKey,"sprites/warning/warningPressAnyKey.png");
-    load(ControlsGabrielaLeftKeyboard,"sprites/controls/controlsGabrielaLeftKeyboard.png");
-    load(FloatingLeftKeyboardGabriela,"sprites/controls/floatingLeftKeyboardGabriela.png");
+    load(TextureID::GabrielaTextbox,"sprites/textbox/gabrielaTextbox.png");
+    load(TextureID::DanielaTextbox,"sprites/textbox/danielaTextbox.png");
+    load(TextureID::BystanderTextbox,"sprites/textbox/bystanderTextbox.png");
+    load(TextureID::WarningBackground,"sprites/warning/warningBackground.png");
+    load(TextureID::WarningTitle,"sprites/warning/warningTitle.png");
+    load(TextureID::WarningNormalText,"sprites/warning/warningNormalText.png");
+    load(TextureID::WarningGlitchText,"sprites/warning/warningGlitchText.png");
+    load(TextureID::WarningPressAnyKey,"sprites/warning/warningPressAnyKey.png");
+    load(TextureID::ControlsGabrielaLeftKeyboard,"sprites/controls/controlsGabrielaLeftKeyboard.png");
+    load(TextureID::FloatingLeftKeyboardGabriela,"sprites/controls/floatingLeftKeyboardGabriela.png");
 }
 
 template <class Resource, class Identifier>
 void ResourceHolder<Resource,Identifier>::loadAllSounds()
 {
-    load(GabrielaSpeaking,"sounds/speaking/gabrielaSpeaking.wav");
-    load(DanielaSpeaking,"sounds/speaking/danielaSpeaking.wav");
-    load(Glitch0,"sounds/glitch/glitch0.wav");
-    load(Glitch1,"sounds/glitch/glitch1.wav");
-    load(AdvanceConversation,"sounds/speaking/advanceConversation.wav");
-    load(ControlsGlitchSound,"sounds/glitch/controlsGlitchSound.wav");
+    load(SoundID::GabrielaSpeaking,"sounds/speaking/gabrielaSpeaking.wav");
+    load(SoundID::DanielaSpeaking,"sounds/speaking/danielaSpeaking.wav");
+    load(SoundID::Glitch0,"sounds/glitch/glitch0.wav");
+    load(SoundID::Glitch1,"sounds/glitch/glitch1.wav");
+    load(SoundID::AdvanceConversation,"sounds/speaking/advanceConversation.wav");
+    load(SoundID::ControlsGlitchSound,"sounds/glitch/controlsGlitchSound.wav");
 }
 
 template <class Resource, class Identifier>
 void ResourceHolder<Resource,Identifier>::loadAllFonts()
 {
-    load(GabrielaFont,"fonts/gabriela.ttf");
-    load(DanielaFont,"fonts/daniela.ttf");
+    load(FontID::GabrielaFont,"fonts/gabriela.ttf");
+    load(FontID::DanielaFont,"fonts/daniela.ttf");
 }

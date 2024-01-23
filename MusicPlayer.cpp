@@ -44,5 +44,5 @@ void MusicPlayer::alterVolume(float change)
 
 void MusicPlayer::loadAllMusic()
 {
-    load(WarningMusic,"music/warning/warningMusic.wav");
+    load(MusicID::WarningMusic,"music/warning/warningMusic.wav");
 }

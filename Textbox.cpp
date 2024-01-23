@@ -24,15 +24,15 @@ Textbox::Textbox(CharName speaker, CharName lookingAt, sf::Texture& texture, sf:
     // The text is initialized
     text.setFont(font);
     switch(speaker){
-    case GABRIELA:
+    case CharName::GABRIELA:
         text.setFillColor(sf::Color::White);
         break;
-    case DANIELA:
+    case CharName::DANIELA:
         text.setFillColor(sf::Color::Yellow);
         break;
-    case BYSTANDER:
+    case CharName::BYSTANDER:
         break;
-    case PLAYER:
+    case CharName::PLAYER:
         break;
     }
 
@@ -51,17 +51,17 @@ Textbox::Textbox(CharName speaker, CharName lookingAt, sf::Texture& texture, sf:
     window.setFramerateLimit(TEXTBOX_FPS);
     sf::Vector2i position(sf::VideoMode::getDesktopMode().width / 10, sf::VideoMode::getDesktopMode().height / 10);
     switch(pos){
-    case TOP_RIGHT:
+    case TextboxPosition::TOP_RIGHT:
         position.x += sf::VideoMode::getDesktopMode().width / 2;
         break;
-    case BOTTOM_LEFT:
+    case TextboxPosition::BOTTOM_LEFT:
         position.y += sf::VideoMode::getDesktopMode().height / 2;
         break;
-    case BOTTOM_RIGHT:
+    case TextboxPosition::BOTTOM_RIGHT:
         position.x += sf::VideoMode::getDesktopMode().width / 2;
         position.y += sf::VideoMode::getDesktopMode().height / 2;
         break;
-    case TOP_LEFT:
+    case TextboxPosition::TOP_LEFT:
         break;
     }
 
@@ -71,16 +71,16 @@ Textbox::Textbox(CharName speaker, CharName lookingAt, sf::Texture& texture, sf:
     // Depending on the name of the character, the window will have a different title
     switch(speaker)
     {
-        case GABRIELA:
+        case CharName::GABRIELA:
             window.setTitle("Gabriela");
             break;
-        case DANIELA:
+        case CharName::DANIELA:
             window.setTitle("Daniela");
             break;
-        case BYSTANDER:
-            window.setTitle("Bystander");
+        case CharName::BYSTANDER:
+            window.setTitle("");
             break;
-        case PLAYER:
+        case CharName::PLAYER:
             break;
     }
 
@@ -113,7 +113,8 @@ void Textbox::setText(std::string text){
 
     bounceCounter=TEXTBOX_BOUNCE;
 
-    if(speaker != BYSTANDER){
+    // Maybe this should be done with an abstract textbox type but nah
+    if(speaker != CharName::BYSTANDER){
         // if the speaker is not bystander then update the y axis position
         sf::Vector2i pos = window.getPosition();
         window.setPosition(pos);
@@ -198,7 +199,7 @@ bool Textbox::update(bool checkIfAdvance, int target_x, int target_y){
         // is moved up a bit, but if it's BYSTANDER, the textbox moves
         // a bit towards the speaker
 
-        if(speaker!=BYSTANDER) pos.y -= 1;
+        if(speaker!=CharName::BYSTANDER) pos.y -= 1;
         else pos = window.getPosition() + (sf::Vector2i(target_x,target_y) - pos) / 100;
         window.setPosition(pos);
         bounceCounter-=1;
@@ -218,7 +219,7 @@ bool Textbox::update(bool checkIfAdvance, int target_x, int target_y){
 
         // BYSTANDER talks by using the window's
         // title, so it works differently
-        if(speaker == BYSTANDER){
+        if(speaker == CharName::BYSTANDER){
             window.setTitle(finalText);
             finalText = " ";
             currentText = " ";

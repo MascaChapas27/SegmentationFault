@@ -75,8 +75,6 @@ bool WarningWindow::run()
     int warningTitleTransparency = 0;
     while(warningTitleTransparency < 400){
 
-        std::cout << "1 Transparency: " << warningTitleTransparency << std::endl;
-
         sf::Event event;
         while(window.pollEvent(event));
 
@@ -91,8 +89,6 @@ bool WarningWindow::run()
     // Second thing: The "WARNING" title goes up and the background begins to be visible
 
     while(abs(warningTitleSprite.getPosition().y - WARNING_TITLE_FINAL_POSITION.y) > 3){
-
-        std::cout << "2 Warning y: " << warningTitleSprite.getPosition().y << std::endl;
 
         sf::Event event;
         while(window.pollEvent(event));
@@ -126,9 +122,6 @@ bool WarningWindow::run()
 
     while(true)
     {
-
-        std::cout << "3 Final" << std::endl;
-
         // If the user presses any key, the warning window ends
         sf::Event event;
         while(window.pollEvent(event))

@@ -12,6 +12,10 @@ void FadingBackground::setCurrentColor(sf::Color color){
     backgroundRectangle.setFillColor(color);
 }
 
+void FadingBackground::setInitialColor(sf::Color color){
+    this->initialColor = color;
+}
+
 void FadingBackground::setFinalColor(sf::Color color){
     finalColor = color;
 }
@@ -33,15 +37,28 @@ int findNewColor(int old, int goal, int fadingSpeed){
     else return old + fadingSpeed;
 }
 
+void FadingBackground::setLooped(bool looped)
+{
+    this->looped = looped;
+}
+
 void FadingBackground::update(){
     sf::Color newColor = backgroundRectangle.getFillColor();
 
+    // For each channel make it slightly closer
     newColor.r = findNewColor(newColor.r,finalColor.r,fadingSpeed);
     newColor.g = findNewColor(newColor.g,finalColor.g,fadingSpeed);
     newColor.b = findNewColor(newColor.b,finalColor.b,fadingSpeed);
     newColor.a = findNewColor(newColor.a,finalColor.a,fadingSpeed);
 
     backgroundRectangle.setFillColor(newColor);
+
+    // This one is classic
+    if(looped && newColor == finalColor){
+        sf::Color aux = finalColor;
+        finalColor = initialColor;
+        initialColor = aux;
+    }
 }
 
 void FadingBackground::draw(sf::RenderTarget& r, sf::RenderStates s) const{

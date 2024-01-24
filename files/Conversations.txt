@@ -17,7 +17,7 @@
 # Name of the speaker
 # Name of the listener
 # Number that represents mood (specifies the row of faces to be used as seen in the textbox sprites, being 0 the glitch row that is only used in glitch characters or special characters)
-# String that represents the text that is spoken
+# String that represents the text that is spoken (can be many lines as long as they are not blank)
 # Blank line
 # ... (the five last lines repeat until a dollar symbol is found instead of a blank line)
 # 
@@ -27,7 +27,8 @@
 # Every conversation has a code, which appears in the comment that comes before it
 #
 # EXTRA: putting a # symbol at the end of a line of text makes the character
-# automatically stop speaking at that moment
+# automatically stop speaking at that moment and advance in the Conversation
+# as if the interaction key was pressed
 #
 ########################
 # 0: Test conversation #
@@ -202,5 +203,194 @@ GABRIELA
 BYSTANDER
 1
 so
+$
+#################################################
+# 3: Fourth test in which dani is sans e ee e e #
+#################################################
+2
+GABRIELA
+DANIELA
+0
+
+DANIELA
+GABRIELA
+1
+Mira soy Sans :DD
+
+DANIELA
+GABRIELA
+1
+e#
+
+DANIELA
+GABRIELA
+1
+e#
+
+DANIELA
+GABRIELA
+1
+e#
+
+DANIELA
+GABRIELA
+1
+e#
+
+DANIELA
+GABRIELA
+1
+e#
+
+DANIELA
+GABRIELA
+1
+e#
+
+DANIELA
+GABRIELA
+1
+e#
+
+DANIELA
+GABRIELA
+1
+e#
+
+DANIELA
+GABRIELA
+1
+e#
+
+DANIELA
+GABRIELA
+1
+e#
+
+DANIELA
+GABRIELA
+1
+e#
+
+DANIELA
+GABRIELA
+1
+e#
+
+DANIELA
+GABRIELA
+1
+e#
+
+DANIELA
+GABRIELA
+1
+e#
+
+DANIELA
+GABRIELA
+1
+e#
+
+DANIELA
+GABRIELA
+1
+e
+
+GABRIELA
+DANIELA
+1
+donde vas
+
+DANIELA
+GABRIELA
+1
+No se :O
+
+GABRIELA
+DANIELA
+1
+a ver yo
+
+GABRIELA
+DANIELA
+1
+e e e e e e
+
+GABRIELA
+DANIELA
+1
+no va
+
+DANIELA
+GABRIELA
+1
+Jo :(
+
+GABRIELA
+DANIELA
+1
+#
+
+GABRIELA
+DANIELA
+1
+#
+
+GABRIELA
+DANIELA
+1
+#
+
+GABRIELA
+DANIELA
+1
+#
+
+GABRIELA
+DANIELA
+1
+#
+
+GABRIELA
+DANIELA
+1
+#
+
+GABRIELA
+DANIELA
+1
+#
+
+GABRIELA
+DANIELA
+1
+#
+
+GABRIELA
+DANIELA
+1
+#
+
+GABRIELA
+DANIELA
+1
+#
+
+GABRIELA
+DANIELA
+1
+#
+
+GABRIELA
+DANIELA
+1
+aa que ha pasado
+
+DANIELA
+GABRIELA
+1
+No se pero que
+chulo :)
 $
 @

@@ -113,7 +113,7 @@ void Textbox::setText(std::string text){
     // counter is increased and the window is
     // moved down a bit (if it's not BYSTANDER)
 
-    bounceCounter=TEXTBOX_BOUNCE;
+    bounceCounter+=TEXTBOX_BOUNCE;
 
     // Maybe this should be done with an abstract textbox type but nah
     if(speaker != CharName::BYSTANDER){

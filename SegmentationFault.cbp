@@ -43,10 +43,10 @@
 			<Add option="-Wall" />
 			<Add option="-std=c++11" />
 			<Add option="-g" />
-			<Add directory="C:/SFML-2.5.1/include" />
+			<Add directory="windows-SFML-2.5.1/include" />
 		</Compiler>
 		<Linker>
-			<Add directory="C:/SFML-2.5.1/lib" />
+			<Add directory="windows-SFML-2.5.1/lib" />
 		</Linker>
 		<Unit filename="AbstractBackground.hpp" />
 		<Unit filename="BackgroundContainer.cpp" />

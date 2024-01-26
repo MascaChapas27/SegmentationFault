@@ -8,8 +8,8 @@
       "args": [],
       "stopAtEntry": false,
       "externalConsole": true,
-      "cwd": "c:/Users/angel/OneDrive - UNIVERSIDAD DE MURCIA/Mis programas/SegmentationFault",
-      "program": "c:/Users/angel/OneDrive - UNIVERSIDAD DE MURCIA/Mis programas/SegmentationFault/build/Debug/outDebug",
+      "cwd": "/home/angel/SegmentationFault",
+      "program": "/home/angel/SegmentationFault/SegmentationFault",
       "MIMode": "gdb",
       "miDebuggerPath": "gdb",
       "setupCommands": [

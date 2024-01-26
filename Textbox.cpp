@@ -66,7 +66,9 @@ Textbox::Textbox(CharName speaker, CharName lookingAt, sf::Texture& texture, sf:
     }
 
     // The window is set to its corresponding position
-    window.setPosition(position);
+    while(window.getPosition() != position){
+        window.setPosition(position);
+    }
 
     // Depending on the name of the character, the window will have a different title
     switch(speaker)

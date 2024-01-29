@@ -201,10 +201,19 @@ bool Textbox::update(bool checkIfAdvance, int target_x, int target_y){
         // is moved up a bit, but if it's BYSTANDER, the textbox moves
         // a bit towards the speaker
 
-        if(speaker!=CharName::BYSTANDER) pos.y -= 1;
-        else pos = window.getPosition() + (sf::Vector2i(target_x,target_y) - pos) / 100;
+        // UPDATE: the textbox doesn't go up at a constant speed, it goes
+        // faster if it moved more (if the bounceCounter is higher)
+
+        if(speaker!=CharName::BYSTANDER) {
+            int currentBounce = bounceCounter < 4 ? 1 : bounceCounter/4;
+            bounceCounter-=currentBounce;
+            pos.y -= currentBounce;
+        } else {
+            pos = window.getPosition() + (sf::Vector2i(target_x,target_y) - pos) / 100;
+            // bounceCounter--;
+        }
+
         window.setPosition(pos);
-        bounceCounter-=1;
     }
 
     // If the window is still open, clear everything

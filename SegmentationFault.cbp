@@ -59,6 +59,8 @@
 		<Unit filename="ConversationHolder.hpp" />
 		<Unit filename="FadingBackground.cpp" />
 		<Unit filename="FadingBackground.hpp" />
+		<Unit filename="FloatingBackground.cpp" />
+		<Unit filename="FloatingBackground.hpp" />
 		<Unit filename="Interaction.cpp" />
 		<Unit filename="Interaction.hpp" />
 		<Unit filename="Log.cpp" />

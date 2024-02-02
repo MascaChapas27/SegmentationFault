@@ -47,7 +47,8 @@ Textbox::Textbox(CharName speaker, CharName lookingAt, sf::Texture& texture, sf:
     speakingSound.setBuffer(soundBuffer);
 
     // The window is created
-    window.create(sf::VideoMode(TEXTBOX_WIDTH, TEXTBOX_HEIGHT), "Textbox", sf::Style::Titlebar);
+    // BYSTANDER has a borderless window
+    window.create(sf::VideoMode(TEXTBOX_WIDTH, TEXTBOX_HEIGHT), "Textbox", speaker == CharName::BYSTANDER ? sf::Style::None : sf::Style::Titlebar);
     window.setFramerateLimit(TEXTBOX_FPS);
     sf::Vector2i position(sf::VideoMode::getDesktopMode().width / 10, sf::VideoMode::getDesktopMode().height / 10);
     switch(pos){

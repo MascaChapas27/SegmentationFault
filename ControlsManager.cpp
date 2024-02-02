@@ -13,6 +13,7 @@ ControlsManager * ControlsManager::getInstance()
 ControlsManager::ControlsManager()
 {
     SoundHolder * soundHolder = SoundHolder::getSoundInstance();
+    TextureHolder * textureHolder = TextureHolder::getTextureInstance();
 
     this->glitchSound.setBuffer(soundHolder->get(SoundID::ControlsGlitchSound));
 
@@ -28,46 +29,8 @@ ControlsManager::ControlsManager()
     associatedButtons[KeyAction::INTERACT] = 0;
     associatedButtons[KeyAction::EXIT] = 6;
 
-    // The vector of floating symbols is initialized
-    for(int i=0;i<FLOATING_CONTROLS_NUM;i++){
-        sf::Sprite s;
-        int randomScale = 1+rand()%5;
-        s.setPosition(rand()%MAIN_WINDOW_WIDTH-s.getTextureRect().width*s.getScale().x/2,
-                      rand()%MAIN_WINDOW_HEIGHT-s.getTextureRect().height*s.getScale().y/2);
-        s.setScale(randomScale,randomScale);
-        s.setColor(FLOATING_CONTROLS_COLOR);
-        floatingControls.push_back(s);
-
-        // The speeds too
-        floatingSpeeds.push_back(sf::Vector2f(1.0-(rand()%201)/100.0,1.0-(rand()%201)/100.0));
-    }
-}
-
-void ControlsManager::moveFloatingControls(){
-    for(int i=0;i<FLOATING_CONTROLS_NUM;i++){
-        floatingControls[i].move(floatingSpeeds[i]);
-        if(floatingControls[i].getPosition().x > MAIN_WINDOW_WIDTH)
-            floatingControls[i].setPosition(-(floatingControls[i].getTextureRect().width*floatingControls[i].getScale().x),
-                                            floatingControls[i].getPosition().y);
-
-        else if(floatingControls[i].getPosition().x < -(floatingControls[i].getTextureRect().width*floatingControls[i].getScale().x))
-            floatingControls[i].setPosition(MAIN_WINDOW_WIDTH,
-                                            floatingControls[i].getPosition().y);
-
-        if(floatingControls[i].getPosition().y > MAIN_WINDOW_HEIGHT)
-            floatingControls[i].setPosition(floatingControls[i].getPosition().x,
-                                            -(floatingControls[i].getTextureRect().height*floatingControls[i].getScale().y));
-
-        else if(floatingControls[i].getPosition().y < -(floatingControls[i].getTextureRect().height*floatingControls[i].getScale().y))
-            floatingControls[i].setPosition(floatingControls[i].getPosition().x,
-                                            MAIN_WINDOW_HEIGHT);
-    }
-}
-
-void ControlsManager::drawFloatingControls(){
-    for(int i=0;i<FLOATING_CONTROLS_NUM;i++){
-        window.draw(floatingControls[i]);
-    }
+    // The background for the floating controls is initialized
+    background.setTextureAndNumber(textureHolder->get(TextureID::FloatingLeftKeyboardGabriela),FLOATING_CONTROLS_NUM);
 }
 
 bool ControlsManager::isAvailable(Control c){
@@ -198,9 +161,8 @@ void ControlsManager::showControls(CharName character)
                 // this->controlsSprite.setTexture(textureHolder->get(ControlsGabrielaMustConnectJoystick));
             } else if(characterControls[CharName::GABRIELA] == Control::KEYBOARD_LEFT){
                 this->controlsSprite.setTexture(textureHolder->get(TextureID::ControlsGabrielaLeftKeyboard));
-                for(int i=0;i<FLOATING_CONTROLS_NUM;i++){
-                    floatingControls[i].setTexture(textureHolder->get(TextureID::FloatingLeftKeyboardGabriela));
-                }
+                //floatingControls[i].setTexture(textureHolder->get(TextureID::FloatingLeftKeyboardGabriela));
+                background.setTextureAndNumber(textureHolder->get(TextureID::FloatingLeftKeyboardGabriela),FLOATING_CONTROLS_NUM);
             } else if (characterControls[CharName::GABRIELA] == Control::KEYBOARD_RIGHT){
                 // this->controlsSprite.setTexture(textureHolder->get(TextureID::ControlsGabrielaRightKeyboard));
             }
@@ -272,12 +234,12 @@ void ControlsManager::showControls(CharName character)
 
         controlsSprite.setTextureRect( glitchRect );
 
-        moveFloatingControls();
+        background.update();
 
         window.clear();
 
         window.draw(controlsSprite);
-        if(glitchCounter==15) drawFloatingControls();
+        if(glitchCounter==15) window.draw(background);
 
         window.display();
     }

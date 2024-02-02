@@ -172,7 +172,7 @@ const int CONTROLS_TEXTURE_WIDTH = MAIN_WINDOW_WIDTH*3;
 
 // Number of keyboard/joystick symbols that float
 // in the background of the controls window
-const int FLOATING_CONTROLS_NUM = 6;
+const int FLOATING_CONTROLS_NUM = 10;
 
 // Max speed that the floating controls can reach
 // (acts as a positive limit and a negative limit so 3 means 3 and -3)
@@ -185,5 +185,19 @@ const sf::Color FLOATING_CONTROLS_COLOR = sf::Color(255,255,255,10);
 // the control thinks it's moving a bit) so this threshold
 // helps with that
 const int JOYSTICK_AXIS_THRESHOLD = 30;
+
+///////////////
+// FUNCTIONS //
+///////////////
+
+// Namespace for functions just in case (inline or else
+// it will be defined 19837 times)
+namespace util{
+    // Returns a random number between a and b
+    inline int RandomBetween(int a, int b){
+        return a + rand()%(b-a+1);
+    }
+}
+
 
 #endif // __UTILITIES_HPP__

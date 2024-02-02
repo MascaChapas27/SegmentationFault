@@ -5,6 +5,7 @@
 #include "ResourceHolder.hpp"
 #include <map>
 #include <vector>
+#include "FloatingBackground.hpp"
 
 // Class that manages everything related to controls
 class ControlsManager
@@ -23,6 +24,9 @@ class ControlsManager
         // Map that stores, for each character, the control it uses
         std::map<CharName, Control> characterControls;
 
+        // Background with floating controls
+        FloatingBackground background;
+
         // Map that stores, for each keyboard control and action, the key associated with that action
         std::map<std::pair<Control,KeyAction>,sf::Keyboard::Key> associatedKeys;
 
@@ -31,20 +35,6 @@ class ControlsManager
 
         // Function that indicates if a control is free
         bool isAvailable(Control c);
-
-        // Vector of floating symbols of controls that show in the background
-        std::vector<sf::Sprite> floatingControls;
-
-        // Vector of speeds for every floating control (this could be done in a separate class)
-        std::vector<sf::Vector2f> floatingSpeeds;
-
-        // Function that moves the floating controls in the background
-        void moveFloatingControls();
-
-        // Function that draw the floating controls (i swear to god this should
-        // be done in a different class but i dont want to make 19048084 classes for
-        // silly effects that are going to be used for just one specific situation)
-        void drawFloatingControls();
 
         // Helper functions for the isPressing function
         bool isPressingKey(CharName character, KeyAction keyAction);

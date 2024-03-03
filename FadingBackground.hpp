@@ -3,6 +3,7 @@
 
 #include <SFML/Graphics.hpp>
 #include "AbstractBackground.hpp"
+#include <memory>
 
 /*
     A background that starts having a color and slowly changes to

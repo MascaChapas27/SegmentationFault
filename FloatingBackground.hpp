@@ -4,6 +4,7 @@
 #include <vector>
 #include <SFML/Graphics.hpp>
 #include "AbstractBackground.hpp"
+#include <memory>
 
 /*
     A background formed by many sprites that are the same

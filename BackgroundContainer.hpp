@@ -4,6 +4,7 @@
 #include <SFML/Graphics.hpp>
 #include "AbstractBackground.hpp"
 #include <list>
+#include <memory>
 
 /*
     COMPOSITE PATTERN

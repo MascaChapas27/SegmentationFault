@@ -3,6 +3,7 @@
 
 #include "AbstractBackground.hpp"
 #include "Utilities.hpp"
+#include <memory>
 
 class LoopingBackground : public AbstractBackground {
     private:

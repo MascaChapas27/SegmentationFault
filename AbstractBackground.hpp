@@ -2,6 +2,7 @@
 #define __ABSTRACT_BACKGROUND_HPP__
 
 #include <SFML/Graphics.hpp>
+#include <memory>
 
 /*
     A background that can be any type of background,

@@ -77,6 +77,7 @@ void ResourceHolder<Resource,Identifier>::loadAllTextures()
     load(TextureID::WarningPressAnyKey,"sprites/warning/warningPressAnyKey.png");
     load(TextureID::ControlsGabrielaLeftKeyboard,"sprites/controls/controlsGabrielaLeftKeyboard.png");
     load(TextureID::FloatingLeftKeyboardGabriela,"sprites/controls/floatingLeftKeyboardGabriela.png");
+    load(TextureID::SquareBackground,"sprites/misc/squareBackground.png");
 }
 
 template <class Resource, class Identifier>

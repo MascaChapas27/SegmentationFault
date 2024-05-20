@@ -4,7 +4,6 @@
 #include <SFML/Graphics.hpp>
 #include "ResourceHolder.hpp"
 #include "MusicPlayer.hpp"
-#include "BackgroundContainer.hpp"
 #include "FadingBackground.hpp"
 
 // Class for the warning window that appears at the beginning
@@ -18,7 +17,7 @@ class WarningWindow
     private:
 
         // Background that says "warning" a lot of times plus a black fade
-        BackgroundContainer background;
+        FadingBackground background;
 
         // Foreground that makes everything black when you press any key
         FadingBackground foreground;

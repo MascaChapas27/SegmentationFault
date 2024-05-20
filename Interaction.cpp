@@ -20,7 +20,6 @@ int Interaction::getEmotion(){
     return emotion;
 }
 
-
 void Interaction::setPhrase(std::string phrase){
     this->phrase = phrase;
 }

@@ -3,13 +3,15 @@
 #include "Log.hpp"
 
 FadingBackground::FadingBackground(){
-    backgroundRectangle.setPosition(0,0);
-    backgroundRectangle.setSize(sf::Vector2f(MAIN_WINDOW_WIDTH,MAIN_WINDOW_HEIGHT));
     fadingSpeed = 1;
 }
 
-void FadingBackground::setCurrentColor(sf::Color color){
-    backgroundRectangle.setFillColor(color);
+void FadingBackground::setColor(sf::Color color){
+    background->setColor(color);
+}
+
+sf::Color FadingBackground::getColor(){
+    return background->getColor();
 }
 
 void FadingBackground::setInitialColor(sf::Color color){
@@ -17,7 +19,7 @@ void FadingBackground::setInitialColor(sf::Color color){
 }
 
 void FadingBackground::setFinalColor(sf::Color color){
-    finalColor = color;
+    this->finalColor = color;
 }
 
 void FadingBackground::setFadingSpeed(int fadingSpeed){
@@ -43,7 +45,9 @@ void FadingBackground::setLooped(bool looped)
 }
 
 void FadingBackground::update(){
-    sf::Color newColor = backgroundRectangle.getFillColor();
+    background->update();
+
+    sf::Color newColor = getColor();
 
     // For each channel make it slightly closer
     newColor.r = findNewColor(newColor.r,finalColor.r,fadingSpeed);
@@ -51,7 +55,7 @@ void FadingBackground::update(){
     newColor.b = findNewColor(newColor.b,finalColor.b,fadingSpeed);
     newColor.a = findNewColor(newColor.a,finalColor.a,fadingSpeed);
 
-    backgroundRectangle.setFillColor(newColor);
+    setColor(newColor);
 
     // This one is classic
     if(looped && newColor == finalColor){
@@ -61,8 +65,12 @@ void FadingBackground::update(){
     }
 }
 
+void FadingBackground::setBackground(std::unique_ptr<AbstractBackground> background){
+    this->background = std::move(background);
+}
+
 void FadingBackground::draw(sf::RenderTarget& r, sf::RenderStates s) const{
-    r.draw(backgroundRectangle,s);
+    r.draw(*background,s);
 }
 
 void FadingBackground::add(std::unique_ptr<AbstractBackground> abstBack){

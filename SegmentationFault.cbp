@@ -49,8 +49,6 @@
 			<Add directory="windows-SFML-2.5.1/lib" />
 		</Linker>
 		<Unit filename="AbstractBackground.hpp" />
-		<Unit filename="BackgroundContainer.cpp" />
-		<Unit filename="BackgroundContainer.hpp" />
 		<Unit filename="ControlsManager.cpp" />
 		<Unit filename="ControlsManager.hpp" />
 		<Unit filename="Conversation.cpp" />
@@ -71,6 +69,8 @@
 		<Unit filename="MessageWindow.hpp" />
 		<Unit filename="MusicPlayer.cpp" />
 		<Unit filename="MusicPlayer.hpp" />
+		<Unit filename="RectangleBackground.cpp" />
+		<Unit filename="RectangleBackground.hpp" />
 		<Unit filename="ResourceHolder.hpp" />
 		<Unit filename="ResourceHolder.tpp" />
 		<Unit filename="Textbox.cpp" />

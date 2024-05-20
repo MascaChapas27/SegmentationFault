@@ -20,8 +20,8 @@ class FadingBackground : public AbstractBackground {
         // The final color the background will reach
         sf::Color finalColor;
 
-        // The rectangle that forms the whole background
-        sf::RectangleShape backgroundRectangle;
+        // The background to be faded
+        std::unique_ptr<AbstractBackground> background;
 
         // How close it will get to the desired color each update
         int fadingSpeed;
@@ -35,7 +35,9 @@ class FadingBackground : public AbstractBackground {
         FadingBackground();
 
         // Sets the current color for the rectangle
-        void setCurrentColor(sf::Color color);
+        void setColor(sf::Color color);
+
+        sf::Color getColor();
 
         // Sets the initial color for the rectangle
         void setInitialColor(sf::Color color);
@@ -46,6 +48,7 @@ class FadingBackground : public AbstractBackground {
         // Sets how fast the current color gets close to the final color
         void setFadingSpeed(int fadingSpeed);
         void setLooped(bool looped);
+        void setBackground(std::unique_ptr<AbstractBackground> background);
         void update();
         void draw(sf::RenderTarget& r, sf::RenderStates s) const;
         void add(std::unique_ptr<AbstractBackground> abstBack);

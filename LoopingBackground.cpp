@@ -52,8 +52,10 @@ void LoopingBackground::draw(sf::RenderTarget& r, sf::RenderStates s) const {
     r.draw(backgroundSprite,s);
 }
 
-void LoopingBackground::add(std::unique_ptr<AbstractBackground> abstBack){
+void LoopingBackground::setColor(sf::Color color){
+    backgroundSprite.setColor(color);
+}
 
-    Log::getInstance()->write("You can't add an abstract background to something that's not a BackgroundContainer!!");
-    exit(EXIT_FAILURE);
+sf::Color LoopingBackground::getColor(){
+    return backgroundSprite.getColor();
 }

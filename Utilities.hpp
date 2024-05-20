@@ -36,7 +36,8 @@ enum class TextureID {
     GabrielaTextbox, DanielaTextbox, BystanderTextbox,
     WarningTitle, WarningBackground, WarningNormalText, WarningGlitchText, WarningPressAnyKey,
     ControlsGabrielaLeftKeyboard,
-    FloatingLeftKeyboardGabriela
+    FloatingLeftKeyboardGabriela,
+    SquareBackground
 };
 
 // Identifiers for every font used

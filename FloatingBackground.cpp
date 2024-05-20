@@ -49,6 +49,15 @@ void FloatingBackground::update(){
     }
 }
 
+void FloatingBackground::setColor(sf::Color color){
+    // Nah
+}
+
+sf::Color FloatingBackground::getColor(){
+    // I don't care
+    return sf::Color::Transparent;
+}
+
 void FloatingBackground::draw(sf::RenderTarget& r, sf::RenderStates s) const{
     for(std::vector<sf::Sprite>::size_type i=0;i<floatingSprites.size();i++){
         r.draw(floatingSprites[i],s);

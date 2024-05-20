@@ -11,9 +11,10 @@
 class AbstractBackground : public sf::Drawable {
     public:
         // Virtual methods, must be implemented in children classes
+        virtual void setColor(sf::Color color)=0;
+        virtual sf::Color getColor()=0;
         virtual void update()=0;
         virtual void draw(sf::RenderTarget& r, sf::RenderStates s) const=0;
-        virtual void add(std::unique_ptr<AbstractBackground> abstBack)=0;
 };
 
 #endif // __ABSTRACT_BACKGROUND_HPP__

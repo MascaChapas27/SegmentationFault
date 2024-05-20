@@ -22,7 +22,8 @@ class FloatingBackground : public AbstractBackground {
 
         // Sets the texture and number of floating sprites
         void setTextureAndNumber(sf::Texture& texture, int numSprites);
-
+        void setColor(sf::Color color);
+        sf::Color getColor();
         void update();
         void draw(sf::RenderTarget& r, sf::RenderStates s) const;
         void add(std::unique_ptr<AbstractBackground> abstBack);

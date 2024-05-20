@@ -1,7 +1,4 @@
 #include "Conversation.hpp"
-#include "LoopingBackground.hpp"
-#include "ResourceHolder.hpp"
-#include "Utilities.hpp"
 #include <assert.h>
 
 Conversation::Conversation(std::list<Interaction>& interactions, std::list<CharName>& characters, std::list<CharName>& glitchedCharacters){
@@ -9,30 +6,13 @@ Conversation::Conversation(std::list<Interaction>& interactions, std::list<CharN
     this->interactions = interactions;
     this->characters = characters;
     this->glitchedCharacters = glitchedCharacters;
-
-    // The iterator points at the beginning
-    it = interactions.begin();
-
-    // The rectangles are created
-    upRectangle.setSize(sf::Vector2f(MAIN_WINDOW_WIDTH,MAIN_WINDOW_HEIGHT/7));
-    upRectangle.setFillColor(sf::Color::Black);
-    upRectangle.setOrigin(upRectangle.getSize().x/2,0);
-
-    downRectangle.setSize(sf::Vector2f(MAIN_WINDOW_WIDTH,MAIN_WINDOW_HEIGHT/7));
-    downRectangle.setFillColor(sf::Color::Black);
-    downRectangle.setOrigin(downRectangle.getSize().x/2,downRectangle.getSize().y);
-
-    // The looping background is created
-    std::unique_ptr<LoopingBackground> loopingBackground(new LoopingBackground());
-    loopingBackground->setTexture(TextureHolder::getTextureInstance()->get(TextureID::SquareBackground),Direction::UP_LEFT);
-
-    // Now put the looping background in the fading background
-    background.setBackground(std::move(loopingBackground));
+    this->it = interactions.begin();
 }
 
-// Once the conversation is loaded, this function starts it
+// Once the conversation is loaded, this function creates the textboxes to
+// make them appear on the screen
 void Conversation::initialize(){
-    /*
+
     TextureHolder * textureHolder = TextureHolder::getTextureInstance();
     SoundHolder * soundHolder = SoundHolder::getSoundInstance();
     FontHolder * fontHolder = FontHolder::getFontInstance();
@@ -110,30 +90,11 @@ void Conversation::initialize(){
         }
         numTextboxes++;
     }
-    */
 
-    background.setColor(sf::Color(255,255,255,0));
-    background.setInitialColor(sf::Color(255,255,255,0));
-    background.setFinalColor(sf::Color(255,255,255,100));
-
-    upRectangle.setPosition(MAIN_WINDOW_WIDTH/2.0,-upRectangle.getSize().y);
-    downRectangle.setPosition(MAIN_WINDOW_WIDTH/2.0,MAIN_WINDOW_HEIGHT + downRectangle.getSize().y);
-
-    sf::Vector2u windowSize = window.getSize();
-    captureTexture.create(windowSize.x, windowSize.y);
-    captureTexture.update(window);
-    captureSprite.setTexture(captureTexture);
-    captureSprite.setPosition(0,0);
-
-    state = 0;
+    advance();
 }
 
-// Advances the current conversation.
-// True: The conversation can still go
-// False: The conversation is over
 bool Conversation::advance(){
-    return state < 3;
-    /*
     // if there are no more interactions, then end everything
     if(it == interactions.end()){
         bool keepGoing = false;
@@ -168,7 +129,6 @@ bool Conversation::advance(){
 
     }
     return true;
-    */
 }
 
 // Update the conversation, which returns true if the conversation
@@ -177,77 +137,6 @@ bool Conversation::advance(){
 // bool checkIfAdvance means we pressed the advance key but maybe
 // the character didn't finish speaking
 bool Conversation::update(bool checkIfAdvance){
-    background.update();
-
-    bool shouldAdvance = false;
-
-    switch(state){
-        case 0:
-            // Move the rectangle at the top
-            if(upRectangle.getPosition().y < 0){
-                sf::Vector2f pos = upRectangle.getPosition();
-                pos.y++;
-                upRectangle.setPosition(pos);
-            }
-
-            // Move the rectangle at the bottom
-            if(downRectangle.getPosition().y > MAIN_WINDOW_HEIGHT){
-                sf::Vector2f pos = downRectangle.getPosition();
-                pos.y--;
-                downRectangle.setPosition(pos);
-            }
-
-            if(upRectangle.getPosition().y == 0 && downRectangle.getPosition().y == MAIN_WINDOW_HEIGHT){
-                shouldAdvance = true;
-                state = 1;
-            }
-
-            break;
-        case 1:
-            if(checkIfAdvance){
-                background.setInitialColor(background.getColor());
-                background.setFinalColor(sf::Color(255,255,255,0));
-                state = 2;
-                shouldAdvance = true;
-            }
-
-            break;
-        case 2:
-            // Move the rectangle at the top
-            if(upRectangle.getPosition().y > -upRectangle.getSize().y){
-                sf::Vector2f pos = upRectangle.getPosition();
-                pos.y--;
-                upRectangle.setPosition(pos);
-            }
-
-            // Move the rectangle at the bottom
-            if(downRectangle.getPosition().y < MAIN_WINDOW_HEIGHT+downRectangle.getSize().y){
-                sf::Vector2f pos = downRectangle.getPosition();
-                pos.y++;
-                downRectangle.setPosition(pos);
-            }
-
-            if(upRectangle.getPosition().y == -upRectangle.getSize().y && downRectangle.getPosition().y == MAIN_WINDOW_HEIGHT+downRectangle.getSize().y){
-                shouldAdvance = true;
-                state = 3;
-            }
-        case 3:
-            shouldAdvance = true;
-            break;
-    }
-
-    window.clear();
-
-    window.draw(captureSprite);
-    window.draw(background);
-    window.draw(upRectangle);
-    window.draw(downRectangle);
-
-    window.display();
-
-    return shouldAdvance;
-
-    /*
     // Helper boolean, stores if we should advance in the conversation
     bool shouldAdvance = false;
     for(auto i = textboxes.begin(); i != textboxes.end(); i++){
@@ -264,7 +153,6 @@ bool Conversation::update(bool checkIfAdvance){
         if(i->second->update(checkIfAdvance,x,y)) shouldAdvance = true;
     }
     return shouldAdvance;
-    */
 }
 
 Conversation::~Conversation(){

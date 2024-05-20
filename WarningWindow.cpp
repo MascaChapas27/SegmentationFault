@@ -2,6 +2,8 @@
 #include "LoopingBackground.hpp"
 #include "AbstractBackground.hpp"
 #include "FadingBackground.hpp"
+#include "RectangleBackground.hpp"
+#include "ConversationHolder.hpp"
 
 WarningWindow * WarningWindow::warningWindow = nullptr;
 
@@ -17,17 +19,22 @@ WarningWindow::WarningWindow()
     TextureHolder * textureHolder = TextureHolder::getTextureInstance();
     SoundHolder * soundHolder = SoundHolder::getSoundInstance();
 
-    std::unique_ptr<AbstractBackground> loopingBackground(new LoopingBackground());
-    ((LoopingBackground*)loopingBackground.get())->setTexture(textureHolder->get(TextureID::WarningBackground),Direction::UP_LEFT);
+    // Background that ways "warning"
+    std::unique_ptr<LoopingBackground> loopingBackground(new LoopingBackground());
+    loopingBackground->setTexture(textureHolder->get(TextureID::WarningBackground),Direction::UP_LEFT);
 
-    std::unique_ptr<AbstractBackground> fadingBackground(new FadingBackground());
-    ((FadingBackground*)fadingBackground.get())->setCurrentColor(sf::Color(0,0,0,255));
-    ((FadingBackground*)fadingBackground.get())->setFinalColor(sf::Color(0,0,0,0));
+    background.setBackground(std::move(loopingBackground));
+    background.setColor(sf::Color(255,255,255,0));
+    background.setInitialColor(sf::Color(255,255,255,0));
+    background.setFinalColor(sf::Color(255,255,255,255));
 
-    background.add(std::move(loopingBackground));
-    background.add(std::move(fadingBackground));
+    // Foreground that makes everything black
 
-    foreground.setCurrentColor(sf::Color(0,0,0,0));
+    std::unique_ptr<AbstractBackground> rectangleBackground(new RectangleBackground());
+
+    foreground.setBackground(std::move(rectangleBackground));
+    foreground.setColor(sf::Color(0,0,0,0));
+    foreground.setInitialColor(sf::Color(0,0,0,0));
     foreground.setFinalColor(sf::Color(0,0,0,255));
     foreground.setFadingSpeed(5);
 
@@ -130,6 +137,16 @@ bool WarningWindow::run()
             {
                 if(event.key.code == DEBUG_KEY) debugMode = true;
                 exiting = true;
+
+                // This is just for debugging please dont look at it too much
+                ConversationHolder conversationHolder;
+                conversationHolder.load("files/Conversations.txt");
+                conversationHolder.start(0);
+
+                while(conversationHolder.updateConversation()){
+                    sf::Event event;
+                    while(window.pollEvent(event));
+                }
             }
         }
 

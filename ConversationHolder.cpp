@@ -136,16 +136,18 @@ bool ConversationHolder::updateConversation(){
         // are both empty)
         keyPressed = true;
         checkIfAdvance = true;
+
+        // A sound plays when pressing the key
+        advanceSound.play();
+
     } else if (!pressingRightNow && keyPressed){
         // Now the key is being released
         keyPressed = false;
     }
 
-    if(conversations[currentConversation]->update(checkIfAdvance)) {
-        // A sound plays when advancing
-        advanceSound.play();
+    if(conversations[currentConversation]->update(checkIfAdvance))
         return conversations[currentConversation]->advance();
-    }
+
     return true;
 }
 

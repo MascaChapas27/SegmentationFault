@@ -16,6 +16,8 @@ class LoopingBackground : public AbstractBackground {
     public:
         LoopingBackground();
         void setTexture(sf::Texture& tex, Direction whereToLoop);
+        void setColor(sf::Color color);
+        sf::Color getColor();
         void update();
         void draw(sf::RenderTarget& r, sf::RenderStates s) const;
         void add(std::unique_ptr<AbstractBackground> abstBack);

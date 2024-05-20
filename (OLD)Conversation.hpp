@@ -5,7 +5,6 @@
 #include "Interaction.hpp"
 #include "Textbox.hpp"
 #include "ResourceHolder.hpp"
-#include "FadingBackground.hpp"
 
 /*
     A conversation is a moment of the gameplay in which
@@ -24,25 +23,11 @@ class Conversation{
         // A list of all glitched characters that participate
         std::list<CharName> glitchedCharacters;
 
-        // A capture of the screen to show it in the background
-        sf::Texture captureTexture;
-        sf::Sprite captureSprite;
-
-        // Black rectangles for the top and bottom part of the screen
-        sf::RectangleShape upRectangle;
-        sf::RectangleShape downRectangle;
-
-        // Background with cool squares
-        FadingBackground background;
-
-        // Chatboxes that contain the text spoken by every character
-        //std::list<Chatbox> chatboxes;
+        // A map of the textboxes (map because there is one for each character)
+        std::map<CharName,std::unique_ptr<Textbox>> textboxes;
 
         // An iterator that points at the current Interaction
         std::list<Interaction>::iterator it;
-
-        // 0 = starting; 1 = started; 2 = ending; 3 = ended
-        int state;
 
     public:
         Conversation(std::list<Interaction>& interactions, std::list<CharName>& characters, std::list<CharName>& glitchedCharacters);

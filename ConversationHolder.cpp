@@ -5,7 +5,6 @@
 #include "Log.hpp"
 
 ConversationHolder::ConversationHolder(){
-    keyPressed = false;
     advanceSound.setBuffer(SoundHolder::getSoundInstance()->get(SoundID::AdvanceConversation));
     names["GABRIELA"] = CharName::GABRIELA;
     names["DANIELA"] = CharName::DANIELA;
@@ -110,45 +109,39 @@ void ConversationHolder::load(std::string path){
     }
 }
 
-// It starts the given conversation
+// It starts the given conversation AND TAKES CONTROL OF THE WINDOW
 void ConversationHolder::start(int code){
 
     currentConversation = code;
     advanceSound.play();
     conversations[code]->initialize();
-    keyPressed = false;
+
+    // Semi-infinite loop doing stuff
+    while(updateConversation());
 }
 
 // It updates the current conversation
 bool ConversationHolder::updateConversation(){
 
-    bool checkIfAdvance = false;
+    sf::Event event;
+    while(window.pollEvent(event)){
 
-    // True if the key (or button) iis being pressed exactly at this moment, as opposed to keyPressed, which
-    // tells if it was being pressed the last time this function was called. This prevents from pressing
-    // the key once and advancing 131233 times unintentionally
-    bool pressingRightNow = ControlsManager::getInstance()->isPressing(CharName::GABRIELA,KeyAction::INTERACT);
+        if(event.type == sf::Event::Closed){
+            window.close();
+            exit(EXIT_SUCCESS);
+        }
 
-    if (pressingRightNow && !keyPressed){
-        // Now we are pressing the key, the conversation advances only if
-        // the current text is equal to the final text, and the current character
-        // is speaking (if it's not, then the current text and final text
-        // are both empty)
-        keyPressed = true;
-        checkIfAdvance = true;
-
-        // A sound plays when pressing the key
-        advanceSound.play();
-
-    } else if (!pressingRightNow && keyPressed){
-        // Now the key is being released
-        keyPressed = false;
+        std::pair<CharName,KeyAction> pair = ControlsManager::getInstance()->checkEvent(event);
+        if(pair.first == CharName::GABRIELA && pair.second == KeyAction::INTERACT){
+            advanceSound.play();
+            conversations[currentConversation]->advance();
+        } else if (pair.second == KeyAction::EXIT){
+            window.close();
+            exit(EXIT_SUCCESS);
+        }
     }
 
-    if(conversations[currentConversation]->update(checkIfAdvance))
-        return conversations[currentConversation]->advance();
-
-    return true;
+    return conversations[currentConversation]->update();
 }
 
 ConversationHolder::~ConversationHolder(){

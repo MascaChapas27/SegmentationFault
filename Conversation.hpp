@@ -3,7 +3,7 @@
 
 #include <list>
 #include "Interaction.hpp"
-#include "Textbox.hpp"
+
 #include "ResourceHolder.hpp"
 #include "FadingBackground.hpp"
 
@@ -41,15 +41,15 @@ class Conversation{
         // An iterator that points at the current Interaction
         std::list<Interaction>::iterator it;
 
-        // 0 = starting; 1 = started; 2 = ending; 3 = ended
-        int state;
+        // Current state for the conversation
+        ConversationState state;
 
     public:
         Conversation(std::list<Interaction>& interactions, std::list<CharName>& characters, std::list<CharName>& glitchedCharacters);
 
-        bool advance();
+        void advance();
         void initialize();
-        bool update(bool checkIfAdvance);
+        bool update();
 
         ~Conversation();
 

@@ -12,23 +12,23 @@
     constants, etc etc etc
 */
 
-////////////////////
-//GLOBAL VARIABLES//
-////////////////////
+//////////////////////////////////////////////////////////////////////////////////
+//                       GLOBAL VARIABLES?? IN MY CODE??                        //
+//////////////////////////////////////////////////////////////////////////////////
 
 // I know global variables are fckuking bad but ehheheh
 
 // The main window
 extern sf::RenderWindow window;
 
-///////////////////
-////// ENUMS //////
-///////////////////
+//////////////////////////////////////////////////////////////////////////////////
+//                                  ENUMERATES                                  //
+//////////////////////////////////////////////////////////////////////////////////
 
 // Names for every character in the game and maybe
 // something else I forgot
 enum class CharName{
-    GABRIELA, DANIELA, PLAYER, BYSTANDER
+    NONE, GABRIELA, DANIELA, PLAYER, BYSTANDER
 };
 
 // Identifiers for every texture used
@@ -56,9 +56,19 @@ enum class MusicID {
     WarningMusic
 };
 
-// Positions of a textbox
-enum class TextboxPosition {
-    TOP_LEFT, TOP_RIGHT, BOTTOM_LEFT, BOTTOM_RIGHT
+// States for a conversation
+enum class ConversationState {
+    STARTING,           // The up and down rectangles are moving and the background is getting opaque
+    HIDING_LEFT_CHAR,   // The character on the left is being hidden
+    HIDING_RIGHT_CHAR,  // The character on the right is being hidden
+    HIDING_BOTH_CHARS,  // Both characters are being hidden
+    SHOWNG_LEFT_CHAR,   // The character on the left is being shown
+    SHOWNG_RIGHT_CHAR,  // The character on the right is being shown
+    SHOWNG_BOTH_CHARS,  // Both characters are being shown
+    SPEAKING,           // There is one character currently speaking
+    WAITING,            // Characters are just standing there... menacingly
+    ENDING,             // Characters are sent back to hell together with the rectangles and the background
+    ENDED               // The conversation ended and the game can continue
 };
 
 // Possible controls a character can use
@@ -70,7 +80,7 @@ enum class Control{
 
 // Things a player can do by pressing keys
 enum class KeyAction{
-    UP, DOWN, LEFT, RIGHT, INTERACT, EXIT
+    UP, DOWN, LEFT, RIGHT, INTERACT, EXIT, NONE
 };
 
 // Directions that a movement can go to
@@ -78,9 +88,9 @@ enum class Direction{
     UP, UP_RIGHT, RIGHT, DOWN_RIGHT, DOWN, DOWN_LEFT, LEFT, UP_LEFT
 };
 
-///////////////////////
-////// CONSTANTS //////
-///////////////////////
+//////////////////////////////////////////////////////////////////////////////////
+//                           MISCELLANEOUS CONSTANTS                            //
+//////////////////////////////////////////////////////////////////////////////////
 
 // Path in which the log file will be created
 const std::string LOG_FILE_PATH = "segfault.log";
@@ -108,53 +118,17 @@ const std::string MAIN_WINDOW_NAME = "amailakuki";
 // Max amount of frames per second for the main window
 const int MAX_FPS = 60;
 
+//////////////////////////////////////////////////////////////////////////////////
+//                           CONVERSATION CONSTANTS                             //
+//////////////////////////////////////////////////////////////////////////////////
+
 // Character used to suddenly end an interaction even if the
 // player didn't press any button
 const char SUDDEN_END_CHAR = '#';
 
-// Height and width of a textbox
-const int TEXTBOX_HEIGHT = 200;
-const int TEXTBOX_WIDTH = 400;
-
-// Height and width of the face of the characters
-// when they are speaking in a textbox
-const int FACE_HEIGHT = 180;
-const int FACE_WIDTH = 120;
-
-// Size of the textbox border
-const int TEXTBOX_BORDER = 10;
-
-// Position in x and y axes of text in a textbox
-const int TEXT_X = FACE_WIDTH + 2*TEXTBOX_BORDER + 20;
-const int TEXT_Y = TEXTBOX_BORDER + 20;
-
-// Size of the font in textboxes
-const int TEXT_SIZE = 20;
-
-// Framerate limit for textboxes
-const int TEXTBOX_FPS = 20;
-
-// Total number of textboxes a character has
-// (The first one is the basic one, the others are glitchy)
-const int TEXTBOX_NUMBER = 3;
-
-// Total number of expression a character has for a certain feeling
-// One facing to the front, eight for each direction
-// and an extra one for glitch effects
-const int EXPRESSION_NUMBER = 10;
-
-// The value at which the final glitch ends. A counter starts increasing
-// its value until it equals this constant's value
-const int FINAL_GLITCH_LIMIT = TEXTBOX_FPS / 2;
-
-// The amount of pixels the screen moves down when advancing
-// in a conversation
-const int TEXTBOX_BOUNCE = 10;
-
-// The range of pixels in which a character looks in cardinal directions.
-// If the difference in x and y axes is bigger than this tresshold, the
-// character will look at a diagonal direction
-const int TEXTBOX_THRESHOLD = 80;
+//////////////////////////////////////////////////////////////////////////////////
+//                          WARNING WINDOW CONSTANTS                            //
+//////////////////////////////////////////////////////////////////////////////////
 
 // Initial and final position of the "WARNING" title
 const sf::Vector2f WARNING_TITLE_INITIAL_POSITION = sf::Vector2f(260,268);
@@ -170,6 +144,10 @@ const int WARNING_GLITCH_Y = 450;
 // Width of the texture for the control window (the left part is
 // full of glitch effects)
 const int CONTROLS_TEXTURE_WIDTH = MAIN_WINDOW_WIDTH*3;
+
+//////////////////////////////////////////////////////////////////////////////////
+//                             CONTROLS CONSTANTS                               //
+//////////////////////////////////////////////////////////////////////////////////
 
 // Number of keyboard/joystick symbols that float
 // in the background of the controls window
@@ -187,9 +165,17 @@ const sf::Color FLOATING_CONTROLS_COLOR = sf::Color(255,255,255,10);
 // helps with that
 const int JOYSTICK_AXIS_THRESHOLD = 30;
 
-///////////////
-// FUNCTIONS //
-///////////////
+// Number of controls (10, which are 2 for the left and right keyboard and 8 for the
+// 8 possible joysticks that can be connected with SFML (even though the game only
+// allows a maximum of 4 players))
+const int NUM_CONTROLS = 10;
+
+// Key that, if it's pressed, makes the game end
+const sf::Keyboard::Key EXIT_KEY = sf::Keyboard::Key::Escape;
+
+//////////////////////////////////////////////////////////////////////////////////
+//                              UTILITY FUNCTIONS                               //
+//////////////////////////////////////////////////////////////////////////////////
 
 // Namespace for functions just in case (inline or else
 // it will be defined 19837 times)

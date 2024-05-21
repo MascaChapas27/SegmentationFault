@@ -73,8 +73,6 @@
 		<Unit filename="RectangleBackground.hpp" />
 		<Unit filename="ResourceHolder.hpp" />
 		<Unit filename="ResourceHolder.tpp" />
-		<Unit filename="Textbox.cpp" />
-		<Unit filename="Textbox.hpp" />
 		<Unit filename="Utilities.hpp" />
 		<Unit filename="WarningWindow.cpp" />
 		<Unit filename="WarningWindow.hpp" />

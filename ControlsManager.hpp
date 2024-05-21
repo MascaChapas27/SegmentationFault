@@ -21,17 +21,14 @@ class ControlsManager
         // Glitch sound that plays when the controls window is initialized
         sf::Sound glitchSound;
 
-        // Map that stores, for each character, the control it uses
-        std::map<CharName, Control> characterControls;
+        // Map that stores, for each control, the character associated with it
+        std::map<Control, CharName> controlToCharacter;
 
         // Background with floating controls
         FloatingBackground background;
 
-        // Map that stores, for each keyboard control and action, the key associated with that action
-        std::map<std::pair<Control,KeyAction>,sf::Keyboard::Key> associatedKeys;
-
-        // Map that stores, for each action, the joystick button associated with it
-        std::map<KeyAction,int> associatedButtons;
+        // Map that stores, for each valid key (except for the exit key), the part of the keyboard and action associated
+        std::map<sf::Keyboard::Key,std::pair<Control,KeyAction>> keyToControlAndAction;
 
         // Function that indicates if a control is free
         bool isAvailable(Control c);
@@ -47,6 +44,12 @@ class ControlsManager
 
         // Check if the character is performing that keyAction
         bool isPressing(CharName character, KeyAction keyAction);
+
+        // Check if the character is performing that keyAction but given an event
+        bool isPressingEvent(CharName character, KeyAction keyAction, sf::Event event);
+
+        // Given an event, returns the character and the key action associated
+        std::pair<CharName,KeyAction> checkEvent(sf::Event event);
 
         // Automatically tries to assign a keyboard control to a character
         // if that character doesn't have a control assigned

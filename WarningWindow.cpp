@@ -83,7 +83,12 @@ bool WarningWindow::run()
     while(warningTitleTransparency < 400){
 
         sf::Event event;
-        while(window.pollEvent(event));
+        while(window.pollEvent(event)){
+            if(event.key.code == EXIT_KEY){
+                window.close();
+                exit(EXIT_SUCCESS);
+            }
+        }
 
         warningTitleTransparency+=3;
         warningTitleSprite.setColor(sf::Color(255,255,255,warningTitleTransparency > 255 ? 255 : warningTitleTransparency));
@@ -98,7 +103,12 @@ bool WarningWindow::run()
     while(abs(warningTitleSprite.getPosition().y - WARNING_TITLE_FINAL_POSITION.y) > 3){
 
         sf::Event event;
-        while(window.pollEvent(event));
+        while(window.pollEvent(event)){
+            if(event.key.code == EXIT_KEY){
+                window.close();
+                exit(EXIT_SUCCESS);
+            }
+        }
 
         sf::Vector2f movement = WARNING_TITLE_FINAL_POSITION-warningTitleSprite.getPosition();
         movement = sf::Vector2f(movement.x/30.0, movement.y/30.0);
@@ -133,6 +143,11 @@ bool WarningWindow::run()
         sf::Event event;
         while(window.pollEvent(event))
         {
+            if(event.key.code == EXIT_KEY){
+                window.close();
+                exit(EXIT_SUCCESS);
+            }
+
             if(event.type == sf::Event::KeyPressed || event.type == sf::Event::JoystickButtonPressed)
             {
                 if(event.key.code == DEBUG_KEY) debugMode = true;
@@ -142,11 +157,6 @@ bool WarningWindow::run()
                 ConversationHolder conversationHolder;
                 conversationHolder.load("files/Conversations.txt");
                 conversationHolder.start(0);
-
-                while(conversationHolder.updateConversation()){
-                    sf::Event event;
-                    while(window.pollEvent(event));
-                }
             }
         }
 

@@ -34,8 +34,8 @@ void conversationTest(ConversationHolder& conversationHolder){
 
 int main(){
 
-    // This thing makes error messages disappear because they keep appearing oh god
-    // they are everywhere go straight to hell and dont come back
+    // This thing makes error messages disappear because they keep appearing when I connect a joystick
+    //oh god they are everywhere go straight to hell and dont come back
     sf::err().rdbuf(NULL);
 
     // Some graphics cards are not good enough for some texture sizes, so let's check it
@@ -73,7 +73,7 @@ int main(){
     conversationHolder.load("files/Conversations.txt");
 
     // Assign a control to Gabriela first of all just in case
-    // (this control is going to be the left part of the keyboard)
+    // (this control SHOULD be the left part of the keyboard)
 
     ControlsManager::getInstance()->assignControl(CharName::GABRIELA);
 

@@ -24,11 +24,6 @@ class ConversationHolder{
         // This is a sound that plays when the conversation advances
         sf::Sound advanceSound;
 
-        // This indicates if the advance key is pressed. If it is, prevent the conversation
-        // from advancing. This prevents the user from advancing 999 times by pressing the
-        // key once and holding it, forcing the user to release the key and then pressing again
-        bool keyPressed;
-
     public:
         ConversationHolder();
         void load(std::string path);

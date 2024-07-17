@@ -32,6 +32,3 @@
 # Code::Blocks stuff
 *.depend
 *.layout
-
-# Linux executable
-SegmentationFault

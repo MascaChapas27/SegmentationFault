@@ -1,6 +1,24 @@
 SegmentationFault:
-	chmod 777 linux-SFML-2.6.1/lib/*
-	LD_LIBRARY_PATH=linux-SFML-2.6.1/lib g++ -std=c++14 -o SegmentationFault *.cpp -I linux-SFML-2.6.1/include -L linux-SFML-2.6.1/lib -lsfml-system -lsfml-graphics -lsfml-window -lsfml-audio
+ifeq ($(OS),Windows_NT)
+	g++ -Wall -pipe -O0 *.cpp -g -o SegmentationFault.exe -I C:\SFML-2.6.1\include -L C:\SFML-2.6.1\lib -lsfml-system -lsfml-graphics -lsfml-window -lsfml-audio
+else
+	g++ -Wall -pipe -O0 *.cpp -g -o SegmentationFault.out -lsfml-system -lsfml-graphics -lsfml-window -lsfml-audio
+endif
 
 run:
-	LD_LIBRARY_PATH=linux-SFML-2.6.1/lib ./SegmentationFault
+ifeq ($(OS),Windows_NT)
+	.\SegmentationFault.exe
+else
+	./SegmentationFault.out
+endif
+
+rerun:
+	make -B
+	make run
+
+debug:
+ifeq ($(OS),Windows_NT)
+	gdb .\SegmentationFault.exe
+else
+	gdb ./SegmentationFault.out
+endif
